@@ -1,16 +1,22 @@
-# building
+# Orbital - YeetAlone
 
 A new Flutter project.
 
-## Getting Started
+## _What are we?_
 
-This project is a starting point for a Flutter application.
+A Flutter-based Android and iOS app that will be the cure to loneliness in office spaces.  
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### TODO List
+Here's a TODO list for Milestone 1.
+1. Create pages (Page design):
+    - Log-in
+    - Register
+    - Profile
+2. Set up functionalities:
+    - Firebase Auth - Login and Registration 
+    - User Class
+    - Sync
+3. Shared design:
+    - Buttons
+    - Form fields
+    - Account text boxes
