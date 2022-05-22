@@ -5,13 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 /// TODO: Edit textInputDecoration and buttonStyle according to Figma design
 
 const textInputDecoration = InputDecoration(
-    fillColor: Colors.white,
+    fillColor: Color.fromRGBO(242, 238, 238, 69),
     filled: true,
     enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: 2.0,) //color: Colors.white,)
+        borderSide: BorderSide(width: 1.0,
+            color: Color.fromRGBO(144, 132, 132, 53)) //color: Colors.white,)
     ),
     focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: 2.0,) // color: Colors.pink,)
+        borderSide: BorderSide(width: 3.0,
+            color: Color.fromRGBO(89, 77, 77, 100)) // color: Colors.pink,)
     )
 );
 

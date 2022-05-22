@@ -59,7 +59,7 @@ class _LoginState extends State<Login> {
                 ),
                 const SizedBox(height: 20.0),
                 TextFormField(
-                  decoration: textInputDecoration.copyWith(hintText: "Email"),
+                  decoration: textInputDecoration.copyWith(prefixIcon: Icon(Icons.email,color:Colors.grey[600]),hintText: "Email"),
                   validator: (val) => val!.isEmpty && !isEmail(val) ? "Enter a valid email": null,
                   /// TODO: Unsure if update to be done on onChanged or onPress of Login
                   onChanged: (val) {
@@ -68,7 +68,7 @@ class _LoginState extends State<Login> {
                 ),
                 const SizedBox(height: 20.0),
                 TextFormField(
-                  decoration: textInputDecoration.copyWith(hintText: "Password"),
+                  decoration: textInputDecoration.copyWith(prefixIcon:Icon(Icons.lock_outline, color: Colors.grey[600]),hintText: "Password"),
                   obscureText: true,
                   validator: (val) => val!.length < 8 ? "Password must be more than 8 characters": null,
                   onChanged: (val) {
