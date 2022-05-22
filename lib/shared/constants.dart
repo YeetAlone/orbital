@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// TODO: Edit textInputDecoration and buttonStyle according to Figma design
 
 const textInputDecoration = InputDecoration(
     fillColor: Colors.white,
@@ -13,6 +14,15 @@ const textInputDecoration = InputDecoration(
         borderSide: BorderSide(width: 2.0,) // color: Colors.pink,)
     )
 );
+
+ButtonStyle buttonStyle = ButtonStyle(
+  minimumSize: MaterialStateProperty.all(const Size(250.0, 36.0)),
+  shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+    borderRadius: BorderRadius.zero,
+    side: BorderSide(color: Colors.grey))
+  ),
+);
+
 
 ThemeData lightTheme = FlexThemeData.light(
   scheme: FlexScheme.green,
