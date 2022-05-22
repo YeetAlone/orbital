@@ -1,6 +1,6 @@
 import 'package:building/screens/legal/privacy_policy.dart';
 import 'package:building/screens/legal/tos.dart';
-import 'package:building/screens/login/forgot_password.dart';
+
 import 'package:building/screens/login/register.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -76,14 +76,7 @@ class _LoginState extends State<Login> {
                   },
                 ),
                 const SizedBox(height: 20.0),
-                TextButton(
-                    onPressed: () => Get.to(() => const ForgotPassword()),
-                    child: const Text(
-                        "Forgot your password?",
-                      /// TODO: Set TextStyle to underline
-                      style: TextStyle(),
-                    )
-                ),
+
                 ElevatedButton(
                   style: buttonStyle.copyWith(
                       backgroundColor: MaterialStateProperty.all(const Color(0xFF00695C)),
