@@ -1,6 +1,14 @@
 import 'dart:io';
 
-class User {
+class AppUser {
+  String email;
+  String userID;
+
+  AppUser({required this.email, required this.userID});
+}
+
+
+class AppUserData {
   String email;
 
   String firstName;
@@ -11,7 +19,7 @@ class User {
 
   String profilePictureURL;
 
-  User(
+  AppUserData(
       {this.email = '',
         this.firstName = '',
         this.lastName = '',
@@ -20,8 +28,8 @@ class User {
 
   String fullName() => '$firstName $lastName';
 
-  factory User.fromJson(Map<String, dynamic> parsedJson) {
-    return User(
+  factory AppUserData.fromJson(Map<String, dynamic> parsedJson) {
+    return AppUserData(
         email: parsedJson['email'] ?? '',
         firstName: parsedJson['firstName'] ?? '',
         lastName: parsedJson['lastName'] ?? '',
