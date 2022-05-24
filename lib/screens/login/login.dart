@@ -9,6 +9,8 @@ import 'package:validators/validators.dart';
 import '../../shared/constants.dart';
 
 class Login extends StatefulWidget {
+  // final Function toggleView;
+
   const Login({Key? key}) : super(key: key);
 
   @override
