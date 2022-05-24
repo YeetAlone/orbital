@@ -16,12 +16,12 @@ class profile extends StatelessWidget {
     return Scaffold(
 
       // AppBar
-        backgroundColor: Color.fromRGBO(0, 105,92, 100),
+        backgroundColor: Color.fromRGBO(0, 105,92, 1),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(40),
           child: AppBar(
             centerTitle: true,
-            backgroundColor: Color.fromRGBO(0, 77, 64, 100),
+            backgroundColor: Color.fromRGBO(0, 77, 64, 1),
             elevation: 0.0,
 
             title: Text("PROFILE"),

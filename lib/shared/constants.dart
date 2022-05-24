@@ -25,6 +25,13 @@ ButtonStyle buttonStyle = ButtonStyle(
   ),
 );
 
+ButtonStyle searchButtonStyle = ButtonStyle(
+  minimumSize: MaterialStateProperty.all(const Size(330.0, 90.0)),
+  shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      side: BorderSide(width:2, color:  Color.fromRGBO(0, 77, 64,1)))
+  ),
+);
 
 ThemeData lightTheme = FlexThemeData.light(
   scheme: FlexScheme.green,
