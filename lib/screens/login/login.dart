@@ -2,6 +2,7 @@ import 'package:building/screens/legal/privacy_policy.dart';
 import 'package:building/screens/legal/tos.dart';
 
 import 'package:building/screens/login/register.dart';
+import 'package:building/screens/profile/profile.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -85,7 +86,8 @@ class _LoginState extends State<Login> {
                   ),
                   onPressed: () async {
                     ///TODO: Login Validation - Firebase Auth
-                    if (_formKey.currentState!.validate()) {}
+                    Get.to(() => Profile());
+                    // if (_formKey.currentState!.validate()) {}
                     },
                   child: const Text("Log In")
                 ),

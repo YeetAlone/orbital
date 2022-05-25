@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class AppUser {
   String email;
   String userID;
@@ -15,7 +13,7 @@ class AppUserData {
 
   String lastName;
 
-  String userID;
+  String? userID;
 
   String profilePictureURL;
 
