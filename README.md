@@ -11,10 +11,9 @@ Here's a TODO list for Milestone 1.
 1. Create pages (Page design):
     - Log-in
       - Placement of Forgot Password
-      - Adaptive button re-sizing  
-
-[comment]: <> (    - Register)
+      - Adaptive button re-sizing
     - Profile
+   
 2. Set up functionalities:
     - Firebase Auth - Login and Registration 
     - User Class

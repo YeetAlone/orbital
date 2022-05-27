@@ -8,7 +8,6 @@ class AuthService {
 
   AppUser? _userFromFirebaseUser(UserPlatform? user) {
     return user != null ? AppUser(
-        email: user.email!,
         userID: user.uid,
     ) : null;
   }

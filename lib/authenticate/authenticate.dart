@@ -1,4 +1,5 @@
 import 'package:building/screens/login/login.dart';
+import 'package:building/screens/login/register.dart';
 import 'package:flutter/material.dart';
 
 class Authenticate extends StatefulWidget {
@@ -17,9 +18,9 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     if (showLogin) {
-      return const Login(); //(toggleView: toggleView);
+      return Login(toggleView: toggleView);
     } else {
-      return Container(); /// TODO: Route to Main page
+      return Register(toggleView: toggleView);
     }
   }
 }

@@ -1,9 +1,9 @@
+import 'package:building/authenticate/app_auth.dart';
 import 'package:building/screens/legal/privacy_policy.dart';
 import 'package:building/screens/legal/tos.dart';
 
 import 'package:building/screens/login/register.dart';
 import 'package:building/screens/profile/profile.dart';
-import 'package:building/screens/search/main_search.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,9 +11,9 @@ import 'package:validators/validators.dart';
 import '../../shared/constants.dart';
 
 class Login extends StatefulWidget {
-  // final Function toggleView;
+  final Function toggleView;
 
-  const Login({Key? key}) : super(key: key);
+  const Login({Key? key, required this.toggleView}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -26,6 +26,7 @@ class _LoginState extends State<Login> {
   /// TODO: 4. Set placement of everything properly
 
   final _formKey = GlobalKey<FormState>();
+  final AppUserAuthenticator _auth = AppUserAuthenticator();
 
   String email = "";
   String password = "";
@@ -87,12 +88,25 @@ class _LoginState extends State<Login> {
                   ),
                   onPressed: () async {
                     ///TODO: Login Validation - Firebase Auth
-                    Get.to(() => MainSearch());
+                    Get.to(() => Profile());
                     // if (_formKey.currentState!.validate()) {}
+
+                    // Get.to(() => Profile());
+                    if (_formKey.currentState!.validate()) {
+                      dynamic result = await _auth.signIn(email, password);
+                      if (result == null) {
+                        error = "Could not sign in with given credentials";
+                      }
+                    }
+
                     },
                   child: const Text("Log In")
                 ),
-                ///TODO: Line with OR
+                const SizedBox(height: 12.0),
+                Text(
+                  error,
+                  style: const TextStyle(color: Colors.red, fontSize: 14.0),
+                ),
                 const SizedBox(height: 20.0),
                 Row(
                   children: [
@@ -118,7 +132,7 @@ class _LoginState extends State<Login> {
                   style: buttonStyle.copyWith(
                   backgroundColor: MaterialStateProperty.all(const Color(0xFF7DCEC4)),
                   ),
-                  onPressed: () => Get.to(() => const Register()),
+                  onPressed: () => Get.to(() => Register(toggleView: widget.toggleView,)),
                   child: const Text("Sign up with Email"),
                 ),
               ]

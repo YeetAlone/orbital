@@ -3,16 +3,27 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../authenticate/app_auth.dart';
 import '../../shared/constants.dart';
 
 class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
+  final Function toggleView;
+
+  const Register({Key? key, required this.toggleView}) : super(key: key);
 
   @override
   State<Register> createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
+
+  final _formKey = GlobalKey<FormState>();
+  final AppUserAuthenticator _auth = AppUserAuthenticator();
+
+  String email = "";
+  String password = "";
+  String error = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +54,20 @@ class _RegisterState extends State<Register> {
                 ),
                 Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                    child: Column(
-                      children: [
-                        makeInput(label: "NUS Email"),
-                        makeInput(label: "Name"),
-                        makeInput(label: "Department"),
-                      ],
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          /// TODO: FIX REQUIRED - TextFormField()
+                          makeInput(label: "NUS Email",
+                                validator: (val) => val!.length < 6 ? "Enter a password 6+ chars wrong": null,
+                                onChanged:(val) => setState(() => password = val)
+                          ),
+                          makeInput(label: "Name",
+                              validator: (val) {}),
+                          makeInput(label: "Department"),
+                        ],
+                      ),
                     ),
                 ),
                 const SizedBox(height: 20.0,),
@@ -57,8 +76,23 @@ class _RegisterState extends State<Register> {
                     style: buttonStyle.copyWith(
                       backgroundColor: MaterialStateProperty.all(const Color(0xFF7DCEC4)),
                     ),
-                    onPressed: () => Get.to(() => const Login()),
+                    onPressed: () async {
+                      dynamic result = await _auth.signUp(email, password);
+                      if (result == null) {
+                        error = "Please enter a valid email";
+                      }
+                      else {
+                        Get.to(() => Login(toggleView: widget.toggleView,));
+                        /// TODO: Successful registration notification
+                      }
+                    },
                     child: const Text("Register"),
+                ),
+                /// Error
+                const SizedBox(height: 12.0),
+                Text(
+                  error,
+                  style: const TextStyle(color: Colors.red, fontSize: 14.0),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -90,7 +124,7 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
-  Widget makeInput({label}){
+  Widget makeInput({label, validator, onChanged, obscureText = false}){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -100,7 +134,11 @@ class _RegisterState extends State<Register> {
             color: Colors.black87
         ),),
         const SizedBox(height: 5,),
-        const TextField(decoration: textInputDecoration,),
+        TextFormField(
+          decoration: textInputDecoration,
+          validator: validator,
+          onChanged: onChanged,
+        ),
         const SizedBox(height: 10,)
       ],
     );

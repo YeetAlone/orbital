@@ -1,8 +1,7 @@
 class AppUser {
-  String email;
   String userID;
 
-  AppUser({required this.email, required this.userID});
+  AppUser({required this.userID});
 }
 
 

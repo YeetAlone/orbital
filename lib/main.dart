@@ -1,4 +1,4 @@
-import 'package:building/screens/login/login.dart';
+import 'package:building/screens/wrapper.dart';
 import 'package:building/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: const Login(),
+      home: const Wrapper(),
       title: 'Flutter Demo',
       theme: lightTheme,
       darkTheme: darkTheme,
