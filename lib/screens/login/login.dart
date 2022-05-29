@@ -1,13 +1,12 @@
 import 'package:building/authenticate/app_auth.dart';
 import 'package:building/screens/legal/privacy_policy.dart';
 import 'package:building/screens/legal/tos.dart';
-
 import 'package:building/screens/login/register.dart';
-import 'package:building/screens/profile/profile.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:validators/validators.dart';
+
 import '../../shared/constants.dart';
 
 class Login extends StatefulWidget {

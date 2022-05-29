@@ -1,13 +1,17 @@
+import 'package:building/authenticate/app_auth.dart';
+import 'package:building/models/user.dart';
 import 'package:building/screens/wrapper.dart';
 import 'package:building/shared/constants.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async{
   /// Temporary for web app
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: "orbital_yeet-alone",
     options: const FirebaseOptions(
       apiKey: "AIzaSyCdLGklC7M0sVaXZR_UbgPyzGpQ9uOqYS4",
       authDomain: "orbital-yeetalone.firebaseapp.com",
@@ -28,15 +32,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      home: const Wrapper(),
-      title: 'Flutter Demo',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-// If you do not have a themeMode switch, uncomment this line
-// to let the device system mode control the theme mode:
-    themeMode: ThemeMode.system,
+    return StreamProvider<AppUser?>.value(
+        initialData: null,
+        value: AppUserAuthenticator().user,
+        child: GetMaterialApp(
+          home: const Wrapper(),
+          title: 'Flutter Demo',
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          // If you do not have a themeMode switch, uncomment this line
+          // to let the device system mode control the theme mode:
+          themeMode: ThemeMode.system,
 
+        )
     );
   }
 }
