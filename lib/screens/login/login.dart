@@ -87,6 +87,9 @@ class _LoginState extends State<Login> {
                   ),
                   onPressed: () async {
                     ///TODO: Login Validation - Firebase Auth
+                    Get.to(() => Profile());
+                    // if (_formKey.currentState!.validate()) {}
+
                     // Get.to(() => Profile());
                     if (_formKey.currentState!.validate()) {
                       dynamic result = await _auth.signIn(email, password);
@@ -94,6 +97,7 @@ class _LoginState extends State<Login> {
                         error = "Could not sign in with given credentials";
                       }
                     }
+
                     },
                   child: const Text("Log In")
                 ),
