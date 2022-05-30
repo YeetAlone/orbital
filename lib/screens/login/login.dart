@@ -11,7 +11,6 @@ import '../../shared/constants.dart';
 
 class Login extends StatefulWidget {
   final Function toggleView;
-
   const Login({Key? key, required this.toggleView}) : super(key: key);
 
   @override

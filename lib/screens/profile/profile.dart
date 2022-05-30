@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:settings_ui/settings_ui.dart';
 import '../../models/user.dart';
 
 class Profile extends StatelessWidget {
@@ -10,6 +10,7 @@ class Profile extends StatelessWidget {
       lastName: "dummy",
       userID: "dummy",
       profilePictureURL: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg");
+
   @override
   Widget build(BuildContext context) {
 
@@ -41,7 +42,7 @@ class Profile extends StatelessWidget {
             Center(
               child: CircleAvatar(backgroundColor: const Color.fromRGBO(165, 214, 167, 100),backgroundImage: NetworkImage(user.profilePictureURL),radius: 40.0,),
             ),
-            const SizedBox(height:70),
+            const SizedBox(height:66),
             const Padding(
               padding: EdgeInsets.fromLTRB(0,0,450,0),
               child: Text("NAME",style: TextStyle(color: Colors.white,letterSpacing: 2.0,),),
@@ -49,7 +50,10 @@ class Profile extends StatelessWidget {
             const SizedBox(height:10.0),
             Container(
               color: const Color.fromRGBO(165, 214, 167, 65),height: 54.0,width: 500,
-              child: Text("\n ${user.firstName} ${user.lastName}",style: const TextStyle(color: Colors.white,letterSpacing: 2.0,fontSize: 16.0,),),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(" ${user.firstName} ${user.lastName}",style: const TextStyle(color: Colors.white,letterSpacing: 2.0,fontSize: 16.0,),),
+              ),
             ),
             const SizedBox(height:30.0),
             const Padding(
@@ -59,7 +63,10 @@ class Profile extends StatelessWidget {
             const SizedBox(height:10.0),
             Container(
               color: const Color.fromRGBO(165, 214, 167, 65),height: 54.0,width: 500,
-              child: const Text("\n Dummy",style: TextStyle(color: Colors.white,letterSpacing: 2.0,fontSize: 16.0,),),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: const Text(" Dummy",style: TextStyle(color: Colors.white,letterSpacing: 2.0,fontSize: 16.0,),),
+              ),
             ),
             const SizedBox(height:70.0),
             Container(
