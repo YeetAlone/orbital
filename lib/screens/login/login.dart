@@ -6,7 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:validators/validators.dart';
-
+import 'package:building/screens/profile/profile.dart';
 import '../../shared/constants.dart';
 
 class Login extends StatefulWidget {
@@ -49,18 +49,20 @@ class _LoginState extends State<Login> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const SizedBox(height:90),
                 Container(
                   height: 150.0,
-                  width: 300.0,
+                  width: 300.0,   //NOTE: GET THE APPLOGO TO LOAD HERE
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.transparent,
                     border: Border.all(
-                      color: Colors.white,
+                      color: Colors.transparent,             //CHANGED BORDER TO TRANSPARENT FROM WHITE. NO WHITE BORDER LAH
                       width: 8,
                     ),
-                  ),
                 ),
-                const SizedBox(height: 20.0),
+                  child: Image.asset("assets/applogo.jpg"),
+                ),
+                const SizedBox(height: 40.0),
                 TextFormField(
                   decoration: textInputDecoration.copyWith(prefixIcon: Icon(Icons.email,color:Colors.grey[600]),hintText: "Email"),
                   validator: (val) => val!.isEmpty && !isEmail(val) ? "Enter a valid email": null,
@@ -158,7 +160,7 @@ class _LoginState extends State<Login> {
                             decoration: TextDecoration.underline,
                           ),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () => Get.to(() => const TermsOfService()),
+                            ..onTap = () => Get.to(() => TermsOfService()),
                         ),
 
                         const TextSpan(

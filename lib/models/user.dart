@@ -14,6 +14,8 @@ class AppUserData {
 
   String? userID;
 
+  String department;
+
   String profilePictureURL;
 
   AppUserData(
@@ -21,6 +23,7 @@ class AppUserData {
         this.firstName = '',
         this.lastName = '',
         this.userID = '',
+        this.department = '',
         this.profilePictureURL = ''});
 
   String fullName() => '$firstName $lastName';
@@ -31,6 +34,7 @@ class AppUserData {
         firstName: parsedJson['firstName'] ?? '',
         lastName: parsedJson['lastName'] ?? '',
         userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
+        department: parsedJson['department'] ?? '',
         profilePictureURL: parsedJson['profilePictureURL'] ?? '');
   }
 
@@ -40,6 +44,7 @@ class AppUserData {
       'firstName': firstName,
       'lastName': lastName,
       'id': userID,
+      'department': department,
       'profilePictureURL': profilePictureURL
     };
   }
