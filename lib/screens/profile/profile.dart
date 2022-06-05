@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:settings_ui/settings_ui.dart';
 import '../../models/user.dart';
 
 class Profile extends StatelessWidget {
@@ -9,7 +9,9 @@ class Profile extends StatelessWidget {
       firstName: "dummy",
       lastName: "dummy",
       userID: "dummy",
+      department: "Dummy",
       profilePictureURL: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg");
+
   @override
   Widget build(BuildContext context) {
 
@@ -34,55 +36,58 @@ class Profile extends StatelessWidget {
         ),
 
       //Main body of profile page
-      body:Padding(
-        padding:const EdgeInsets.fromLTRB(30, 40, 30, 0),
-        child: Column(
-          children: <Widget>[
-            Center(
-              child: CircleAvatar(backgroundColor: const Color.fromRGBO(165, 214, 167, 100),backgroundImage: NetworkImage(user.profilePictureURL),radius: 40.0,),
+      body:Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const SizedBox(height:40),
+          Center(
+            child: CircleAvatar(backgroundColor: const Color.fromRGBO(165, 214, 167, 100),backgroundImage: NetworkImage(user.profilePictureURL),radius: 40.0,),
+          ),
+          const SizedBox(height:40),
+          Text("  NAME",textAlign: TextAlign.left,style: TextStyle(color: Colors.white,letterSpacing: 2.0,),),
+          const SizedBox(height:10.0),
+          Container(
+            margin:EdgeInsets.fromLTRB(20, 3, 20, 3),
+            color: const Color.fromRGBO(165, 214, 167, 65),height: 54.0, width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(" ${user.firstName} ${user.lastName}",style: const TextStyle(color: Colors.white,letterSpacing: 2.0,fontSize: 16.0,),),
             ),
-            const SizedBox(height:70),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0,0,450,0),
-              child: Text("NAME",style: TextStyle(color: Colors.white,letterSpacing: 2.0,),),
+          ),
+          const SizedBox(height:30.0),
+          Text("  DEPARTMENT",style: TextStyle(color: Colors.white,letterSpacing: 2.0,),),
+          const SizedBox(height:10.0),
+          Container(
+            margin:EdgeInsets.fromLTRB(20, 3, 20, 3),
+            color: const Color.fromRGBO(165, 214, 167, 65),height: 54.0,width:double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(" ${user.department}",style: TextStyle(color: Colors.white,letterSpacing: 2.0,fontSize: 16.0,),),
             ),
-            const SizedBox(height:10.0),
-            Container(
-              color: const Color.fromRGBO(165, 214, 167, 65),height: 54.0,width: 500,
-              child: Text("\n ${user.firstName} ${user.lastName}",style: const TextStyle(color: Colors.white,letterSpacing: 2.0,fontSize: 16.0,),),
-            ),
-            const SizedBox(height:30.0),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0,0,450,0),
-              child: Text("DEPARTMENT",style: TextStyle(color: Colors.white,letterSpacing: 2.0,),),
-            ),
-            const SizedBox(height:10.0),
-            Container(
-              color: const Color.fromRGBO(165, 214, 167, 65),height: 54.0,width: 500,
-              child: const Text("\n Dummy",style: TextStyle(color: Colors.white,letterSpacing: 2.0,fontSize: 16.0,),),
-            ),
-            const SizedBox(height:70.0),
-            Container(
-                decoration: const BoxDecoration(color: Color.fromRGBO(165, 214, 167, 0.6),borderRadius: BorderRadius.all(Radius.circular(40.0))),
-                height:47,width:510,
-                child: Row(
-                  children: [
-                    const Text("\n sync with google calendar?",style: TextStyle(color: Colors.white, letterSpacing: 2.0, fontSize: 16.0,)),
-                    const SizedBox(width:170),
-                  ],)
-            ),
-            const SizedBox(height:20),
-            Container(
-                decoration: const BoxDecoration(color: Color.fromRGBO(165, 214, 167, 0.6),borderRadius: BorderRadius.all(Radius.circular(40.0))),
-                height:47,width:510,
-                child: Row(
-                  children: const [
-                    Text("\n sync with outlook calendar?",style: TextStyle(color: Colors.white, letterSpacing: 2.0, fontSize: 16.0,)),
-                    SizedBox(width:170),
-                  ],)
-            ),
-          ]
-        )
+          ),
+          const SizedBox(height:70.0),
+          Container(
+            margin:EdgeInsets.all(20),
+              decoration: const BoxDecoration(color: Color.fromRGBO(165, 214, 167, 0.6),borderRadius: BorderRadius.all(Radius.circular(40.0))),
+              height:47,width:double.infinity,
+              child: Row(
+                children: [
+                  const Text("\n sync with google calendar?",style: TextStyle(color: Colors.white, letterSpacing: 2.0, fontSize: 16.0,)),
+
+                ],)
+          ),
+          const SizedBox(height:20),
+          Container(
+              margin:EdgeInsets.all(20),
+              decoration: const BoxDecoration(color: Color.fromRGBO(165, 214, 167, 0.6),borderRadius: BorderRadius.all(Radius.circular(40.0))),
+              height:47,width:double.infinity,
+              child: Row(
+                children: const [
+                  Text("\n sync with outlook calendar?",style: TextStyle(color: Colors.white, letterSpacing: 2.0, fontSize: 16.0,)),
+
+                ],)
+          ),
+        ]
       )
     );
   }
