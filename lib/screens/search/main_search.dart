@@ -29,8 +29,9 @@ class MainSearch extends StatelessWidget {
               const Center(
                   child: Text(
                       "How do you want to find your colleague?",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 32,
+                          fontSize: 30,
                           color:Color.fromRGBO(0, 77, 64,1)
                       )
                   )
@@ -53,7 +54,7 @@ class MainSearch extends StatelessWidget {
                         fontSize: 24)
                 ),
                 icon: const ImageIcon(
-                    AssetImage("name.png"),
+                    AssetImage("assets/name.png"),
                     color: Color.fromRGBO(0, 77, 64,1), size:40),
               ),
               const SizedBox(height:20),
@@ -71,7 +72,7 @@ class MainSearch extends StatelessWidget {
                         fontSize: 24)
                 ),
                 icon: const ImageIcon(
-                    AssetImage("building.png"),
+                    AssetImage("assets/building.png"),
                     color: Color.fromRGBO(0, 77, 64,1),
                     size:45),
               ),

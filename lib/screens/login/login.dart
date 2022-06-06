@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:validators/validators.dart';
 import 'package:building/screens/profile/profile.dart';
+import 'package:building/screens/map/map.dart';
 import '../../shared/constants.dart';
 
 class Login extends StatefulWidget {
@@ -88,7 +89,7 @@ class _LoginState extends State<Login> {
                   ),
                   onPressed: () async {
                     ///TODO: Login Validation - Firebase Auth
-                    Get.to(() => Profile());
+                    Get.to(() => Map());
                     // if (_formKey.currentState!.validate()) {}
 
                     // Get.to(() => Profile());
