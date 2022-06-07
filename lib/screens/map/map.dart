@@ -52,6 +52,9 @@ class _MapState extends State<Map> {
       selectedItemColor: Colors.black,
       onTap: (int index) {
         setState(() => _selectedIndex = index, );
+        if(_selectedIndex==4){
+
+        }
         pageIndex = _selectedIndex;
       },
 

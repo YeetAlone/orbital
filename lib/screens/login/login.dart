@@ -42,6 +42,7 @@ class _LoginState extends State<Login> {
             image: const AssetImage("assets/loginpic.jpg"), fit: BoxFit.cover)
       ),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
         body: Container(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
