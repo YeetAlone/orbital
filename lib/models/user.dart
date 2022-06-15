@@ -1,9 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 class AppUser {
   String userID;
 
   AppUser({required this.userID});
-}
 
+  factory AppUser.fromFirebaseUser(User user) => AppUser(userID: user.uid);
+
+  @override
+  String toString() {
+    return "AppUser(userID: $userID)";
+  }
+}
 
 class AppUserData {
   String email;
@@ -20,11 +28,11 @@ class AppUserData {
 
   AppUserData(
       {this.email = '',
-        this.firstName = '',
-        this.lastName = '',
-        this.userID = '',
-        this.department = '',
-        this.profilePictureURL = ''});
+      this.firstName = '',
+      this.lastName = '',
+      this.userID = '',
+      this.department = '',
+      this.profilePictureURL = ''});
 
   String fullName() => '$firstName $lastName';
 

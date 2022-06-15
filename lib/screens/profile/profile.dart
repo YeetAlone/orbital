@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../models/user.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../services/authenticate/bloc/auth_bloc.dart';
+import '../../services/authenticate/bloc/auth_event.dart';
+
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -129,6 +134,11 @@ class _ProfileState extends State<Profile> {
                 activeTrackColor: Colors.black,
               ),
             ),
+            TextButton(
+                onPressed: () {
+                  context.read<AuthBloc>().add(const AuthEventLogOut());
+                },
+                child: const Text("Log Out")),
           ],
         ));
   }
