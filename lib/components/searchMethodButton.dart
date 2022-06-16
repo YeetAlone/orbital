@@ -10,7 +10,9 @@ class SearchMethodButton extends StatelessWidget {
 
   var respond;
 
-  SearchMethodButton(this.title, this.iconURL, this.bg, this.respond());
+  SearchMethodButton(this.title, this.iconURL, this.bg, this.respond(),
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

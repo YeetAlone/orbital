@@ -8,11 +8,12 @@ Widget infoDisp(String title, String info) =>
       Text(
         title,
         textAlign: TextAlign.left,
-        style: TextStyle(color: Colors.white, letterSpacing: 2.0, fontSize: 16),
+        style: const TextStyle(
+            color: Colors.white, letterSpacing: 2.0, fontSize: 16),
       ),
       const SizedBox(height: 10.0),
       Container(
-        margin: EdgeInsets.fromLTRB(20, 3, 20, 3),
+        margin: const EdgeInsets.fromLTRB(20, 3, 20, 3),
         color: const Color.fromRGBO(165, 214, 167, 65),
         height: 54.0,
         width: double.infinity,
@@ -20,7 +21,7 @@ Widget infoDisp(String title, String info) =>
           padding: const EdgeInsets.all(15.0),
           child: Text(
             info,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               letterSpacing: 2.0,
               fontSize: 20.0,

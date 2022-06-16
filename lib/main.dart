@@ -1,6 +1,6 @@
+import 'package:building/screens/chat/chat.dart';
 import 'package:building/screens/login/login.dart';
 import 'package:building/screens/login/register.dart';
-import 'package:building/screens/profile/profile.dart';
 import 'package:building/services/authenticate/bloc/auth_bloc.dart';
 import 'package:building/services/authenticate/bloc/auth_event.dart';
 import 'package:building/services/authenticate/bloc/auth_state.dart';
@@ -36,7 +36,7 @@ class Wrapper extends StatelessWidget {
         // AuthService.firebase().logOut();
         if (state is AuthStateLoggedIn) {
           // page a logged in user should see
-          return const Profile();
+          return const Chat();
         } else if (state is AuthStateRegistering) {
           return const Register();
         } else if (state is AuthStateLoggedOut) {
