@@ -32,6 +32,8 @@ class Wrapper extends StatelessWidget {
     context.read<AuthBloc>().add(const AuthEventInitialize());
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
+        // AuthService.firebase().initialize();
+        // AuthService.firebase().logOut();
         if (state is AuthStateLoggedIn) {
           // page a logged in user should see
           return const Profile();

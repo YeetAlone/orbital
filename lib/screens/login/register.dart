@@ -45,6 +45,8 @@ class _RegisterState extends State<Register> {
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _name.dispose();
+    _department.dispose();
     super.dispose();
   }
 
@@ -168,11 +170,13 @@ class _RegisterState extends State<Register> {
                       final password = _password.text;
                       if (_formKey.currentState!.validate()) {
                         if (password == _reEnterPassword.text) {
-                          /// NOTE: this is a temporary solution
-                          ///      which will be resolved when we finish working
-                          ///      on the user data pipeline.
+                          /// NOTE: to be updated when the profile page service
+                          ///       is finished.
                           context.read<AuthBloc>().add(AuthEventRegister(
-                              email: email, password: password));
+                              email: email,
+                              password: password,
+                              name: _name.text,
+                              department: _department.text));
                         }
                       }
                     },
