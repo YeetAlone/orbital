@@ -81,6 +81,7 @@ flutter:
     - assets/name.png
     - assets/applogo.jpg
     - assets/map.jpg
+    - assets/availability.png
 
 
 
