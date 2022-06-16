@@ -1,6 +1,5 @@
 import 'package:building/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:building/screens/search/main_search.dart';
 import 'package:building/screens/chat/chat.dart';
 import 'package:building/components/appBar.dart';

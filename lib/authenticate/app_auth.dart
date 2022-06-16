@@ -1,7 +1,7 @@
 import 'package:building/authenticate/database.dart';
 import 'package:building/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'dart:developer' as devtools show log;
 
 class AppUserAuthenticator {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -21,22 +21,23 @@ class AppUserAuthenticator {
       User? user = userCredential.user;
 
       await DatabaseService(uid: user?.uid).updateUserData("", "", '');
-      
+
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString());
+      devtools.log(e.toString());
       return null;
     }
   }
 
   Future signUp(String email, String password) async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
 
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString());
+      devtools.log(e.toString());
       return null;
     }
   }
@@ -45,7 +46,7 @@ class AppUserAuthenticator {
     try {
       return await _auth.signOut();
     } catch (e) {
-      print(e.toString());
+      devtools.log(e.toString());
       return null;
     }
   }

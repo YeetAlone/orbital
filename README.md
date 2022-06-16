@@ -22,3 +22,13 @@ Here's a TODO list for Milestone 1.
     - Buttons
     - Form fields
     - Account text boxes
+
+### TODO List
+Here is a TODO list for Milestone 2.
+1. VAFS login
+2. Navigation Bar
+3. Settings_UI for buttons in profile page
+4. Chat feature
+5. Availability overlay
+
+Aim by the end of MS2: a Minimum working product

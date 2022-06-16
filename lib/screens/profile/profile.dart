@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:settings_ui/settings_ui.dart';
 import '../../models/user.dart';
 import 'package:building/components/appBar.dart';
 import 'package:building/components/infoDisp.dart';
@@ -55,10 +54,10 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: 50),
 
             Container(
-              color: Color.fromRGBO(46, 136, 113, 1),
+              color: const Color.fromRGBO(46, 136, 113, 1),
               child: SwitchListTile(
-                hoverColor: Color.fromRGBO(46, 136, 113, 1),
-                title: Text("Sync with Google Calendar?",
+                hoverColor: const Color.fromRGBO(46, 136, 113, 1),
+                title: const Text('Sync with Google Calendar?',
                     style: TextStyle(color: Colors.white)),
                 value: switch1Value,
                 onChanged: (bool value) {
@@ -74,10 +73,10 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: 10),
 
             Container(
-              color: Color.fromRGBO(46, 136, 113, 1),
+              color: const Color.fromRGBO(46, 136, 113, 1),
               child: SwitchListTile(
-                hoverColor: Color.fromRGBO(46, 136, 113, 1),
-                title: Text("Sync with Google Calendar?",
+                hoverColor: const Color.fromRGBO(46, 136, 113, 1),
+                title: const Text('Sync with Outlook Calendar?',
                     style: TextStyle(color: Colors.white)),
                 value: switch2Value,
                 onChanged: (bool value) {
@@ -85,7 +84,7 @@ class _ProfileState extends State<Profile> {
                     switch2Value = value;
                   });
                 },
-                activeColor: Color.fromRGBO(165, 214, 167, 65),
+                activeColor: const Color.fromRGBO(165, 214, 167, 65),
                 activeTrackColor: Colors.black,
               ),
             ),
