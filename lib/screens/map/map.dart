@@ -2,6 +2,7 @@ import 'package:building/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:building/screens/search/main_search.dart';
 import 'package:building/screens/chat/chat.dart';
+import 'package:building/components/appBar.dart';
 
 class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
@@ -56,17 +57,9 @@ class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(40),
-            child: AppBar(
-              title: const Text("MAP", style: TextStyle(color: Colors.white)),
-              elevation: 0,
-              centerTitle: true,
-              backgroundColor: const Color.fromRGBO(0, 77, 64, 1),
-            )),
         body: Column(children: [
-          Expanded(
-              flex: 9, child: Image.asset("assets/map.jpg", fit: BoxFit.fill)),
-        ]));
+      appBar("MAP"),
+      Expanded(flex: 9, child: Image.asset("assets/map.jpg", fit: BoxFit.fill)),
+    ]));
   }
 }
