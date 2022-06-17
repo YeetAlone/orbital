@@ -1,9 +1,11 @@
-import 'package:building/authenticate/authenticate.dart';
+import 'package:building/screens/login/register.dart';
 import 'package:building/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 import '../models/user.dart';
+
+/// DEPRECATED
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -31,7 +33,7 @@ class _WrapperState extends State<Wrapper> with SingleTickerProviderStateMixin {
             .animate(_controller);
     _controller.forward().whenComplete(() => isLoggedIn
         ? Get.to(() => const Profile())
-        : Get.to(() => const Authenticate()));
+        : Get.to(() => const Register()));
   }
 
   @override
