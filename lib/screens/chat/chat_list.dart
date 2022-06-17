@@ -42,7 +42,7 @@ List<ChatUser> get chatUsers => [
           time: "24 Feb"),
       ChatUser(
           name: "Varun Kohli",
-          messageText: "Ayushi's smile is so gentle. Sweet. Have fun guys",
+          messageText: "Ayushi's smile is so gentle. Sweet. Have fun gtuys",
           imageUrl: imageLink,
           time: "18 Feb"),
     ];
