@@ -8,6 +8,9 @@ import 'package:building/services/authenticate/firebase_auth_provider.dart';
 import 'package:building/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:building/screens/map/map.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 void main() {
   /// Temporary for web app
@@ -36,7 +39,7 @@ class Wrapper extends StatelessWidget {
         // AuthService.firebase().logOut();
         if (state is AuthStateLoggedIn) {
           // page a logged in user should see
-          return const Profile();
+          return const Map();
         } else if (state is AuthStateRegistering) {
           return const Register();
         } else if (state is AuthStateLoggedOut) {

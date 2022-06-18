@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:building/screens/search/main_search.dart';
 import 'package:building/screens/chat/chat.dart';
 import 'package:building/components/appBar.dart';
+import 'package:building/components/navBar.dart';
 
 class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
@@ -25,28 +26,7 @@ class _MapState extends State<Map> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[pageIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'profile'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search'),
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'map'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'chat'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.access_time), label: 'availability'),
-        ],
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _selectedIndex,
-        iconSize: 40,
-        selectedItemColor: Colors.black,
-        onTap: (int index) {
-          setState(
-            () => _selectedIndex = index,
-          );
-          if (_selectedIndex == 4) {}
-          pageIndex = _selectedIndex;
-        },
-      ),
+      bottomNavigationBar:navBar(2)
     );
   }
 }

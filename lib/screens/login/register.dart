@@ -54,7 +54,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white54,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthStateRegistering) {
