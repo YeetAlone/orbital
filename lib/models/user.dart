@@ -82,7 +82,7 @@ class AppUserData {
         userName = snapshot.data()[userFullName],
         department = snapshot.data()[departmentName],
         profilePictureURL = snapshot.data()[userProfileURLName],
-        docID = snapshot.data()[docIDName];
+        docID = snapshot.id;
 
   AppUserData.fromDocumentSnapshot(
       DocumentSnapshot<Map<String, dynamic>> snapshot)
