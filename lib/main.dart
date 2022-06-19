@@ -39,7 +39,7 @@ class Wrapper extends StatelessWidget {
         // AuthService.firebase().logOut();
         if (state is AuthStateLoggedIn) {
           // page a logged in user should see
-          return const Map();
+          return const Profile();
         } else if (state is AuthStateRegistering) {
           return const Register();
         } else if (state is AuthStateLoggedOut) {
