@@ -31,7 +31,7 @@ ButtonStyle searchButtonStyle = ButtonStyle(
 
 ButtonStyle editButtonStyle = ButtonStyle(
     backgroundColor:
-        MaterialStateProperty.all(Color.fromRGBO(165, 214, 167, 100)));
+        MaterialStateProperty.all(const Color.fromRGBO(165, 214, 167, 100)));
 
 ThemeData lightTheme = FlexThemeData.light(
   scheme: FlexScheme.green,

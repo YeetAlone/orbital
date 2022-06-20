@@ -1,31 +1,41 @@
-import 'package:flutter/foundation.dart' show immutable;
+part of 'navigation_cubit.dart';
 
-@immutable
-abstract class NavState {
-  const NavState();
+class NavigationState extends Equatable {
+  final NavBarItem navbarItem;
+  final int index;
+
+  const NavigationState(this.navbarItem, this.index);
+
+  @override
+  List<Object> get props => [navbarItem, index];
 }
 
-// go to map
-class NavStateMap extends NavState {
-  const NavStateMap();
-}
+// @immutable
+// abstract class NavState {
+//   const NavState();
+// }
 
-// Wait for map to load
-class NavStateMapLoading extends NavState {
-  const NavStateMapLoading();
-}
+// // go to map
+// class NavStateMap extends NavState {
+//   const NavStateMap();
+// }
 
-// go to profile page
-class NavStateProfile extends NavState {
-  const NavStateProfile();
-}
+// // Wait for map to load
+// class NavStateMapLoading extends NavState {
+//   const NavStateMapLoading();
+// }
 
-// go to search page
-class NavStateSearch extends NavState {
-  const NavStateSearch();
-}
+// // go to profile page
+// class NavStateProfile extends NavState {
+//   const NavStateProfile();
+// }
 
-// go to chat page
-class NavStateChat extends NavState {
-  const NavStateChat();
-}
+// // go to search page
+// class NavStateSearch extends NavState {
+//   const NavStateSearch();
+// }
+
+// // go to chat page
+// class NavStateChat extends NavState {
+//   const NavStateChat();
+// }

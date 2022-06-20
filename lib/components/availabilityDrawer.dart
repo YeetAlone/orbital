@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AppDrawer extends StatefulWidget {
+class AvailabilityDrawer extends StatefulWidget {
+  const AvailabilityDrawer({Key? key}) : super(key: key);
+
   @override
-  _AppDrawerState createState() => new _AppDrawerState();
+  State<AvailabilityDrawer> createState() => _AvailabilityDrawerState();
 }
 
-class _AppDrawerState extends State<AppDrawer> {
+class _AvailabilityDrawerState extends State<AvailabilityDrawer> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

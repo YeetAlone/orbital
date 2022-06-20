@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 // import '../../shared/constants.dart';
 import 'package:building/components/appBar.dart';
 import 'package:building/components/searchMethodButton.dart';
-import 'package:building/components/navBar.dart';
 
 class MainSearch extends StatelessWidget {
   /// TODO: 1. navigate the buttons to the respective pages
@@ -32,7 +31,6 @@ class MainSearch extends StatelessWidget {
         SearchMethodButton(" Find by Availability", "assets/availability.png",
             const [255, 255, 255], () => {}),
       ]),
-      bottomNavigationBar: navBar(1),
     );
   }
 }

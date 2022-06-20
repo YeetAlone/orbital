@@ -20,11 +20,12 @@ class _infoDispState extends State<infoDisp> {
       Text(
         title,
         textAlign: TextAlign.left,
-        style: TextStyle(color: Colors.white, letterSpacing: 2.0, fontSize: 16),
+        style: const TextStyle(
+            color: Colors.white, letterSpacing: 2.0, fontSize: 16),
       ),
       const SizedBox(height: 10.0),
       Container(
-        margin: EdgeInsets.fromLTRB(20, 3, 20, 3),
+        margin: const EdgeInsets.fromLTRB(20, 3, 20, 3),
         color: const Color.fromRGBO(165, 214, 167, 65),
         height: 54.0,
         width: double.infinity,
@@ -36,7 +37,7 @@ class _infoDispState extends State<infoDisp> {
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
                   info,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     letterSpacing: 2.0,
                     fontSize: 20.0,
@@ -49,7 +50,7 @@ class _infoDispState extends State<infoDisp> {
                 child: ElevatedButton(
                     style: editButtonStyle,
                     onPressed: () {},
-                    child: Icon(
+                    child: const Icon(
                       Icons.edit,
                       color: Color.fromRGBO(0, 77, 64, 1),
                     )))
