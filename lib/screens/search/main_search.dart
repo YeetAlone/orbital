@@ -12,25 +12,25 @@ class MainSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-        //body
-        body: Column(children: <Widget>[
-      appBar("SEARCH"),
-      const SizedBox(height: 150),
-      const Center(
-          child: Text("How do you want to find your colleague?",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 30, color: Color.fromRGBO(0, 77, 64, 1)))),
-      const SizedBox(height: 50),
-      SearchMethodButton("   Find by Name", "assets/name.png",
-          const [225, 242, 226], () => {}),
-      const SizedBox(height: 20),
-      SearchMethodButton("  Find by Building", "assets/building.png",
-          const [244, 250, 244], () => {}),
-      const SizedBox(height: 20),
-      SearchMethodButton(" Find by Availability", "assets/availability.png",
-          const [255, 255, 255], () => {}),
-    ]));
+      //body
+      body: Column(children: <Widget>[
+        appBar("SEARCH"),
+        const SizedBox(height: 150),
+        const Center(
+            child: Text("How do you want to find your colleague?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 30, color: Color.fromRGBO(0, 77, 64, 1)))),
+        const SizedBox(height: 50),
+        SearchMethodButton("   Find by Name", "assets/name.png",
+            const [225, 242, 226], () => {}),
+        const SizedBox(height: 20),
+        SearchMethodButton("  Find by Building", "assets/building.png",
+            const [244, 250, 244], () => {}),
+        const SizedBox(height: 20),
+        SearchMethodButton(" Find by Availability", "assets/availability.png",
+            const [255, 255, 255], () => {}),
+      ]),
+    );
   }
 }

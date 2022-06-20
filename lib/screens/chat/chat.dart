@@ -12,10 +12,11 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: [
-        appBar("CHAT"),
-      ],
-    ));
+      body: Column(
+        children: [
+          appBar("CHAT"),
+        ],
+      ),
+    );
   }
 }
