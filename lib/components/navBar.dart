@@ -3,7 +3,9 @@ import 'package:building/screens/profile/profile.dart';
 import 'package:building/screens/chat/chat.dart';
 import 'package:building/screens/search/main_search.dart';
 import 'package:flutter/material.dart';
+import 'package:building/components/availabilityDrawer.dart';
 import 'package:get/get.dart';
+import 'dart:developer' as devtools show log;
 
 class navBar extends StatefulWidget {
   late int index;
@@ -14,6 +16,7 @@ class navBar extends StatefulWidget {
 }
 
 class _navBarState extends State<navBar> {
+  var availabilityKey = GlobalKey<_navBarState>();
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -45,6 +48,7 @@ class _navBarState extends State<navBar> {
             Get.to(() => Chat());
             break;
           case 4:
+            AppDrawer();
         }
       },
     );
