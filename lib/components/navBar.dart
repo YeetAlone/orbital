@@ -45,8 +45,6 @@ class _navBarState extends State<navBar> {
             Get.to(() => Chat());
             break;
           case 4:
-
-
         }
       },
     );

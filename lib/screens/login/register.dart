@@ -1,6 +1,7 @@
 import 'package:building/services/authenticate/bloc/auth_bloc.dart';
 import 'package:building/services/authenticate/bloc/auth_event.dart';
 import 'package:building/services/authenticate/bloc/auth_state.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +31,16 @@ class _RegisterState extends State<Register> {
   late final TextEditingController _department;
 
   String error = "";
+  String DDvalue = "Department";
+  List items = [
+    "Department",
+    "Computing",
+    "Engineering",
+    "Science",
+    "Arts and Social Sciences",
+    "Business",
+    "Medicine"
+  ];
 
   @override
   void initState() {
@@ -142,17 +153,55 @@ class _RegisterState extends State<Register> {
                                   val!.isEmpty ? "Enter your name" : null,
                             ),
                           ),
-                          makeInput(
-                            label: "Department",
-                            textFormField: TextFormField(
-                              controller: _department,
-                              decoration: textInputDecoration.copyWith(
-                                hintText: "e.g. Computer Science",
-                              ),
-                              validator: (val) =>
-                                  val!.isEmpty ? "Enter your department" : null,
-                            ),
-                          ),
+                          const SizedBox(height: 20),
+                          Container(
+                              color: Color.fromRGBO(242, 238, 238, 69),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton2(
+                                  hint: Text("Department"),
+                                  buttonPadding:
+                                      EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black87),
+                                  dropdownDecoration: const BoxDecoration(
+                                    color: Color.fromRGBO(210, 233, 227, 1),
+                                  ),
+                                  value: DDvalue,
+                                  buttonWidth: 500,
+                                  buttonHeight: 60,
+                                  icon: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.black, size: 30),
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      DDvalue = newValue as String;
+                                    });
+                                    for (int i = 0; i < items.length; i++) {
+                                      if (DDvalue == items[i]) {
+                                        _department.text = items[i];
+                                        devtools.log(_department.text);
+                                        devtools.log(items[i]);
+                                      }
+                                    }
+                                  },
+                                  items: items.map((var item) {
+                                    return DropdownMenuItem(
+                                        value: item, child: Text(item));
+                                  }).toList(),
+                                ),
+                              )),
+                          // makeInput(
+                          //   label: "Department",
+                          //   textFormField: TextFormField(
+                          //     controller: _department,
+                          //     decoration: textInputDecoration.copyWith(
+                          //       hintText: "e.g. Computer Science",
+                          //     ),
+                          //     validator: (val) =>
+                          //         val!.isEmpty ? "Enter your department" : null,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
