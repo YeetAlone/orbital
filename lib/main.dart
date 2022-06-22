@@ -1,10 +1,11 @@
+import 'package:building/screens/home.dart';
 import 'package:building/screens/login/login.dart';
 import 'package:building/screens/login/register.dart';
-import 'package:building/screens/profile/profile.dart';
 import 'package:building/services/authenticate/bloc/auth_bloc.dart';
 import 'package:building/services/authenticate/bloc/auth_event.dart';
 import 'package:building/services/authenticate/bloc/auth_state.dart';
 import 'package:building/services/authenticate/firebase_auth_provider.dart';
+import 'package:building/services/navigation/bloc/navigation_cubit.dart';
 import 'package:building/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +37,10 @@ class Wrapper extends StatelessWidget {
         // AuthService.firebase().logOut();
         if (state is AuthStateLoggedIn) {
           // page a logged in user should see
-          return const Profile();
+          return BlocProvider<NavigationCubit>(
+            create: (context) => NavigationCubit(),
+            child: const HomeScreen(),
+          );
         } else if (state is AuthStateRegistering) {
           return const Register();
         } else if (state is AuthStateLoggedOut) {
