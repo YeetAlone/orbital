@@ -1,0 +1,9 @@
+const senderEmailName = 'sender_email';
+// const chatIdName = 'chat_id';
+const lastMessageTimeName = 'last_message_time';
+const userName = 'name';
+const lastTextName = 'last_text';
+const isReadName = 'is_read';
+const imageUrlName = 'image_url';
+const createdAtName = 'created_at';
+const messageName = 'message';

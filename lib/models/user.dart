@@ -5,15 +5,15 @@ import 'package:flutter/foundation.dart' show immutable;
 import '../services/cloud/cloud_constants.dart';
 
 class AppUser {
-  String userID;
+  String userAuthID;
 
-  AppUser({required this.userID});
+  AppUser({required this.userAuthID});
 
-  factory AppUser.fromFirebaseUser(User user) => AppUser(userID: user.uid);
+  factory AppUser.fromFirebaseUser(User user) => AppUser(userAuthID: user.uid);
 
   @override
   String toString() {
-    return "AppUser(userID: $userID)";
+    return "AppUser(userID: $userAuthID)";
   }
 }
 
@@ -23,10 +23,10 @@ class AppUserData {
   // final String firstName;
   // final String lastName;
   final String userName;
-  final String? userID;
+  final String userID;
   final String department;
   final String profilePictureURL;
-  final String docID;
+  // final String docID;
 
   const AppUserData(
       {required this.email,
@@ -34,11 +34,15 @@ class AppUserData {
       // required this.firstName,
       // required this.lastName,
       required this.userID,
-      required this.docID,
+      // required this.docID,
       required this.department,
       required this.profilePictureURL});
 
   // String fullName() => '$firstName $lastName';
+  @override
+  String toString() {
+    return "AppUserData(userID: $userID, userName: $userName, department: $department \n email: $email)";
+  }
 
   factory AppUserData.fromJson(Map<String, dynamic> parsedJson) {
     return AppUserData(
@@ -48,8 +52,8 @@ class AppUserData {
         userName: parsedJson[userFullName] ?? '',
         userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
         department: parsedJson[departmentName] ?? '',
-        profilePictureURL: parsedJson[userProfileURLName] ?? '',
-        docID: parsedJson[docIDName] ?? '');
+        profilePictureURL: parsedJson[userProfileURLName] ?? '');
+    // docID: parsedJson[docIDName] ?? '');
   }
 
   factory AppUserData.empty() {
@@ -59,8 +63,8 @@ class AppUserData {
         userID: 'userID',
         department: 'dept',
         profilePictureURL:
-            'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg',
-        docID: 'docID');
+            'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg');
+    // docID: 'docID');
   }
 
   Map<String, dynamic> toJson() {
@@ -75,23 +79,23 @@ class AppUserData {
   }
 
   AppUserData.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      : userID = snapshot.id,
+      : userID = snapshot.data()[userIDName],
         email = snapshot.data()[userEmailName],
         // firstName = snapshot.data()[userFirstName],
         // lastName = snapshot.data()[userLastName],
         userName = snapshot.data()[userFullName],
         department = snapshot.data()[departmentName],
-        profilePictureURL = snapshot.data()[userProfileURLName],
-        docID = snapshot.id;
+        profilePictureURL = snapshot.data()[userProfileURLName];
+  // docID = snapshot.id;
 
   AppUserData.fromDocumentSnapshot(
       DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : userID = snapshot.id,
+      : userID = snapshot.data()![userIDName],
         email = snapshot.data()![userEmailName],
         // firstName = snapshot.data()[userFirstName],
         // lastName = snapshot.data()[userLastName],
         userName = snapshot.data()![userFullName],
         department = snapshot.data()![departmentName],
-        profilePictureURL = snapshot.data()![userProfileURLName],
-        docID = snapshot.data()![docIDName];
+        profilePictureURL = snapshot.data()![userProfileURLName];
+  // docID = snapshot.data()![docIDName];
 }

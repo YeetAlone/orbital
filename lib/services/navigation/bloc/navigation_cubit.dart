@@ -5,7 +5,7 @@ import '../../../shared/nav_bar_constants.dart';
 part 'nav_state.dart';
 
 class NavigationCubit extends Cubit<NavigationState> {
-  NavigationCubit() : super(const NavigationState(NavBarItem.profile, 0));
+  NavigationCubit() : super(const NavigationState(NavBarItem.map, 2));
 
   void getNavBarItem(NavBarItem navbarItem) {
     switch (navbarItem) {

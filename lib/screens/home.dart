@@ -1,5 +1,5 @@
+import 'package:building/screens/chat/chat_home_page.dart';
 import 'package:building/shared/nav_bar_constants.dart';
-import 'package:building/screens/chat/chat.dart';
 import 'package:building/screens/map/map.dart';
 import 'package:building/screens/profile/profile.dart';
 import 'package:building/screens/search/main_search.dart';
@@ -10,17 +10,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../shared/nav_bar_constants.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  //* Passing user authentication ID throughout the app
+  final String userAuthId;
+  const HomeScreen({required this.userAuthId, Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // final user = FirebaseCloudStorage()
+  //     .getAppUserFromId(AuthService.firebase().currentUser!.userAuthID);
   int index = 2;
 
   @override
   Widget build(BuildContext context) {
+    final userAuthId = widget.userAuthId;
     return Scaffold(bottomNavigationBar:
         BlocBuilder<NavigationCubit, NavigationState>(
             builder: (context, state) {
@@ -122,13 +127,13 @@ class _HomeScreenState extends State<HomeScreen> {
     }), body: BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state) {
         if (state.navbarItem == NavBarItem.profile) {
-          return const Profile();
+          return Profile(userAuthId: userAuthId);
         } else if (state.navbarItem == NavBarItem.search) {
-          return const MainSearch();
+          return MainSearch(userAuthId: userAuthId);
         } else if (state.navbarItem == NavBarItem.map) {
-          return const MapPage();
+          return MapPage(userAuthId: userAuthId);
         } else if (state.navbarItem == NavBarItem.chat) {
-          return const Chat();
+          return ChatHome(userAuthId: userAuthId);
         } else {
           return const CircularProgressIndicator();
         }

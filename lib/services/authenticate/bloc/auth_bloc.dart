@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:building/services/authenticate/auth_provider.dart';
 import 'package:building/services/authenticate/bloc/auth_event.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
-import 'dart:developer' as devtools show log;
+// import 'dart:developer' as devtools show log;
 
 import 'auth_state.dart';
 
@@ -12,7 +12,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventInitialize>((event, emit) async {
       await provider.initialize();
       final user = provider.currentUser;
-      devtools.log(user.toString());
+      // devtools.log(user.toString());
       if (user == null) {
         emit(const AuthStateLoggedOut(exception: null));
       } else {
@@ -47,7 +47,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final user = await provider.createUser(
             email: event.email, password: event.password);
         await FirebaseCloudStorage().createNewAppUser(
-            userId: user.userID,
+            userAuthId: user.userAuthID,
             fullName: event.name,
             email: event.email,
             department: event.department);

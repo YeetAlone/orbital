@@ -155,12 +155,12 @@ class _RegisterState extends State<Register> {
                           ),
                           const SizedBox(height: 20),
                           Container(
-                              color: Color.fromRGBO(242, 238, 238, 69),
+                              color: const Color.fromRGBO(242, 238, 238, 69),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton2(
-                                  hint: Text("Department"),
+                                  hint: const Text("Department"),
                                   buttonPadding:
-                                      EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                      const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                   style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,

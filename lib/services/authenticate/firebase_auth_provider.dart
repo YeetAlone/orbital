@@ -11,6 +11,7 @@ class FirebaseAuthProvider extends AuthProvider {
   @override
   Future<void> initialize() async {
     await Firebase.initializeApp(
+      name: 'orbital-yeetalone',
       options: DefaultFirebaseOptions.currentPlatform,
     );
   }
