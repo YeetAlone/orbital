@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:building/components/appBar.dart';
+import 'package:building/components/app_bar.dart';
 
 class Chat extends StatefulWidget {
   const Chat({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class _ChatState extends State<Chat> {
     return Scaffold(
       body: Column(
         children: [
-          appBar("CHAT"),
+          ScreenAppBar("CHAT"),
         ],
       ),
     );

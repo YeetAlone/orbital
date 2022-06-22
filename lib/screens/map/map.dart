@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:building/components/appBar.dart';
+import 'package:building/components/app_bar.dart';
 
 class MapPage extends StatelessWidget {
-  const MapPage({Key? key}) : super(key: key);
+  final String userAuthId;
+  const MapPage({required this.userAuthId, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(children: [
-      appBar("MAP"),
+      ScreenAppBar("MAP"),
       Expanded(flex: 9, child: Image.asset("assets/map.jpg", fit: BoxFit.fill)),
     ]));
   }

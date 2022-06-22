@@ -18,8 +18,15 @@ void main() {
     theme: lightTheme,
     darkTheme: darkTheme,
     themeMode: ThemeMode.system,
-    home: BlocProvider<AuthBloc>(
-      create: (context) => AuthBloc(FirebaseAuthProvider()),
+    home: MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(FirebaseAuthProvider()),
+        ),
+        BlocProvider<NavigationCubit>(
+          create: (context) => NavigationCubit(),
+        ),
+      ],
       child: const Wrapper(),
     ),
   ));
@@ -37,10 +44,7 @@ class Wrapper extends StatelessWidget {
         // AuthService.firebase().logOut();
         if (state is AuthStateLoggedIn) {
           // page a logged in user should see
-          return BlocProvider<NavigationCubit>(
-            create: (context) => NavigationCubit(),
-            child: const HomeScreen(),
-          );
+          return HomeScreen(userAuthId: state.user.userAuthID);
         } else if (state is AuthStateRegistering) {
           return const Register();
         } else if (state is AuthStateLoggedOut) {

@@ -4,18 +4,19 @@
 import 'package:building/shared/constants.dart';
 import 'package:flutter/material.dart';
 
-class infoDisp extends StatefulWidget {
-  late String title;
-  late String info;
+class InfoDisplay extends StatefulWidget {
+  final String title;
+  final String info;
 
-  infoDisp(this.title, this.info);
+  const InfoDisplay({required this.title, required this.info, Key? key})
+      : super(key: key);
 
   @override
-  State<infoDisp> createState() => _infoDispState();
+  State<InfoDisplay> createState() => _InfoDisplayState();
 }
 
-class _infoDispState extends State<infoDisp> {
-  Widget InfoDisp(String title, String info) {
+class _InfoDisplayState extends State<InfoDisplay> {
+  Widget infoDisp(String title, String info) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         title,
@@ -62,6 +63,6 @@ class _infoDispState extends State<infoDisp> {
 
   @override
   Widget build(BuildContext context) {
-    return InfoDisp(widget.title, widget.info);
+    return infoDisp(widget.title, widget.info);
   }
 }

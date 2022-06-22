@@ -4,14 +4,18 @@ import 'package:flutter/material.dart';
 import '../../shared/constants.dart';
 
 class SearchMethodButton extends StatelessWidget {
-  late String title;
-  late String iconURL;
-  List bg;
+  final String title;
+  final String iconURL;
+  final List bg;
 
-  var respond;
+  final Function respond;
 
-  SearchMethodButton(this.title, this.iconURL, this.bg, this.respond(),
-      {Key? key})
+  const SearchMethodButton(
+      {required this.title,
+      required this.iconURL,
+      required this.bg,
+      required this.respond(),
+      Key? key})
       : super(key: key);
 
   @override

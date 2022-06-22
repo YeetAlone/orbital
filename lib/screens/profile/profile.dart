@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import '../../models/user.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:developer' as devtools show log;
-import '../../services/authenticate/auth_service.dart';
+// import 'dart:developer' as devtools show log;
 import '../../services/authenticate/bloc/auth_bloc.dart';
 import '../../services/authenticate/bloc/auth_event.dart';
 import '../../services/cloud/firebase_cloud_storage.dart';
-import 'package:building/components/appBar.dart';
-import 'package:building/components/infoDisp.dart';
+import 'package:building/components/app_bar.dart';
+import 'package:building/components/info_disp.dart';
 
 /*
 todo
@@ -16,7 +15,8 @@ try to create components for the switchtiles
  */
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+  final String userAuthId;
+  const Profile({required this.userAuthId, Key? key}) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -33,30 +33,29 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
-  String get userId => AuthService.firebase().currentUser!.userID;
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     // another temporary stopgap until the image upload feature is implemented
-    devtools.log("userId: $userId");
+    // devtools.log("userAuthId: $context.userAuthId");
 
     return Scaffold(
       key: _key,
       backgroundColor: const Color.fromRGBO(0, 105, 92, 1),
-      body: StreamBuilder<Iterable<AppUserData>>(
-          stream: _userService.getAppUser(userId),
+      body: FutureBuilder<AppUserData>(
+          future: _userService.getAppUserFromId(widget.userAuthId),
           builder: (context, snapshot) {
-            devtools.log(userId);
+            // devtools.log(widget.userAuthId);
             AppUserData user = AppUserData.empty();
             if (snapshot.data != null) {
-              user = snapshot.data!.first;
+              user = snapshot.data!;
               _userService.updateAppUser(
-                docID: user.docID,
+                email: user.email,
                 profilePictureUrl:
                     "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
               );
             } else {
-              devtools.log(snapshot.data.toString());
+              // devtools.log(snapshot.data.toString());
             }
             return ListView(
               children: [
@@ -73,11 +72,11 @@ class _ProfileState extends State<Profile> {
                 ),
                 const SizedBox(height: 50),
                 //display of name
-                infoDisp("  NAME", " ${user.userName}"),
+                InfoDisplay(title: "  NAME", info: " ${user.userName}"),
                 const SizedBox(height: 30.0),
 
                 //display of department
-                infoDisp("  DEPARTMENT", " ${user.department}"),
+                InfoDisplay(title: "  DEPARTMENT", info: " ${user.department}"),
                 const SizedBox(height: 50),
                 Container(
                   color: const Color.fromRGBO(46, 136, 113, 1),

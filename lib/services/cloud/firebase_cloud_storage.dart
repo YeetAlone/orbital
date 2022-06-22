@@ -11,20 +11,22 @@ class FirebaseCloudStorage {
   FirebaseCloudStorage._internal();
   factory FirebaseCloudStorage() => _instance;
 
-  final users = FirebaseFirestore.instance.collection('userData');
+  final users = FirebaseFirestore.instance.collection('users');
 
-  Stream<Iterable<AppUserData>> getAppUser(String userId) {
-    devtools.log('getAppUser: $userId');
+  Future<AppUserData> getAppUserFromId(String userAuthId) {
+    devtools.log('getAppUser: $userAuthId');
     try {
-      return users.where(userIDName, isEqualTo: userId).snapshots().map(
-          (event) => event.docs.map((doc) => AppUserData.fromSnapshot(doc)));
+      return users.where(userIDName, isEqualTo: userAuthId).get().then(
+          (event) => event.docs
+              .map((doc) => AppUserData.fromSnapshot(doc))
+              .elementAt(0));
     } catch (e) {
       throw CouldNotGetAppUserException();
     }
   }
 
-  Future<AppUserData> getDocAppUser(String docId) {
-    return users.doc(docId).get().then((doc) {
+  Future<AppUserData> getAppUserFromEmail(String email) {
+    return users.doc(email).get().then((doc) {
       if (doc.exists) {
         return AppUserData.fromDocumentSnapshot(doc);
       } else {
@@ -34,24 +36,20 @@ class FirebaseCloudStorage {
   }
 
   Future<void> updateAppUser({
-    required String docID,
     String? fullName,
-    String? email,
+    required String email,
     String? department,
     String? profilePictureUrl,
   }) async {
     try {
       if (fullName != null) {
-        users.doc(docID).update({userFullName: fullName});
-      }
-      if (email != null) {
-        users.doc(docID).update({userEmailName: email});
+        users.doc(email).update({userFullName: fullName});
       }
       if (department != null) {
-        users.doc(docID).update({departmentName: department});
+        users.doc(email).update({departmentName: department});
       }
       if (profilePictureUrl != null) {
-        users.doc(docID).update({userProfileURLName: profilePictureUrl});
+        users.doc(email).update({userProfileURLName: profilePictureUrl});
       }
       // return AppUserData(
       //   userID: userData.userID,
@@ -67,29 +65,29 @@ class FirebaseCloudStorage {
   }
 
   Future<AppUserData> createNewAppUser({
-    required String userId,
-    String? fullName,
-    String? email,
-    String? department,
+    required String userAuthId,
+    required String fullName,
+    required String email,
+    required String department,
     String? profilePictureUrl,
   }) async {
-    final user = await users.add(
+    await users.doc(email).set(
       {
-        userIDName: userId,
-        userFullName: fullName ?? "",
-        userEmailName: email ?? "",
-        departmentName: department ?? "",
+        userIDName: userAuthId,
+        userFullName: fullName,
+        userEmailName: email,
+        departmentName: department,
         userProfileURLName: profilePictureUrl ?? "",
+        userStatus: 'incognito',
+        gpsLocation: null,
       },
     );
-    final fetchedUser = await user.get();
     // devtools.log(fetchedUser.id);
     return AppUserData(
-        email: email ?? "",
-        docID: fetchedUser.id,
-        userName: fullName ?? "",
-        userID: userId,
-        department: department ?? "",
+        email: email,
+        userName: fullName,
+        userID: userAuthId,
+        department: department,
         profilePictureURL: profilePictureUrl ?? "");
   }
 
