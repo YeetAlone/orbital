@@ -1,9 +1,6 @@
   name: CI
   on:
-    //trigger the workflow on push and pull reuest of master branch
-    push:
-      branches:
-        -master
+    //trigger the workflow on pull reuest of master branch
     pull_request:
       branches:
         -master
