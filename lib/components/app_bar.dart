@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-Widget ScreenAppBar(String s) => PreferredSize(
+Widget appBar(String s) => PreferredSize(
       preferredSize: const Size.fromHeight(40),
       child: AppBar(
         centerTitle: true,

@@ -6,6 +6,7 @@ import 'package:building/services/authenticate/bloc/auth_event.dart';
 import 'package:building/services/authenticate/bloc/auth_state.dart';
 import 'package:building/services/authenticate/firebase_auth_provider.dart';
 import 'package:building/services/navigation/bloc/navigation_cubit.dart';
+import 'package:building/services/search/bloc/search_bloc.dart';
 import 'package:building/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,9 @@ void main() {
         ),
         BlocProvider<NavigationCubit>(
           create: (context) => NavigationCubit(),
+        ),
+        BlocProvider<SearchBloc>(
+          create: (context) => SearchBloc(),
         ),
       ],
       child: const Wrapper(),

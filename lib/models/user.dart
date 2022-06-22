@@ -1,3 +1,4 @@
+import 'package:building/shared/status_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show immutable;
@@ -26,17 +27,20 @@ class AppUserData {
   final String userID;
   final String department;
   final String profilePictureURL;
+  final Status status;
   // final String docID;
 
-  const AppUserData(
-      {required this.email,
-      required this.userName,
-      // required this.firstName,
-      // required this.lastName,
-      required this.userID,
-      // required this.docID,
-      required this.department,
-      required this.profilePictureURL});
+  const AppUserData({
+    required this.email,
+    required this.userName,
+    // required this.firstName,
+    // required this.lastName,
+    required this.userID,
+    // required this.docID,
+    required this.department,
+    required this.profilePictureURL,
+    required this.status,
+  });
 
   // String fullName() => '$firstName $lastName';
   @override
@@ -46,13 +50,16 @@ class AppUserData {
 
   factory AppUserData.fromJson(Map<String, dynamic> parsedJson) {
     return AppUserData(
-        email: parsedJson[userEmailName] ?? '',
-        // firstName: parsedJson[userFirstName] ?? '',
-        // lastName: parsedJson[userLastName] ?? '',
-        userName: parsedJson[userFullName] ?? '',
-        userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
-        department: parsedJson[departmentName] ?? '',
-        profilePictureURL: parsedJson[userProfileURLName] ?? '');
+      email: parsedJson[userEmailName] ?? '',
+      // firstName: parsedJson[userFirstName] ?? '',
+      // lastName: parsedJson[userLastName] ?? '',
+      userName: parsedJson[userFullName] ?? '',
+      userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
+      department: parsedJson[departmentName] ?? '',
+      profilePictureURL: parsedJson[userProfileURLName] ?? '',
+      status: Status.values
+          .firstWhere((e) => e.toString() == parsedJson[userStatus]),
+    );
     // docID: parsedJson[docIDName] ?? '');
   }
 
@@ -63,7 +70,8 @@ class AppUserData {
         userID: 'userID',
         department: 'dept',
         profilePictureURL:
-            'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg');
+            'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg',
+        status: Status.incognito);
     // docID: 'docID');
   }
 
@@ -85,7 +93,8 @@ class AppUserData {
         // lastName = snapshot.data()[userLastName],
         userName = snapshot.data()[userFullName],
         department = snapshot.data()[departmentName],
-        profilePictureURL = snapshot.data()[userProfileURLName];
+        profilePictureURL = snapshot.data()[userProfileURLName],
+        status = snapshot.data()[userStatus];
   // docID = snapshot.id;
 
   AppUserData.fromDocumentSnapshot(
@@ -96,6 +105,7 @@ class AppUserData {
         // lastName = snapshot.data()[userLastName],
         userName = snapshot.data()![userFullName],
         department = snapshot.data()![departmentName],
-        profilePictureURL = snapshot.data()![userProfileURLName];
+        profilePictureURL = snapshot.data()![userProfileURLName],
+        status = snapshot.data()![userStatus];
   // docID = snapshot.data()![docIDName];
 }

@@ -29,7 +29,8 @@ class ChatMessage {
         senderName: json[userName],
         message: json[messageName],
         createdAt: (json[createdAtName] as Timestamp).toDate(),
-        status: Status.values.firstWhere((e) => e.toString() == json["status"]),
+        status:
+            Status.values.firstWhere((e) => e.toString() == json[userStatus]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -38,7 +39,7 @@ class ChatMessage {
         userName: senderName,
         messageName: message,
         createdAtName: createdAt.toUtc(),
-        "status": status.toString(),
+        userStatus: status.toString(),
       };
 }
 

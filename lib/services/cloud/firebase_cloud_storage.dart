@@ -1,5 +1,6 @@
 import 'package:building/models/user.dart';
 import 'package:building/services/cloud/cloud_exceptions.dart';
+import 'package:building/shared/status_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:developer' as devtools show log;
 
@@ -40,6 +41,7 @@ class FirebaseCloudStorage {
     required String email,
     String? department,
     String? profilePictureUrl,
+    Status? status,
   }) async {
     try {
       if (fullName != null) {
@@ -50,6 +52,9 @@ class FirebaseCloudStorage {
       }
       if (profilePictureUrl != null) {
         users.doc(email).update({userProfileURLName: profilePictureUrl});
+      }
+      if (status != null) {
+        users.doc(email).update({userStatus: status.toString()});
       }
       // return AppUserData(
       //   userID: userData.userID,
@@ -88,10 +93,25 @@ class FirebaseCloudStorage {
         userName: fullName,
         userID: userAuthId,
         department: department,
+        status: Status.incognito,
         profilePictureURL: profilePictureUrl ?? "");
   }
 
   // test this, if fromJson does not work write a fromSnapshot method
   Stream<Iterable<AppUserData>> allUsers() => users.snapshots().map((event) =>
       event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
+
+  Stream<Iterable<AppUserData>> findUsersByAvailability(String status) =>
+      users.where(userStatus, isEqualTo: status).snapshots().map((event) =>
+          event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
+
+  Stream<Iterable<AppUserData>> findUsersByName(String queryText) => users
+      .where(userFullName, isGreaterThanOrEqualTo: '$queryText\uf8ff')
+      .snapshots()
+      .map((event) =>
+          event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
+
+  Stream<Iterable<AppUserData>> findUsersByBuilding(String building) =>
+      // TODO: Milestone 3
+      throw UnimplementedError();
 }
