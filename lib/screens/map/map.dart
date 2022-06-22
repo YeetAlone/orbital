@@ -9,7 +9,7 @@ class MapPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(children: [
-      ScreenAppBar("MAP"),
+      appBar("MAP"),
       Expanded(flex: 9, child: Image.asset("assets/map.jpg", fit: BoxFit.fill)),
     ]));
   }
