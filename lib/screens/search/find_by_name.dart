@@ -1,3 +1,4 @@
+import 'package:building/components/app_bar.dart';
 import 'package:building/models/user.dart';
 import 'package:building/services/search/bloc/search_bloc.dart';
 import 'package:building/shared/search_constants.dart';
@@ -30,78 +31,90 @@ class _FindByNameState extends State<FindByName> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
+      body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-            child: Expanded(
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: "Search",
-                  hintStyle: TextStyle(color: Colors.grey.shade600),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.grey.shade600,
-                    size: 20,
+          appBar("FIND BY NAME"),
+          SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                flex: 8,
+                child: SizedBox(
+                  width: 300,
+                  height: 50,
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: "Search",
+                      hintStyle: TextStyle(color: Colors.grey.shade600),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.grey.shade600,
+                        size: 20,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey.shade100,
+                      contentPadding: const EdgeInsets.all(8),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(color: Colors.grey.shade100)),
+                    ),
                   ),
-                  filled: true,
-                  fillColor: Colors.grey.shade100,
-                  contentPadding: const EdgeInsets.all(8),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(color: Colors.grey.shade100)),
                 ),
               ),
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              if (_searchController.text.trim() != "") {
-                context.read<SearchBloc>().add(SearchActionEvent(
-                    page: SearchEnum.name,
-                    query: _searchController.text.trim()));
-              }
-            },
-            icon: const Icon(Icons.search),
-          ),
-          BlocBuilder<SearchBloc, SearchState>(
-            builder: (context, state) {
-              if (state is SearchComplete) {
-                return StreamBuilder<Iterable<AppUserData>>(
-                    builder: ((context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    return const Text('done');
-                  } else if (snapshot.hasError) {
-                    return const Text('Error!');
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                  onPressed: () {
+                    if (_searchController.text.trim() != "") {
+                      context.read<SearchBloc>().add(SearchActionEvent(
+                          page: SearchEnum.name,
+                          query: _searchController.text.trim()));
+                    }
+                  },
+                  icon: const Icon(Icons.search),
+                ),
+              ),
+              BlocBuilder<SearchBloc, SearchState>(
+                builder: (context, state) {
+                  if (state is SearchComplete) {
+                    return StreamBuilder<Iterable<AppUserData>>(
+                        builder: ((context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.done) {
+                        return const Text('done');
+                      } else if (snapshot.hasError) {
+                        return const Text('Error!');
+                      } else {
+                        return SizedBox(
+                          height: 200.0,
+                          child: ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              if (snapshot.data!.elementAt(index).email ==
+                                  widget.userEmail) {
+                                return Container();
+                              }
+                              return ListTile(
+                                title: Text(
+                                    snapshot.data!.elementAt(index).userName),
+                                onTap: () {},
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    }));
+                  } else if (state is NameSearch) {
+                    return Container();
                   } else {
-                    return SizedBox(
-                      height: 200.0,
-                      child: ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          if (snapshot.data!.elementAt(index).email ==
-                              widget.userEmail) {
-                            return Container();
-                          }
-                          return ListTile(
-                            title:
-                                Text(snapshot.data!.elementAt(index).userName),
-                            onTap: () {},
-                          );
-                        },
-                      ),
-                    );
+                    return const CircularProgressIndicator();
                   }
-                }));
-              } else if (state is NameSearch) {
-                return Container();
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
+                },
+              ),
+            ],
           ),
         ],
       ),
