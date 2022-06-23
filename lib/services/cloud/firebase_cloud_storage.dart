@@ -1,6 +1,5 @@
 import 'package:building/models/user.dart';
 import 'package:building/services/cloud/cloud_exceptions.dart';
-import 'package:building/shared/status_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:developer' as devtools show log;
 
@@ -45,7 +44,7 @@ class FirebaseCloudStorage {
     required String email,
     String? department,
     String? profilePictureUrl,
-    Status? status,
+    String? status,
   }) async {
     try {
       if (fullName != null) {
@@ -58,7 +57,7 @@ class FirebaseCloudStorage {
         users.doc(email).update({userProfileURLName: profilePictureUrl});
       }
       if (status != null) {
-        users.doc(email).update({userStatus: status.toShortString()});
+        users.doc(email).update({userStatus: status});
       }
       // return AppUserData(
       //   userID: userData.userID,

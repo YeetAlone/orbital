@@ -1,4 +1,5 @@
 import 'package:building/screens/chat/chat_home_page.dart';
+import 'package:building/services/cloud/firebase_cloud_storage.dart';
 import 'package:building/shared/nav_bar_constants.dart';
 import 'package:building/screens/map/map.dart';
 import 'package:building/screens/profile/profile.dart';
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final userAuthId = widget.userAuthId;
+
     return Scaffold(
       bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
           builder: (context, state) {
@@ -74,7 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   items: [
                     PopupMenuItem(
                       child: ListTile(
-                        onTap: () {},
+                        onTap: () async {
+                          final email = await FirebaseCloudStorage()
+                              .getUserEmailFromId(userAuthId);
+                          updateAvailability(email, "available");
+                        },
                         hoverColor: const Color.fromRGBO(213, 250, 214, 1),
                         enabled: true,
                         title: const Text(
@@ -88,7 +94,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     PopupMenuItem(
                       child: ListTile(
-                        onTap: () {},
+                        onTap: () async {
+                          final email = await FirebaseCloudStorage()
+                              .getUserEmailFromId(userAuthId);
+                          updateAvailability(email, "busy");
+                        },
                         hoverColor: const Color.fromRGBO(213, 250, 214, 1),
                         enabled: true,
                         leading: const Icon(
@@ -107,7 +117,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ListTile(
                         hoverColor: const Color.fromRGBO(213, 250, 214, 1),
                         enabled: true,
-                        onTap: () {},
+                        onTap: () async {
+                          final email = await FirebaseCloudStorage()
+                              .getUserEmailFromId(userAuthId);
+                          updateAvailability(email, "incognito");
+                        },
                         leading: const Icon(
                           Icons.circle,
                           color: Colors.grey,
@@ -143,5 +157,10 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
+  }
+
+  Future<void> updateAvailability(String email, String status) async {
+    FirebaseCloudStorage().updateAppUser(email: email, status: status);
+    Navigator.of(context).pop();
   }
 }
