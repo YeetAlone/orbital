@@ -31,7 +31,9 @@ class _RegisterState extends State<Register> {
   late final TextEditingController _department;
 
   String error = "";
-  String ddValue = "Department";
+
+  String departmentValue = "Department";
+
   List items = [
     "Department",
     "Computing",
@@ -168,17 +170,17 @@ class _RegisterState extends State<Register> {
                                   dropdownDecoration: const BoxDecoration(
                                     color: Color.fromRGBO(210, 233, 227, 1),
                                   ),
-                                  value: ddValue,
+                                  value: departmentValue,
                                   buttonWidth: 500,
                                   buttonHeight: 60,
                                   icon: const Icon(Icons.arrow_drop_down,
                                       color: Colors.black, size: 30),
                                   onChanged: (newValue) {
                                     setState(() {
-                                      ddValue = newValue as String;
+                                      departmentValue = newValue as String;
                                     });
                                     for (int i = 0; i < items.length; i++) {
-                                      if (ddValue == items[i]) {
+                                      if (departmentValue == items[i]) {
                                         _department.text = items[i];
                                         devtools.log(_department.text);
                                         devtools.log(items[i]);

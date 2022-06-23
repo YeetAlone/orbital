@@ -7,3 +7,4 @@ const isReadName = 'is_read';
 const imageUrlName = 'image_url';
 const createdAtName = 'created_at';
 const messageName = 'message';
+const userStatus = 'status';

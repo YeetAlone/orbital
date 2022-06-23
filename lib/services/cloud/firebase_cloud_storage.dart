@@ -18,11 +18,15 @@ class FirebaseCloudStorage {
     try {
       return users.where(userIDName, isEqualTo: userAuthId).get().then(
           (event) => event.docs
-              .map((doc) => AppUserData.fromSnapshot(doc))
+              .map((doc) => AppUserData.fromDocumentSnapshot(doc))
               .elementAt(0));
     } catch (e) {
       throw CouldNotGetAppUserException();
     }
+  }
+
+  Future<String> getUserEmailFromId(String userAuthId) {
+    return getAppUserFromId(userAuthId).then((value) => value.email);
   }
 
   Future<AppUserData> getAppUserFromEmail(String email) {
@@ -40,6 +44,7 @@ class FirebaseCloudStorage {
     required String email,
     String? department,
     String? profilePictureUrl,
+    String? status,
   }) async {
     try {
       if (fullName != null) {
@@ -50,6 +55,9 @@ class FirebaseCloudStorage {
       }
       if (profilePictureUrl != null) {
         users.doc(email).update({userProfileURLName: profilePictureUrl});
+      }
+      if (status != null) {
+        users.doc(email).update({userStatus: status});
       }
       // return AppUserData(
       //   userID: userData.userID,
@@ -88,10 +96,25 @@ class FirebaseCloudStorage {
         userName: fullName,
         userID: userAuthId,
         department: department,
+        status: "incognito",
         profilePictureURL: profilePictureUrl ?? "");
   }
 
   // test this, if fromJson does not work write a fromSnapshot method
   Stream<Iterable<AppUserData>> allUsers() => users.snapshots().map((event) =>
       event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
+
+  Stream<Iterable<AppUserData>> findUsersByAvailability(String status) =>
+      users.where(userStatus, isEqualTo: status).snapshots().map((event) =>
+          event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
+
+  Stream<Iterable<AppUserData>> findUsersByName(String queryText) => users
+      .where(userFullName, isGreaterThanOrEqualTo: '$queryText\uf8ff')
+      .snapshots()
+      .map((event) =>
+          event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
+
+  Stream<Iterable<AppUserData>> findUsersByBuilding(String building) =>
+      // TODO: Milestone 3
+      throw UnimplementedError();
 }
