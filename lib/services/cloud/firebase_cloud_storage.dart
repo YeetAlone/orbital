@@ -97,7 +97,7 @@ class FirebaseCloudStorage {
         userName: fullName,
         userID: userAuthId,
         department: department,
-        // status: Status.incognito,
+        status: "incognito",
         profilePictureURL: profilePictureUrl ?? "");
   }
 

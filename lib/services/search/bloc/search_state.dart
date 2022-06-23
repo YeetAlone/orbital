@@ -30,4 +30,7 @@ class NameSearch extends SearchState {
 class SearchComplete extends SearchState {
   final Stream<Iterable<AppUserData>> results;
   const SearchComplete({required this.results});
+
+  @override
+  List<Object> get props => [results];
 }

@@ -26,7 +26,7 @@ class AppUserData {
   final String userID;
   final String department;
   final String profilePictureURL;
-  // final Status status;
+  final String status;
   // final String docID;
 
   const AppUserData({
@@ -38,7 +38,7 @@ class AppUserData {
     // required this.docID,
     required this.department,
     required this.profilePictureURL,
-    // required this.status,
+    required this.status,
   });
 
   // String fullName() => '$firstName $lastName';
@@ -56,7 +56,7 @@ class AppUserData {
       userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
       department: parsedJson[departmentName] ?? '',
       profilePictureURL: parsedJson[userProfileURLName] ?? '',
-      // status: fromString(parsedJson[userStatus]),
+      status: (parsedJson[userStatus]),
     );
     // docID: parsedJson[docIDName] ?? '');
   }
@@ -69,7 +69,7 @@ class AppUserData {
       department: 'dept',
       profilePictureURL:
           'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg',
-      // status: Status.incognito,
+      status: "incognito",
     );
     // docID: 'docID');
   }
@@ -92,9 +92,8 @@ class AppUserData {
         // lastName = snapshot.data()[userLastName],
         userName = snapshot.data()[userFullName],
         department = snapshot.data()[departmentName],
-        profilePictureURL = snapshot.data()[userProfileURLName]
-  // status = fromString(snapshot.data()[userStatus])
-  ;
+        profilePictureURL = snapshot.data()[userProfileURLName],
+        status = (snapshot.data()[userStatus]);
   // docID = snapshot.id;
 
   AppUserData.fromDocumentSnapshot(
@@ -105,7 +104,7 @@ class AppUserData {
         // lastName = snapshot.data()[userLastName],
         userName = snapshot.data()![userFullName],
         department = snapshot.data()![departmentName],
-        profilePictureURL = snapshot.data()![userProfileURLName];
-  // status = fromString(snapshot.data()![userStatus]);
+        profilePictureURL = snapshot.data()![userProfileURLName],
+        status = (snapshot.data()![userStatus]);
   // docID = snapshot.data()![docIDName];
 }

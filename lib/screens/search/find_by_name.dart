@@ -4,6 +4,7 @@ import 'package:building/services/search/bloc/search_bloc.dart';
 import 'package:building/shared/search_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:developer' as devtools show log;
 
 class FindByName extends StatefulWidget {
   final String userEmail;
@@ -34,7 +35,7 @@ class _FindByNameState extends State<FindByName> {
       body: Column(
         children: [
           appBar("FIND BY NAME"),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             children: [
               Expanded(
@@ -44,6 +45,7 @@ class _FindByNameState extends State<FindByName> {
                   height: 50,
                   child: TextField(
                     controller: _searchController,
+                    style: const TextStyle(color: Colors.black),
                     decoration: InputDecoration(
                       hintText: "Search",
                       hintStyle: TextStyle(color: Colors.grey.shade600),
@@ -75,18 +77,23 @@ class _FindByNameState extends State<FindByName> {
                   icon: const Icon(Icons.search),
                 ),
               ),
-              BlocBuilder<SearchBloc, SearchState>(
-                builder: (context, state) {
-                  if (state is SearchComplete) {
-                    return StreamBuilder<Iterable<AppUserData>>(
-                        builder: ((context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
+            ],
+          ),
+          BlocBuilder<SearchBloc, SearchState>(
+            buildWhen: ((previous, current) => previous != current),
+            builder: (context, state) {
+              devtools.log(state.toString());
+              if (state is SearchComplete) {
+                return StreamBuilder<Iterable<AppUserData>>(
+                    stream: state.results,
+                    builder: ((context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
                         return const Text('done');
                       } else if (snapshot.hasError) {
                         return const Text('Error!');
+                      } else if (snapshot.data == null ||
+                          snapshot.data!.isEmpty) {
+                        return const Text("No results");
                       } else {
                         return SizedBox(
                           height: 200.0,
@@ -95,6 +102,9 @@ class _FindByNameState extends State<FindByName> {
                             itemBuilder: (context, index) {
                               if (snapshot.data!.elementAt(index).email ==
                                   widget.userEmail) {
+                                if (snapshot.data!.length == 1) {
+                                  return const Text("No results");
+                                }
                                 return Container();
                               }
                               return ListTile(
@@ -107,14 +117,12 @@ class _FindByNameState extends State<FindByName> {
                         );
                       }
                     }));
-                  } else if (state is NameSearch) {
-                    return Container();
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                },
-              ),
-            ],
+              } else if (state is NameSearch) {
+                return Container();
+              } else {
+                return const Text("OH THERE'S A PROBLEM ALRIGHT");
+              }
+            },
           ),
         ],
       ),
