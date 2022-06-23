@@ -34,7 +34,7 @@ class _FindByNameState extends State<FindByName> {
     return Scaffold(
       body: Column(
         children: [
-          appBar("FIND BY NAME"),
+          screenAppBar("FIND BY NAME"),
           const SizedBox(height: 20),
           Row(
             children: [

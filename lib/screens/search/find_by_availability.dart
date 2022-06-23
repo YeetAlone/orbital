@@ -34,7 +34,7 @@ class _FindByAvailabilityState extends State<FindByAvailability> {
     return Scaffold(
       body: Column(
         children: [
-          appBar("FIND BY AVAILABILITY"),
+          screenAppBar("FIND BY AVAILABILITY"),
           const SizedBox(height: 20),
           Row(
             children: [

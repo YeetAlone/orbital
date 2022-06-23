@@ -47,7 +47,7 @@ class MainSearch extends StatelessWidget {
                   } else {
                     return Column(
                       children: <Widget>[
-                        appBar("SEARCH"),
+                        screenAppBar("SEARCH"),
                         const SizedBox(height: 150),
                         const Center(
                             child: Text(
