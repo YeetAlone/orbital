@@ -4,6 +4,8 @@ import 'package:building/screens/chat/widgets/chat_home_body.dart';
 import 'package:building/services/chat/firebase_chat_storage.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:building/components/app_bar.dart';
+
 import 'dart:developer' as devtools show log;
 
 class ChatHome extends StatefulWidget {
@@ -55,20 +57,15 @@ class _ChatHomeState extends State<ChatHome> {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
+                    ScreenAppBar("CHAT"),
                     SafeArea(
                       child: Padding(
                         padding:
-                            const EdgeInsets.only(left: 16, right: 16, top: 10),
+                            const EdgeInsets.only(left: 16, right: 16, top: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              "CHAT",
-                              style: TextStyle(
-                                backgroundColor: Color.fromRGBO(0, 77, 64, 1),
-                                fontSize: 40,
-                              ),
-                            ),
+                            Expanded(flex: 5, child: SizedBox()),
                             Container(
                               padding: const EdgeInsets.only(
                                   left: 8, right: 8, top: 2, bottom: 2),

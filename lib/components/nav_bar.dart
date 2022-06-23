@@ -1,7 +1,7 @@
 import 'package:building/shared/nav_bar_constants.dart';
 import 'package:building/services/navigation/bloc/navigation_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:building/components/availabilityDrawer.dart';
+import 'package:building/components/availability_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../shared/nav_bar_constants.dart';

@@ -14,7 +14,7 @@ class AddNewUser extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(children: [
-          appBar("Add User"),
+          ScreenAppBar("Add User"),
           const SizedBox(height: 40),
           StreamBuilder<Iterable<AppUserData>>(
               stream: FirebaseCloudStorage().allUsers(),

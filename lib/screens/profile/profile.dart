@@ -59,7 +59,7 @@ class _ProfileState extends State<Profile> {
             }
             return ListView(
               children: [
-                appBar("PROFILE"),
+                ScreenAppBar("PROFILE"),
                 const SizedBox(height: 40),
 
                 //profile picture circular avatar
