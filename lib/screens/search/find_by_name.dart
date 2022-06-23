@@ -1,10 +1,12 @@
+import 'package:building/models/user.dart';
 import 'package:building/services/search/bloc/search_bloc.dart';
 import 'package:building/shared/search_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FindByName extends StatefulWidget {
-  const FindByName({Key? key}) : super(key: key);
+  final String userEmail;
+  const FindByName({required this.userEmail, Key? key}) : super(key: key);
 
   @override
   State<FindByName> createState() => _FindByNameState();
@@ -51,21 +53,52 @@ class _FindByNameState extends State<FindByName> {
               ),
             ),
           ),
-          BlocConsumer<SearchBloc, SearchState>(
-            listener: (context, state) {
-              // TODO: implement listener
+          IconButton(
+            onPressed: () {
+              if (_searchController.text.trim() != "") {
+                context.read<SearchBloc>().add(SearchActionEvent(
+                    page: SearchEnum.name,
+                    query: _searchController.text.trim()));
+              }
             },
+            icon: const Icon(Icons.search),
+          ),
+          BlocBuilder<SearchBloc, SearchState>(
             builder: (context, state) {
-              return IconButton(
-                onPressed: () {
-                  if (_searchController.text.trim() != "") {
-                    context.read<SearchBloc>().add(SearchActionEvent(
-                        page: SearchEnum.name,
-                        query: _searchController.text.trim()));
+              if (state is SearchComplete) {
+                return StreamBuilder<Iterable<AppUserData>>(
+                    builder: ((context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    return const Text('done');
+                  } else if (snapshot.hasError) {
+                    return const Text('Error!');
+                  } else {
+                    return SizedBox(
+                      height: 200.0,
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          if (snapshot.data!.elementAt(index).email ==
+                              widget.userEmail) {
+                            return Container();
+                          }
+                          return ListTile(
+                            title:
+                                Text(snapshot.data!.elementAt(index).userName),
+                            onTap: () {},
+                          );
+                        },
+                      ),
+                    );
                   }
-                },
-                icon: const Icon(Icons.search),
-              );
+                }));
+              } else if (state is NameSearch) {
+                return Container();
+              } else {
+                return const CircularProgressIndicator();
+              }
             },
           ),
         ],

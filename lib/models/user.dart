@@ -57,8 +57,7 @@ class AppUserData {
       userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
       department: parsedJson[departmentName] ?? '',
       profilePictureURL: parsedJson[userProfileURLName] ?? '',
-      status: Status.values
-          .firstWhere((e) => e.toString() == parsedJson[userStatus]),
+      status: fromString(parsedJson[userStatus]),
     );
     // docID: parsedJson[docIDName] ?? '');
   }
@@ -94,7 +93,7 @@ class AppUserData {
         userName = snapshot.data()[userFullName],
         department = snapshot.data()[departmentName],
         profilePictureURL = snapshot.data()[userProfileURLName],
-        status = snapshot.data()[userStatus];
+        status = fromString(snapshot.data()[userStatus]);
   // docID = snapshot.id;
 
   AppUserData.fromDocumentSnapshot(
@@ -106,6 +105,6 @@ class AppUserData {
         userName = snapshot.data()![userFullName],
         department = snapshot.data()![departmentName],
         profilePictureURL = snapshot.data()![userProfileURLName],
-        status = snapshot.data()![userStatus];
+        status = fromString(snapshot.data()![userStatus]);
   // docID = snapshot.data()![docIDName];
 }

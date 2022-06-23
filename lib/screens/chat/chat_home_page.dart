@@ -30,12 +30,12 @@ class _ChatHomeState extends State<ChatHome> {
   }
 
   Future<String> getReceiverEmail() async {
-    final user =
-        await FirebaseCloudStorage().getAppUserFromId(widget.userAuthId);
+    final email =
+        await FirebaseCloudStorage().getUserEmailFromId(widget.userAuthId);
     // devtools.log('UserID: $userId');
     // devtools.log("Receiver: ${user.toString()}");
-    devtools.log(user.email);
-    return user.email;
+    devtools.log(email);
+    return email;
   }
 
   @override
