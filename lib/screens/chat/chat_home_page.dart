@@ -57,7 +57,7 @@ class _ChatHomeState extends State<ChatHome> {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    ScreenAppBar("CHAT"),
+                    screenAppBar("CHAT"),
                     SafeArea(
                       child: Padding(
                         padding:
@@ -65,7 +65,7 @@ class _ChatHomeState extends State<ChatHome> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Expanded(flex: 5, child: SizedBox()),
+                            const Expanded(flex: 5, child: SizedBox()),
                             Container(
                               padding: const EdgeInsets.only(
                                   left: 8, right: 8, top: 2, bottom: 2),

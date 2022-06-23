@@ -15,7 +15,7 @@ class MainSearch extends StatelessWidget {
     return Scaffold(
       //body
       body: Column(children: <Widget>[
-        ScreenAppBar("SEARCH"),
+        screenAppBar("SEARCH"),
         const SizedBox(height: 150),
         const Center(
             child: Text("How do you want to find your colleague?",
