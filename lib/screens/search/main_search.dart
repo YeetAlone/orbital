@@ -5,7 +5,7 @@ import 'package:building/services/cloud/firebase_cloud_storage.dart';
 import 'package:building/services/search/bloc/search_bloc.dart';
 import 'package:building/shared/search_constants.dart';
 import 'package:flutter/material.dart';
-// import '../../shared/constants.dart';
+import 'dart:developer' as devtools show log;
 import 'package:building/components/app_bar.dart';
 import 'package:building/components/search_method_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,9 +29,10 @@ class MainSearch extends StatelessWidget {
       body: FutureBuilder<String>(
           future: FirebaseCloudStorage().getUserEmailFromId(userAuthId),
           builder: (context, snapshot) {
-            if (snapshot.hasError || !snapshot.hasData) {
-              throw Exception();
+            if (snapshot.hasError) {
+              devtools.log(snapshot.error.toString());
             }
+            final userEmail = snapshot.data ?? "test@nus.edu";
             return BlocBuilder<SearchBloc, SearchState>(
                 builder: (context, state) {
               if (state is BuildingSearch) {
@@ -39,7 +40,7 @@ class MainSearch extends StatelessWidget {
               } else if (state is AvailabilitySearch) {
                 return const FindByAvailability();
               } else if (state is NameSearch) {
-                return FindByName(userEmail: snapshot.data!);
+                return FindByName(userEmail: userEmail);
               } else if (state is SearchInitial) {
                 return Column(
                   children: <Widget>[
@@ -71,9 +72,11 @@ class MainSearch extends StatelessWidget {
                         title: " Find by Availability",
                         iconURL: "assets/availability.png",
                         bg: const [255, 255, 255],
-                        onPressed: () => context.read<SearchBloc>().add(
-                            const GotoSearchEvent(
-                                page: SearchEnum.availability))),
+                        onPressed: () {
+                          context.read<SearchBloc>().add(const GotoSearchEvent(
+                              page: SearchEnum.availability));
+                          devtools.log("Find by availability pressed");
+                        }),
                   ],
                 );
               } else {

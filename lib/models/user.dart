@@ -1,4 +1,3 @@
-import 'package:building/shared/status_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show immutable;
@@ -27,7 +26,7 @@ class AppUserData {
   final String userID;
   final String department;
   final String profilePictureURL;
-  final Status status;
+  // final Status status;
   // final String docID;
 
   const AppUserData({
@@ -39,7 +38,7 @@ class AppUserData {
     // required this.docID,
     required this.department,
     required this.profilePictureURL,
-    required this.status,
+    // required this.status,
   });
 
   // String fullName() => '$firstName $lastName';
@@ -57,20 +56,21 @@ class AppUserData {
       userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
       department: parsedJson[departmentName] ?? '',
       profilePictureURL: parsedJson[userProfileURLName] ?? '',
-      status: fromString(parsedJson[userStatus]),
+      // status: fromString(parsedJson[userStatus]),
     );
     // docID: parsedJson[docIDName] ?? '');
   }
 
   factory AppUserData.empty() {
     return const AppUserData(
-        email: 'dummy email',
-        userName: 'dummy dummy',
-        userID: 'userID',
-        department: 'dept',
-        profilePictureURL:
-            'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg',
-        status: Status.incognito);
+      email: 'dummy email',
+      userName: 'dummy dummy',
+      userID: 'userID',
+      department: 'dept',
+      profilePictureURL:
+          'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg',
+      // status: Status.incognito,
+    );
     // docID: 'docID');
   }
 
@@ -92,8 +92,9 @@ class AppUserData {
         // lastName = snapshot.data()[userLastName],
         userName = snapshot.data()[userFullName],
         department = snapshot.data()[departmentName],
-        profilePictureURL = snapshot.data()[userProfileURLName],
-        status = fromString(snapshot.data()[userStatus]);
+        profilePictureURL = snapshot.data()[userProfileURLName]
+  // status = fromString(snapshot.data()[userStatus])
+  ;
   // docID = snapshot.id;
 
   AppUserData.fromDocumentSnapshot(
@@ -104,7 +105,7 @@ class AppUserData {
         // lastName = snapshot.data()[userLastName],
         userName = snapshot.data()![userFullName],
         department = snapshot.data()![departmentName],
-        profilePictureURL = snapshot.data()![userProfileURLName],
-        status = fromString(snapshot.data()![userStatus]);
+        profilePictureURL = snapshot.data()![userProfileURLName];
+  // status = fromString(snapshot.data()![userStatus]);
   // docID = snapshot.data()![docIDName];
 }

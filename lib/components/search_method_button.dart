@@ -8,7 +8,7 @@ class SearchMethodButton extends StatelessWidget {
   final String iconURL;
   final List bg;
 
-  final Function onPressed;
+  final Function()? onPressed;
 
   const SearchMethodButton(
       {required this.title,
@@ -21,9 +21,7 @@ class SearchMethodButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-      onPressed: () {
-        onPressed;
-      },
+      onPressed: onPressed,
       style: searchButtonStyle.copyWith(
           backgroundColor: MaterialStateProperty.all(
               Color.fromRGBO(bg[0], bg[1], bg[2], 1))),

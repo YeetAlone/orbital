@@ -17,12 +17,10 @@ class FirebaseCloudStorage {
   Future<AppUserData> getAppUserFromId(String userAuthId) {
     devtools.log('getAppUser: $userAuthId');
     try {
-      final user = users.where(userIDName, isEqualTo: userAuthId).get().then(
+      return users.where(userIDName, isEqualTo: userAuthId).get().then(
           (event) => event.docs
-              .map((doc) => AppUserData.fromSnapshot(doc))
+              .map((doc) => AppUserData.fromDocumentSnapshot(doc))
               .elementAt(0));
-      user.then((value) => devtools.log(value.toString()));
-      return user;
     } catch (e) {
       throw CouldNotGetAppUserException();
     }
@@ -99,7 +97,7 @@ class FirebaseCloudStorage {
         userName: fullName,
         userID: userAuthId,
         department: department,
-        status: Status.incognito,
+        // status: Status.incognito,
         profilePictureURL: profilePictureUrl ?? "");
   }
 

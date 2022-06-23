@@ -29,15 +29,6 @@ class _ChatHomeState extends State<ChatHome> {
     super.dispose();
   }
 
-  Future<String> getReceiverEmail() async {
-    final email =
-        await FirebaseCloudStorage().getUserEmailFromId(widget.userAuthId);
-    // devtools.log('UserID: $userId');
-    // devtools.log("Receiver: ${user.toString()}");
-    devtools.log(email);
-    return email;
-  }
-
   @override
   Widget build(BuildContext context) {
     // final users = Users.initUsers;
@@ -46,9 +37,11 @@ class _ChatHomeState extends State<ChatHome> {
     //     FirebaseChatAPI().addUser(user);
     //   }
     // }
+    devtools.log("User Auth ID ${widget.userAuthId}");
     return Scaffold(
         body: FutureBuilder<String>(
-            future: getReceiverEmail(),
+            future:
+                FirebaseCloudStorage().getUserEmailFromId(widget.userAuthId),
             builder: (context, snapshot) {
               final String receiverEmail = snapshot.data ?? "test@nus.edu";
               return SingleChildScrollView(
