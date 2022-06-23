@@ -12,6 +12,22 @@ import 'package:validators/validators.dart';
 import '../../services/authenticate/auth_exceptions.dart';
 import '../../shared/constants.dart';
 
+//these two classes are written for unit testing purpose
+
+class EmailFieldValidator {
+  static String? validate(String? value) {
+    return (value?.isNotEmpty ?? false) && isEmail(value.toString())
+        ? null
+        : "Enter a valid email";
+  }
+}
+
+class PasswordFieldValidator {
+  static String? validate(String value) {
+    return value.length < 8 ? "Password must be more than 8 characters" : null;
+  }
+}
+
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -94,9 +110,7 @@ class _LoginState extends State<Login> {
                         prefixIcon: Icon(Icons.email, color: Colors.grey[600]),
                         hintText: "Email",
                       ),
-                      validator: (val) => val!.isEmpty && !isEmail(val)
-                          ? "Enter a valid email"
-                          : null,
+                      validator: (val) => EmailFieldValidator.validate(val!),
                       keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 20.0),
@@ -108,9 +122,7 @@ class _LoginState extends State<Login> {
                         hintText: "Password",
                       ),
                       obscureText: true,
-                      validator: (val) => val!.length < 8
-                          ? "Password must be more than 8 characters"
-                          : null,
+                      validator: (val) => PasswordFieldValidator.validate(val!),
                       autocorrect: false,
                     ),
                     const SizedBox(height: 20.0),
