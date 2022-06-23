@@ -31,7 +31,9 @@ class _RegisterState extends State<Register> {
   late final TextEditingController _department;
 
   String error = "";
+
   String departmentValue = "Department";
+
   List items = [
     "Department",
     "Computing",

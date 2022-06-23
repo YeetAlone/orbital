@@ -14,7 +14,7 @@ class _ChatState extends State<Chat> {
     return Scaffold(
       body: Column(
         children: [
-          appBar("CHAT"),
+          screenAppBar("CHAT"),
         ],
       ),
     );
