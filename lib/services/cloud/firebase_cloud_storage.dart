@@ -13,10 +13,10 @@ class FirebaseCloudStorage {
 
   final users = FirebaseFirestore.instance.collection('users');
 
-  Future<AppUserData> getAppUserFromId(String userAuthId) {
+  Future<AppUserData> getAppUserFromId(String userAuthId) async {
     devtools.log('getAppUser: $userAuthId');
     try {
-      return users.where(userIDName, isEqualTo: userAuthId).get().then(
+      return await users.where(userIDName, isEqualTo: userAuthId).get().then(
           (event) => event.docs
               .map((doc) => AppUserData.fromDocumentSnapshot(doc))
               .elementAt(0));
@@ -25,18 +25,22 @@ class FirebaseCloudStorage {
     }
   }
 
-  Future<String> getUserEmailFromId(String userAuthId) {
-    return getAppUserFromId(userAuthId).then((value) => value.email);
+  Future<String> getUserEmailFromId(String userAuthId) async {
+    return await getAppUserFromId(userAuthId).then((value) => value.email);
   }
 
-  Future<AppUserData> getAppUserFromEmail(String email) {
-    return users.doc(email).get().then((doc) {
-      if (doc.exists) {
-        return AppUserData.fromDocumentSnapshot(doc);
-      } else {
-        throw CouldNotGetAppUserException();
-      }
-    });
+  Future<AppUserData> getAppUserFromEmail(String email) async {
+    try {
+      return await users.doc(email).get().then((doc) {
+        if (doc.exists) {
+          return AppUserData.fromDocumentSnapshot(doc);
+        } else {
+          throw CouldNotGetAppUserException();
+        }
+      });
+    } catch (e) {
+      throw CouldNotGetAppUserException();
+    }
   }
 
   Future<void> updateAppUser({
@@ -47,17 +51,27 @@ class FirebaseCloudStorage {
     String? status,
   }) async {
     try {
+      final doc = await users.doc(email).get();
+      if (!doc.exists) {
+        throw Exception();
+      }
+
       if (fullName != null) {
-        users.doc(email).update({userFullName: fullName});
+        await users.doc(email).update({userFullName: fullName});
       }
       if (department != null) {
-        users.doc(email).update({departmentName: department});
+        await users.doc(email).update({departmentName: department});
       }
       if (profilePictureUrl != null) {
-        users.doc(email).update({userProfileURLName: profilePictureUrl});
+        await users.doc(email).update({userProfileURLName: profilePictureUrl});
       }
       if (status != null) {
-        users.doc(email).update({userStatus: status});
+        if (status != "incognito" &&
+            status != "busy" &&
+            status != "available") {
+          throw Exception();
+        }
+        await users.doc(email).update({userStatus: status});
       }
       // return AppUserData(
       //   userID: userData.userID,
@@ -85,7 +99,8 @@ class FirebaseCloudStorage {
         userFullName: fullName,
         userEmailName: email,
         departmentName: department,
-        userProfileURLName: profilePictureUrl ?? "",
+        userProfileURLName: profilePictureUrl ??
+            "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
         userStatus: 'incognito',
         gpsLocation: null,
       },
