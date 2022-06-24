@@ -29,14 +29,18 @@ class FirebaseCloudStorage {
     return getAppUserFromId(userAuthId).then((value) => value.email);
   }
 
-  Future<AppUserData> getAppUserFromEmail(String email) {
-    return users.doc(email).get().then((doc) {
-      if (doc.exists) {
-        return AppUserData.fromDocumentSnapshot(doc);
-      } else {
-        throw CouldNotGetAppUserException();
-      }
-    });
+  Future<AppUserData> getAppUserFromEmail(String email) async {
+    try {
+      return await users.doc(email).get().then((doc) {
+        if (doc.exists) {
+          return AppUserData.fromDocumentSnapshot(doc);
+        } else {
+          throw CouldNotGetAppUserException();
+        }
+      });
+    } catch (e) {
+      throw CouldNotGetAppUserException();
+    }
   }
 
   Future<void> updateAppUser({
@@ -47,6 +51,11 @@ class FirebaseCloudStorage {
     String? status,
   }) async {
     try {
+      final doc = await users.doc(email).get();
+      if (!doc.exists) {
+        throw Exception();
+      }
+
       if (fullName != null) {
         users.doc(email).update({userFullName: fullName});
       }
@@ -57,6 +66,11 @@ class FirebaseCloudStorage {
         users.doc(email).update({userProfileURLName: profilePictureUrl});
       }
       if (status != null) {
+        if (status != "incognito" &&
+            status != "busy" &&
+            status != "available") {
+          throw Exception();
+        }
         users.doc(email).update({userStatus: status});
       }
       // return AppUserData(
