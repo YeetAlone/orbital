@@ -12,6 +12,12 @@ const userProfileURLName = 'user_profile_url';
 const gpsLocation = 'location';
 const userStatus = 'user_status';
 
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+}
+
 @immutable
 class AppUserData {
   final String email;
@@ -183,10 +189,29 @@ class FakeCloudStorage {
 
   Stream<Iterable<AppUserData>> allUsers() => users.snapshots().map((event) =>
       event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
+
+  Stream<Iterable<AppUserData>> findUsersByAvailability(String status) {
+    if (status == "incognito" || status == "busy" || status == "available") {
+      return users.where(userStatus, isEqualTo: status).snapshots().map(
+          (event) => event.docs
+              .map((snapshot) => AppUserData.fromJson(snapshot.data())));
+    } else {
+      throw InvalidStatusException();
+    }
+  }
+
+  Stream<Iterable<AppUserData>> findUsersByName(String queryText) {
+    // print(db.dump());
+    return users
+        .where(userFullName,
+            isGreaterThanOrEqualTo: '${queryText.trim().capitalize()}\uf8ff')
+        .snapshots()
+        .map((event) => event.docs
+            .map((snapshot) => AppUserData.fromJson(snapshot.data())));
+  }
 }
 
-class NoDocumentException implements Exception {}
- 
+class InvalidStatusException implements Exception {}
 // await db.collection(userCollection).doc("dummy@email.com").set({
 //       userFullName: 'dummy 1',
 //       userIDName: '10',
@@ -204,21 +229,3 @@ class NoDocumentException implements Exception {}
 //           'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg',
 //       userStatus: "busy",
 //     });
-
-    // await db.collection(userCollection).doc("bul@ba.saur").set({
-    //   userFullName: "Bulbasaur",
-    //   userIDName: '1',
-    //   departmentName: 'Grass',
-    //   userProfileURLName:
-    //       'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png',
-    //   userStatus: 'available',
-    // });
-
-    // await db.collection(userCollection).doc("sq@uir.tle").set({
-    //   userFullName: "Squirtle",
-    //   userIDName: '7',
-    //   departmentName: 'Water',
-    //   userProfileURLName:
-    //       'https://assets.pokemon.com/assets/cms2/img/pokedex/full/007.png',
-    //   userStatus: 'available',
-    // });

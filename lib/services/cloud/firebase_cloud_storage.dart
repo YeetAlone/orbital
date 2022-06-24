@@ -5,6 +5,12 @@ import 'dart:developer' as devtools show log;
 
 import 'cloud_constants.dart';
 
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+}
+
 class FirebaseCloudStorage {
   static final FirebaseCloudStorage _instance =
       FirebaseCloudStorage._internal();
@@ -66,21 +72,14 @@ class FirebaseCloudStorage {
         users.doc(email).update({userProfileURLName: profilePictureUrl});
       }
       if (status != null) {
-        if (status != "incognito" &&
-            status != "busy" &&
-            status != "available") {
+        if (status == "incognito" ||
+            status == "busy" ||
+            status == "available") {
+          users.doc(email).update({userStatus: status});
+        } else {
           throw Exception();
         }
-        users.doc(email).update({userStatus: status});
       }
-      // return AppUserData(
-      //   userID: userData.userID,
-      //   docID: docID,
-      //   userName: fullName ?? userData.userName,
-      //   profilePictureURL: profilePictureUrl ?? userData.profilePictureURL,
-      //   department: department ?? userData.department,
-      //   email: email ?? userData.email,
-      // );
     } catch (e) {
       throw CouldNotUpdateAppUserException();
     }
@@ -118,12 +117,19 @@ class FirebaseCloudStorage {
   Stream<Iterable<AppUserData>> allUsers() => users.snapshots().map((event) =>
       event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
 
-  Stream<Iterable<AppUserData>> findUsersByAvailability(String status) =>
-      users.where(userStatus, isEqualTo: status).snapshots().map((event) =>
-          event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
+  Stream<Iterable<AppUserData>> findUsersByAvailability(String status) {
+    if (status == "incognito" || status == "busy" || status == "available") {
+      return users.where(userStatus, isEqualTo: status).snapshots().map(
+          (event) => event.docs
+              .map((snapshot) => AppUserData.fromJson(snapshot.data())));
+    } else {
+      throw CouldNotGetAppUserException();
+    }
+  }
 
   Stream<Iterable<AppUserData>> findUsersByName(String queryText) => users
-      .where(userFullName, isGreaterThanOrEqualTo: '$queryText\uf8ff')
+      .where(userFullName,
+          isGreaterThanOrEqualTo: '${queryText.trim().capitalize()}\uf8ff')
       .snapshots()
       .map((event) =>
           event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
