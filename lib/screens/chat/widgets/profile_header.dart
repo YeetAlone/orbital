@@ -1,4 +1,5 @@
 import 'package:building/models/chat_user.dart';
+import 'package:building/services/cloud/firebase_cloud_storage.dart';
 import 'package:flutter/material.dart';
 
 // Header for the top of a chat conversation
@@ -47,12 +48,19 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                       ),
                     ),
                     const SizedBox(height: 6),
-                    // Functionality required
-                    Text(
-                      "Online",
-                      style:
-                      TextStyle(color: Colors.grey.shade600, fontSize: 13),
-                    ),
+                    FutureBuilder<bool>(
+                        future: FirebaseCloudStorage()
+                            .getAppUserFromEmail(widget.user.email)
+                            .then((value) => value.status == 'available'),
+                        builder: (context, snapshot) {
+                          return Text(
+                            snapshot.data != null && snapshot.data!
+                                ? "Online"
+                                : "Offline",
+                            style: TextStyle(
+                                color: Colors.grey.shade600, fontSize: 13),
+                          );
+                        }),
                   ],
                 ),
               ),

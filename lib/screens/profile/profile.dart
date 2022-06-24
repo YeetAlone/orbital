@@ -49,11 +49,6 @@ class _ProfileState extends State<Profile> {
             AppUserData user = AppUserData.empty();
             if (snapshot.data != null) {
               user = snapshot.data!;
-              _userService.updateAppUser(
-                email: user.email,
-                profilePictureUrl:
-                    "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
-              );
             } else {
               // devtools.log(snapshot.data.toString());
             }
