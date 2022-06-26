@@ -22,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // final user = FirebaseCloudStorage()
   //     .getAppUserFromId(AuthService.firebase().currentUser!.userAuthID);
-  int index = 2;
+  int index = 0;
   String status = "";
 
   Future<bool> setAvailabilityDrawerColor(String status) async {
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 currentIndex: index,
                 iconSize: 40,
                 selectedItemColor: Colors.black,
-                onTap: (int newIndex) {
+                onTap: (newIndex) {
                   setState(() {
                     if (newIndex != 4) {
                       index = newIndex;
