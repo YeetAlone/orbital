@@ -1,37 +1,73 @@
 {
   "project_info": {
-    "project_number": "97647061013",
-    "project_id": "orbital-3f7f0",
-    "storage_bucket": "orbital-3f7f0.appspot.com"
+    "project_number": "106841316848",
+    "project_id": "orbital-yeetalone",
+    "storage_bucket": "orbital-yeetalone.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:97647061013:android:d69d8cedfed8353a7a861c",
+        "mobilesdk_app_id": "1:106841316848:android:e8814bd29a9b9654dd1135",
         "android_client_info": {
-          "package_name": "com.orbital.yeetAlone"
+          "package_name": "com.orbital.dev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "97647061013-s2b1klp8sna9gapc8crliqaas9o4otvm.apps.googleusercontent.com",
+          "client_id": "106841316848-4v31s77ngreajhdlmn4u2e9ivudah04c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCyh44lF_wMcmO0RfbnIfSLD2fn1Fsb9JQ"
+          "current_key": "AIzaSyBXKYHbHP-4rV_xfIvu3WAtJHH1bBzeeQk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "97647061013-s2b1klp8sna9gapc8crliqaas9o4otvm.apps.googleusercontent.com",
+              "client_id": "106841316848-4v31s77ngreajhdlmn4u2e9ivudah04c.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "97647061013-e4o0dsg4nfu1fqio1pac2mh4p084hu9c.apps.googleusercontent.com",
+              "client_id": "106841316848-d4ra72ssndm72upg1rvshbn7kq58qf9b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.building"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106841316848:android:81dc52ace13d5323dd1135",
+        "android_client_info": {
+          "package_name": "com.orbital.yeetAlone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106841316848-4v31s77ngreajhdlmn4u2e9ivudah04c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXKYHbHP-4rV_xfIvu3WAtJHH1bBzeeQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106841316848-4v31s77ngreajhdlmn4u2e9ivudah04c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "106841316848-d4ra72ssndm72upg1rvshbn7kq58qf9b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.building"
