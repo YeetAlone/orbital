@@ -103,7 +103,7 @@ class _ProfileState extends State<Profile> {
                   color: const Color.fromRGBO(46, 136, 113, 1),
                   child: SwitchListTile(
                     hoverColor: const Color.fromRGBO(46, 136, 113, 1),
-                    title: const Text('Sync with Google Calendar?',
+                    title: const Text('Sync with Outlook Calendar?',
                         style: TextStyle(color: Colors.white)),
                     value: switch2Value,
                     onChanged: (bool value) {
