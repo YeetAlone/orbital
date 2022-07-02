@@ -193,17 +193,6 @@ class _RegisterState extends State<Register> {
                                   }).toList(),
                                 ),
                               )),
-                          // makeInput(
-                          //   label: "Department",
-                          //   textFormField: TextFormField(
-                          //     controller: _department,
-                          //     decoration: textInputDecoration.copyWith(
-                          //       hintText: "e.g. Computer Science",
-                          //     ),
-                          //     validator: (val) =>
-                          //         val!.isEmpty ? "Enter your department" : null,
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),

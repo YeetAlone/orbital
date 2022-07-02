@@ -7,7 +7,8 @@ import '../../services/authenticate/bloc/auth_bloc.dart';
 import '../../services/authenticate/bloc/auth_event.dart';
 import '../../services/cloud/firebase_cloud_storage.dart';
 import 'package:building/components/app_bar.dart';
-import 'package:building/components/info_disp.dart';
+import 'package:building/components/info_disp_name.dart';
+import 'package:building/components/info_disp_department.dart';
 
 /*
 todo
@@ -67,11 +68,19 @@ class _ProfileState extends State<Profile> {
                 ),
                 const SizedBox(height: 50),
                 //display of name
-                InfoDisplay(title: "  NAME", info: " ${user.userName}"),
+                InfoDisplayProfile(
+                  title: "  NAME",
+                  info: " ${user.userName}",
+                  email: user.email,
+                ),
                 const SizedBox(height: 30.0),
 
                 //display of department
-                InfoDisplay(title: "  DEPARTMENT", info: " ${user.department}"),
+                InfoDisplayDepartment(
+                  title: "  DEPARTMENT",
+                  info: " ${user.department}",
+                  email: user.email,
+                ),
                 const SizedBox(height: 50),
                 Container(
                   color: const Color.fromRGBO(46, 136, 113, 1),
