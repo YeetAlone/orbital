@@ -97,8 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 await updateAvailability(email, "available");
                               },
                               tileColor: status == "available"
-                                  ? const Color.fromRGBO(0, 77, 64, 1)
-                                  : const Color.fromRGBO(213, 250, 214, 1),
+                                  ? const Color.fromRGBO(219, 232, 219, 1)
+                                  : const Color.fromRGBO(255, 255, 255, 1),
                               hoverColor:
                                   const Color.fromRGBO(213, 250, 214, 1),
                               enabled: true,
@@ -118,8 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 await updateAvailability(email, "busy");
                               },
                               tileColor: status == "busy"
-                                  ? const Color.fromRGBO(0, 77, 64, 1)
-                                  : const Color.fromRGBO(213, 250, 214, 1),
+                                  ? const Color.fromRGBO(219, 232, 219, 1)
+                                  : const Color.fromRGBO(255, 255, 255, 1),
                               hoverColor:
                                   const Color.fromRGBO(213, 250, 214, 1),
                               enabled: true,
@@ -138,8 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           PopupMenuItem(
                             child: ListTile(
                               tileColor: status == "incognito"
-                                  ? const Color.fromRGBO(0, 77, 64, 1)
-                                  : const Color.fromRGBO(213, 250, 214, 1),
+                                  ? const Color.fromRGBO(219, 232, 219, 1)
+                                  : const Color.fromRGBO(255, 255, 255, 1),
                               hoverColor:
                                   const Color.fromRGBO(213, 250, 214, 1),
                               enabled: true,
