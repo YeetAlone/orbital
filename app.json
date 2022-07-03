@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "sdkVersion": "32.0.0",
+    "name": "building",
+    "slug": "mobile",
+    "platforms": ["android"],
+    "version": "1.0.0",
+    "icon": "applogo.jpg"
+  }
+}
