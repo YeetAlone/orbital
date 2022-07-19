@@ -5,11 +5,11 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:validators/validators.dart';
 import 'dart:developer' as devtools show log;
 import '../../services/authenticate/auth_exceptions.dart';
 import '../../services/authenticate/auth_service.dart';
 import '../../shared/constants.dart';
+import 'widgets.dart';
 
 // IceBox
 // can modify auth service and exceptions to remove the need for a formKey
@@ -72,13 +72,13 @@ class _RegisterState extends State<Register> {
         listener: (context, state) {
           if (state is AuthStateRegistering) {
             if (state.exception is WeakPasswordAuthException) {
-              error = "Weak password";
+              setState(() => error = "Weak password");
             } else if (state.exception is EmailAlreadyInUseAuthException) {
-              error = "Email is already in use";
+              setState(() => error = "Email is already in use");
             } else if (state.exception is InvalidEmailAuthException) {
-              error = "Invalid email entered";
+              setState(() => error = "Invalid email entered");
             } else if (state.exception is GenericAuthException) {
-              error = 'Authentication Error';
+              setState(() => error = 'Authentication Error');
             }
           }
         },
@@ -115,34 +115,31 @@ class _RegisterState extends State<Register> {
                       key: _formKey,
                       child: Column(
                         children: [
-                          makeInput(
+                          InputField(
                             label: "NUS Email",
                             textFormField: TextFormField(
                               controller: _email,
-                              validator: (val) => val!.isEmpty && !isEmail(val)
-                                  ? "Enter a valid email"
-                                  : null,
+                              validator: (val) =>
+                                  EmailFieldValidator.validate(val!),
                               keyboardType: TextInputType.emailAddress,
                             ),
                           ),
-                          makeInput(
+                          InputField(
                             label: "Password",
                             textFormField: TextFormField(
                               controller: _password,
                               obscureText: true,
-                              validator: (val) => val!.length < 8
-                                  ? "Password must be more than 8 characters"
-                                  : null,
-                              autocorrect: false,
+                              validator: (val) =>
+                                  PasswordFieldValidator.validate(val),
                             ),
                           ),
-                          makeInput(
+                          InputField(
                               label: "Re-enter password",
                               textFormField: TextFormField(
                                 controller: _reEnterPassword,
                                 obscureText: true,
                               )),
-                          makeInput(
+                          InputField(
                             label: "Name",
                             textFormField: TextFormField(
                               controller: _name,
@@ -213,22 +210,17 @@ class _RegisterState extends State<Register> {
                           /// NOTE: to be updated when the profile page service
                           ///       is finished.
                           context.read<AuthBloc>().add(AuthEventRegister(
-                              email: email,
+                              email: email.trim(),
                               password: password,
-                              name: _name.text,
+                              name: _name.text.trim().toLowerCase(),
                               department: _department.text));
                         }
                       }
                     },
                     child: const Text("Register"),
                   ),
-
-                  /// Error
                   const SizedBox(height: 12.0),
-                  Text(
-                    error,
-                    style: const TextStyle(color: Colors.red, fontSize: 14.0),
-                  ),
+                  ErrorBox(text: error),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -254,26 +246,6 @@ class _RegisterState extends State<Register> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget makeInput({required String label, required Widget textFormField}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        textFormField,
-        const SizedBox(
-          height: 10,
-        )
-      ],
     );
   }
 }

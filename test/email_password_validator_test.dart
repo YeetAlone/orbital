@@ -1,4 +1,4 @@
-import 'package:building/screens/login/login.dart';
+import 'package:building/screens/login/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

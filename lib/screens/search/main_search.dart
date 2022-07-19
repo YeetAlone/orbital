@@ -1,13 +1,13 @@
 import 'package:building/screens/search/find_by_availability.dart';
 import 'package:building/screens/search/find_by_building.dart';
 import 'package:building/screens/search/find_by_name.dart';
+import 'package:building/screens/search/widgets.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
 import 'package:building/services/search/bloc/search_bloc.dart';
 import 'package:building/shared/search_constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
 import 'package:building/components/app_bar.dart';
-import 'package:building/components/search_method_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainSearch extends StatelessWidget {

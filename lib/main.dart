@@ -6,6 +6,7 @@ import 'package:building/services/authenticate/bloc/auth_event.dart';
 import 'package:building/services/authenticate/bloc/auth_state.dart';
 import 'package:building/services/authenticate/firebase_auth_provider.dart';
 import 'package:building/services/navigation/bloc/navigation_cubit.dart';
+import 'package:building/services/profile_update/bloc/profile_bloc.dart';
 import 'package:building/services/search/bloc/search_bloc.dart';
 import 'package:building/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ void main() {
     title: 'Flutter Demo',
     theme: lightTheme,
     darkTheme: darkTheme,
+    debugShowCheckedModeBanner: false,
     themeMode: ThemeMode.system,
     home: MultiBlocProvider(
       providers: [
@@ -29,6 +31,9 @@ void main() {
         ),
         BlocProvider<SearchBloc>(
           create: (context) => SearchBloc(),
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(),
         ),
       ],
       child: const Wrapper(),

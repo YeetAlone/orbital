@@ -1,7 +1,6 @@
 import 'package:building/components/app_bar.dart';
 import 'package:building/models/user.dart';
 import 'package:building/services/search/bloc/search_bloc.dart';
-import 'package:building/shared/constants.dart';
 import 'package:building/shared/search_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

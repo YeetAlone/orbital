@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:building/services/authenticate/auth_exceptions.dart';
 import 'package:building/services/authenticate/auth_provider.dart';
 import 'package:building/services/authenticate/bloc/auth_event.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
@@ -51,6 +52,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             fullName: event.name,
             email: event.email,
             department: event.department);
+        await provider.logOut();
+        emit(const AuthStateLoggedOut(exception: null));
+      } on UserNotLoggedInAuthException catch (_) {
         emit(const AuthStateLoggedOut(exception: null));
       } on Exception catch (exception) {
         emit(AuthStateRegistering(exception: exception));

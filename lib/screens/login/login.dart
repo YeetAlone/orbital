@@ -8,25 +8,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:validators/validators.dart';
 import '../../services/authenticate/auth_exceptions.dart';
 import '../../shared/constants.dart';
+import 'widgets.dart';
 
 //these two classes are written for unit testing purpose
-
-class EmailFieldValidator {
-  static String? validate(String? value) {
-    return (value?.isNotEmpty ?? false) && isEmail(value.toString())
-        ? null
-        : "Enter a valid email";
-  }
-}
-
-class PasswordFieldValidator {
-  static String? validate(String value) {
-    return value.length < 8 ? "Password must be more than 8 characters" : null;
-  }
-}
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -71,11 +57,12 @@ class _LoginState extends State<Login> {
         listener: (context, state) {
           if (state is AuthStateLoggedOut) {
             if (state.exception is UserNotFoundAuthException) {
-              error = "Cannot find a user with the given credentials";
+              setState(() =>
+                  error = "Cannot find a user with the given credentials");
             } else if (state.exception is WrongPasswordAuthException) {
-              error = "Wrong credentials";
+              setState(() => error = "Wrong credentials");
             } else if (state.exception is GenericAuthException) {
-              error = "Authentication Error";
+              setState(() => error = "Authentication Error");
             }
           }
         },
@@ -143,10 +130,7 @@ class _LoginState extends State<Login> {
                         },
                         child: const Text("Log In")),
                     const SizedBox(height: 12.0),
-                    Text(
-                      error,
-                      style: const TextStyle(color: Colors.red, fontSize: 14.0),
-                    ),
+                    ErrorBox(text: error),
                     const SizedBox(height: 20.0),
                     Row(
                       children: [
