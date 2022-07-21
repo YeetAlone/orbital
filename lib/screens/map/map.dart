@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:building/components/app_bar.dart';
 import 'dart:developer' as devtools show log;
 
 import 'package:geolocator/geolocator.dart';
+
+import '../../services/cloud/firebase_cloud_storage.dart';
 
 class MapPage extends StatefulWidget {
   final String userAuthId;
@@ -40,21 +44,23 @@ class _MapPageState extends State<MapPage> {
 
   void _getCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
+
     devtools.log(position.toString());
     int locationPos = -1;
     for (int i = 0; i < buildings.length; i++) {
       double distanceInMeters = Geolocator.distanceBetween(position.latitude,
           position.longitude, buildings[i][1], buildings[i][2]);
-      devtools.log(buildings[i][0] + " " + distanceInMeters.toString());
+      //devtools.log(buildings[i][0] + " " + distanceInMeters.toString());
       if (distanceInMeters < buildings[i][3]) {
         locationPos = i;
-        devtools.log("min is " + buildings[i][0]);
+        //devtools.log("min is " + buildings[i][0]);
       }
     }
 
     setState(() {
       _position = position;
+      //devtools.log(locationPos.toString());
       if (locationPos > -1) {
         location = buildings[locationPos][0];
       } else {
@@ -117,7 +123,7 @@ class _MapPageState extends State<MapPage> {
                             child: _position != null
                                 ? Text(location)
                                 : const Text(
-                                    "No data regarding your location. Please allow location on your device or retry"))
+                                    "No data regarding your location. Please allow location on your device or wait and retry"))
                       ]);
                 },
                 child: const Text("Click to see current location")),
