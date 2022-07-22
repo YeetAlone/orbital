@@ -10,10 +10,12 @@ abstract class ProfileState extends Equatable {
 class ProfileInitial extends ProfileState {
   final String name;
   final String department;
-  const ProfileInitial({this.name = "", this.department = ""});
+  final String location;
+  const ProfileInitial(
+      {this.location = "", this.name = "", this.department = ""});
 
   @override
-  List<Object> get props => [name, department];
+  List<Object> get props => [name, department, location];
 }
 
 class UpdateName extends ProfileState {
@@ -22,4 +24,8 @@ class UpdateName extends ProfileState {
 
 class UpdateDepartment extends ProfileState {
   const UpdateDepartment();
+}
+
+class UpdateLocation extends ProfileState {
+  const UpdateLocation();
 }

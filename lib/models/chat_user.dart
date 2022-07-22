@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
 class ChatUser {
   String name;
   String email;
+
   String imageUrl;
   String lastMessageText;
   DateTime lastMessageTime;

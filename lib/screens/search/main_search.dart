@@ -10,16 +10,17 @@ import 'dart:developer' as devtools show log;
 import 'package:building/components/app_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MainSearch extends StatelessWidget {
-  /// TODO: 1. navigate the buttons to the respective pages
-  /// TODO: 2. try to put different colours for the borders.
-
+class MainSearch extends StatefulWidget {
   final String userAuthId;
   const MainSearch({required this.userAuthId, Key? key}) : super(key: key);
 
   @override
+  State<MainSearch> createState() => _MainSearchState();
+}
+
+class _MainSearchState extends State<MainSearch> {
+  @override
   Widget build(BuildContext context) {
-    // initial state
     context
         .read<SearchBloc>()
         .add(const GotoSearchEvent(page: SearchEnum.initial));
@@ -27,7 +28,7 @@ class MainSearch extends StatelessWidget {
     return Scaffold(
       //body
       body: FutureBuilder<String>(
-          future: FirebaseCloudStorage().getUserEmailFromId(userAuthId),
+          future: FirebaseCloudStorage().getUserEmailFromId(widget.userAuthId),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               devtools.log(snapshot.error.toString());
@@ -37,7 +38,9 @@ class MainSearch extends StatelessWidget {
                 buildWhen: ((previous, current) => current is! SearchComplete),
                 builder: (context, state) {
                   if (state is BuildingSearch) {
-                    return const FindByBuilding();
+                    return FindByBuilding(
+                      userEmail: userEmail,
+                    );
                   } else if (state is AvailabilitySearch) {
                     return FindByAvailability(
                       userEmail: userEmail,
@@ -68,9 +71,11 @@ class MainSearch extends StatelessWidget {
                             title: "  Find by Building",
                             iconURL: "assets/building.png",
                             bg: const [244, 250, 244],
-                            onPressed: () => context.read<SearchBloc>().add(
-                                const GotoSearchEvent(
-                                    page: SearchEnum.building))),
+                            onPressed: () {
+                              return context.read<SearchBloc>().add(
+                                  const GotoSearchEvent(
+                                      page: SearchEnum.building));
+                            }),
                         const SizedBox(height: 20),
                         SearchMethodButton(
                             title: " Find by Availability",
