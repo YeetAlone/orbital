@@ -25,8 +25,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  bool switch1Value = false;
-  bool switch2Value = false;
   late final FirebaseCloudStorage _userService;
 
   @override
@@ -94,48 +92,22 @@ class _ProfileState extends State<Profile> {
                           email: user.email,
                         ),
                         const SizedBox(height: 50),
-                        Container(
-                          color: const Color.fromRGBO(46, 136, 113, 1),
-                          child: SwitchListTile(
-                            hoverColor: const Color.fromRGBO(46, 136, 113, 1),
-                            title: const Text('Sync with Google Calendar?',
-                                style: TextStyle(color: Colors.white)),
-                            value: switch1Value,
-                            onChanged: (bool value) {
-                              setState(() {
-                                switch1Value = value;
-                              });
-                            },
-                            activeColor:
-                                const Color.fromRGBO(165, 214, 167, 65),
-                            activeTrackColor: Colors.black,
+
+                        Center(
+                          child: Container(
+                            height: 40,
+                            width: 100,
+                            color: const Color.fromRGBO(165, 214, 167, 65),
+                            child: TextButton(
+                                onPressed: () {
+                                  context
+                                      .read<AuthBloc>()
+                                      .add(const AuthEventLogOut());
+                                },
+                                child: const Text("Log Out",
+                                    style: TextStyle(color: Colors.white))),
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Container(
-                          color: const Color.fromRGBO(46, 136, 113, 1),
-                          child: SwitchListTile(
-                            hoverColor: const Color.fromRGBO(46, 136, 113, 1),
-                            title: const Text('Sync with Outlook Calendar?',
-                                style: TextStyle(color: Colors.white)),
-                            value: switch2Value,
-                            onChanged: (bool value) {
-                              setState(() {
-                                switch2Value = value;
-                              });
-                            },
-                            activeColor:
-                                const Color.fromRGBO(165, 214, 167, 65),
-                            activeTrackColor: Colors.black,
-                          ),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              context
-                                  .read<AuthBloc>()
-                                  .add(const AuthEventLogOut());
-                            },
-                            child: const Text("Log Out")),
                       ],
                     );
                   } else {
