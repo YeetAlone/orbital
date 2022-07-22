@@ -1,17 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:building/components/app_bar.dart';
 import 'dart:developer' as devtools show log;
 import 'package:geolocator_android/geolocator_android.dart';
-import 'package:geolocator_apple/geolocator_apple.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../services/cloud/firebase_cloud_storage.dart';
-
 class MapPage extends StatefulWidget {
-  final String userAuthId;
-  const MapPage({Key? key, required this.userAuthId}) : super(key: key);
+  const MapPage({Key? key}) : super(key: key);
   void getLocationPermission() async {
     await Geolocator.requestPermission();
   }

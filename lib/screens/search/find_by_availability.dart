@@ -2,13 +2,12 @@ import 'package:building/components/app_bar.dart';
 import 'package:building/models/user.dart';
 import 'package:building/services/search/bloc/search_bloc.dart';
 import 'package:building/shared/search_constants.dart';
+import 'package:building/shared/shared_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FindByAvailability extends StatefulWidget {
-  final String userEmail;
-  const FindByAvailability({required this.userEmail, Key? key})
-      : super(key: key);
+  const FindByAvailability({Key? key}) : super(key: key);
 
   @override
   State<FindByAvailability> createState() => _FindByAvailabilityState();
@@ -99,7 +98,7 @@ class _FindByAvailabilityState extends State<FindByAvailability> {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               if (snapshot.data!.elementAt(index).email ==
-                                  widget.userEmail) {
+                                  SharedPrefs.userEmail) {
                                 if (snapshot.data!.length == 1) {
                                   return const Text("No results");
                                 }

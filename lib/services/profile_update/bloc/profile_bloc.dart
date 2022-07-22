@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
+import 'package:building/shared/shared_data.dart';
+import 'dart:developer' as devtools show log;
 import 'package:equatable/equatable.dart';
 
 part 'profile_event.dart';
@@ -12,8 +14,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<UpdateNameEvent>((event, emit) {
       try {
         userService.updateAppUser(email: event.email, fullName: event.name);
-        emit(ProfileInitial(name: event.name));
+        emit(ProfileInitial(
+            name: event.name, department: SharedPrefs.userDepartment));
       } catch (e) {
+        devtools.log(e.toString());
         emit(const ProfileInitial());
       }
     });
@@ -21,9 +25,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       try {
         userService.updateAppUser(
             email: event.email, department: event.department);
-        emit(ProfileInitial(department: event.department));
+        emit(ProfileInitial(
+            name: SharedPrefs.userFullName, department: event.department));
       } catch (e) {
         // rethrow;
+        devtools.log(e.toString());
         emit(const ProfileInitial());
       }
     });
