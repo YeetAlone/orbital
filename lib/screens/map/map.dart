@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:building/components/app_bar.dart';
 import 'dart:developer' as devtools show log;
-
+import 'package:geolocator_android/geolocator_android.dart';
+import 'package:geolocator_apple/geolocator_apple.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../services/cloud/firebase_cloud_storage.dart';
@@ -43,6 +44,11 @@ class _MapPageState extends State<MapPage> {
   ];
 
   void _getCurrentLocation() async {
+    GeolocatorAndroid.registerWith();
+    await Geolocator.requestPermission();
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    devtools.log(serviceEnabled.toString());
+    if (!serviceEnabled) {}
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.bestForNavigation);
 
@@ -114,6 +120,7 @@ class _MapPageState extends State<MapPage> {
           children: [
             ElevatedButton(
                 onPressed: () {
+                  GeolocatorAndroid.registerWith();
                   _getCurrentLocation();
                   showMenu(
                       context: context,
