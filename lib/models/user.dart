@@ -22,11 +22,13 @@ class AppUserData {
   final String email;
   // final String firstName;
   // final String lastName;
+
   final String userName;
   final String userID;
   final String department;
   final String profilePictureURL;
   final String status;
+  final String location;
   // final String docID;
 
   const AppUserData({
@@ -35,10 +37,12 @@ class AppUserData {
     // required this.firstName,
     // required this.lastName,
     required this.userID,
+
     // required this.docID,
     required this.department,
     required this.profilePictureURL,
     required this.status,
+    required this.location,
   });
 
   // String fullName() => '$firstName $lastName';
@@ -57,6 +61,7 @@ class AppUserData {
       department: parsedJson[departmentName] ?? '',
       profilePictureURL: parsedJson[userProfileURLName] ?? '',
       status: (parsedJson[userStatus]),
+      location: parsedJson[gpsLocation] ?? 'no building',
     );
     // docID: parsedJson[docIDName] ?? '');
   }
@@ -70,6 +75,7 @@ class AppUserData {
       profilePictureURL:
           'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg',
       status: "incognito",
+      location: 'no building',
     );
     // docID: 'docID');
   }
@@ -93,7 +99,8 @@ class AppUserData {
         userName = snapshot.data()[userFullName],
         department = snapshot.data()[departmentName],
         profilePictureURL = snapshot.data()[userProfileURLName],
-        status = (snapshot.data()[userStatus]);
+        status = (snapshot.data()[userStatus]),
+        location = (snapshot.data()[gpsLocation]);
   // docID = snapshot.id;
 
   AppUserData.fromDocumentSnapshot(
@@ -102,9 +109,11 @@ class AppUserData {
         email = snapshot.data()![userEmailName],
         // firstName = snapshot.data()[userFirstName],
         // lastName = snapshot.data()[userLastName],
+
         userName = snapshot.data()![userFullName],
         department = snapshot.data()![departmentName],
         profilePictureURL = snapshot.data()![userProfileURLName],
-        status = (snapshot.data()![userStatus]);
+        status = (snapshot.data()![userStatus]),
+        location = (snapshot.data()![gpsLocation]);
   // docID = snapshot.data()![docIDName];
 }

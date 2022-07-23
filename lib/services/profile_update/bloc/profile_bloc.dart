@@ -27,5 +27,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(const ProfileInitial());
       }
     });
+
+    on<UpdateLocationEvent>((event, emit) {
+      try {
+        userService.updateAppUser(email: event.email, location: event.location);
+        emit(ProfileInitial(location: event.location));
+      } catch (e) {
+        emit(const ProfileInitial());
+      }
+    });
   }
 }
