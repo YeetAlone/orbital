@@ -58,6 +58,12 @@ class SharedPrefs {
   static String get getUserProfilePictureUrl =>
       instance.getString(avatarKey) ?? '';
 
+  static String get userLocation => instance.getString(userLocationKey) ?? '';
+
+  static Future<void> setUserLocation(String location) async {
+    await instance.setString(userLocationKey, location);
+  }
+
   static Future<void> setFromData(AppUserData data) async {
     await setUserId(data.userID);
     await setUserEmail(data.email);
@@ -65,6 +71,7 @@ class SharedPrefs {
     await setUserFullName(data.userName);
     await setUserDepartment(data.department);
     await setUserStatus(data.status);
+    await setUserLocation(data.location);
   }
 
   static AppUserData get userData => AppUserData(
@@ -74,6 +81,7 @@ class SharedPrefs {
         userName: userFullName,
         department: userDepartment,
         status: userStatus,
+        location: userLocation,
       );
 
   static Future<void> resetPrefs() async {

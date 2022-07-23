@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../models/user.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:developer' as devtools show log;
+// import 'dart:developer' as devtools show log;
 import '../../services/authenticate/bloc/auth_bloc.dart';
 import '../../services/authenticate/bloc/auth_event.dart';
 import 'package:building/components/app_bar.dart';
@@ -24,8 +24,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  late final FirebaseCloudStorage _userService;
-
   late String location;
   List buildings = [
     ["School of Medicine", 1.29591, 103.78233, 100.65],
@@ -113,20 +111,20 @@ class _ProfileState extends State<Profile> {
                               email: user.email,
                             ),
                             const SizedBox(height: 50),
-                        //display of department
-                        InfoDisplayDepartment(
-                          title: "  DEPARTMENT",
-                          info: " $department",
-                          email: user.email,
-                        ),
-                        const SizedBox(height: 30),
+                            //display of department
+                            InfoDisplayDepartment(
+                              title: "  DEPARTMENT",
+                              info: " $department",
+                              email: user.email,
+                            ),
+                            const SizedBox(height: 30),
 
-                        InfoDispLocation(
-                          title: "  LOCATION",
-                          info: " ${location.toTitleCase()}",
-                          email: user.email,
-                        ),
-                        const SizedBox(height: 30.0),
+                            InfoDispLocation(
+                              title: "  LOCATION",
+                              info: " ${location.toTitleCase()}",
+                              email: user.email,
+                            ),
+                            const SizedBox(height: 30.0),
 
                             Center(
                               child: Container(

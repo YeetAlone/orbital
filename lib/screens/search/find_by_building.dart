@@ -1,17 +1,17 @@
+import 'package:building/shared/shared_data.dart';
 import 'package:flutter/material.dart';
 import 'package:building/components/app_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../models/user.dart';
 
-import 'dart:developer' as devtools show log;
+// import 'dart:developer' as devtools show log;
 
 import '../../services/search/bloc/search_bloc.dart';
 import '../../shared/search_constants.dart';
 
 class FindByBuilding extends StatefulWidget {
-  final String userEmail;
-  const FindByBuilding({Key? key, required this.userEmail}) : super(key: key);
+  const FindByBuilding({Key? key}) : super(key: key);
 
   @override
   State<FindByBuilding> createState() => _FindByBuildingState();
@@ -84,6 +84,7 @@ class _FindByBuildingState extends State<FindByBuilding> {
           ),
           BlocBuilder<SearchBloc, SearchState>(
             builder: (context, state) {
+              final userEmail = SharedPrefs.userEmail;
               if (state is SearchComplete) {
                 return StreamBuilder<Iterable<AppUserData>>(
                     stream: state.results,
@@ -102,7 +103,7 @@ class _FindByBuildingState extends State<FindByBuilding> {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               if (snapshot.data!.elementAt(index).email ==
-                                  widget.userEmail) {
+                                  userEmail) {
                                 if (snapshot.data!.length == 1) {
                                   return const Text("No results");
                                 }
