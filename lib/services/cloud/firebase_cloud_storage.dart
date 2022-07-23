@@ -49,6 +49,7 @@ class FirebaseCloudStorage {
     String? department,
     String? profilePictureUrl,
     String? status,
+    String? location,
   }) async {
     try {
       final doc = await users.doc(email).get();
@@ -72,6 +73,9 @@ class FirebaseCloudStorage {
           throw Exception();
         }
         await users.doc(email).update({userStatus: status});
+      }
+      if (location != null) {
+        await users.doc(email).update({gpsLocation: location});
       }
       // return AppUserData(
       //   userID: userData.userID,
@@ -102,7 +106,7 @@ class FirebaseCloudStorage {
         userProfileURLName: profilePictureUrl ??
             "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
         userStatus: 'incognito',
-        gpsLocation: null,
+        gpsLocation: 'no building',
       },
     );
     // devtools.log(fetchedUser.id);
@@ -112,6 +116,7 @@ class FirebaseCloudStorage {
         userID: userAuthId,
         department: department,
         status: "incognito",
+        location: "no building",
         profilePictureURL: profilePictureUrl ?? "");
   }
 
@@ -130,6 +135,6 @@ class FirebaseCloudStorage {
           event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
 
   Stream<Iterable<AppUserData>> findUsersByBuilding(String building) =>
-      // TODO: Milestone 3
-      throw UnimplementedError();
+      users.where(userStatus, isEqualTo: gpsLocation).snapshots().map((event) =>
+          event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
 }

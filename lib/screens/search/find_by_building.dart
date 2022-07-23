@@ -1,34 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:building/components/app_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../models/user.dart';
+
+import 'dart:developer' as devtools show log;
+
+import '../../services/search/bloc/search_bloc.dart';
+import '../../shared/search_constants.dart';
 
 class FindByBuilding extends StatefulWidget {
-  const FindByBuilding({Key? key}) : super(key: key);
+  final String userEmail;
+  const FindByBuilding({Key? key, required this.userEmail}) : super(key: key);
 
   @override
   State<FindByBuilding> createState() => _FindByBuildingState();
 }
 
 class _FindByBuildingState extends State<FindByBuilding> {
-  late String location;
-  List buildings = [
-    ["School of Medicine", 1.29591, 103.78233, 100.65],
-    ["University Hall", 1.29713, 103.77765, 51.75],
-    ["COM", 1.29518, 103.77417, 66.85],
-    ["Engineering", 1.29892, 103.77158, 166.96],
-    ["Science", 1.29623, 103.77988, 151.06],
-    ["FASS", 1.29504, 103.77161, 187.3],
-    ["Biz", 1.29359, 103.77460, 87.81],
-    ["YIH", 1.29846, 103.77486, 90.48],
-    ["SDE", 1.29717, 103.77064, 65.32],
-    ["UTown", 1.30559, 103.77305, 168.83],
-    ["PGPR", 1.29088, 103.78043, 108.86],
-    ["I4", 1.29462, 103.77583, 48.20],
-    ["I3", 1.29245, 103.77566, 64.94],
-    ["CLB", 1.29672, 103.77353, 76.16],
-    ["USC", 1.29976, 103.77536, 84.98],
-    ["Museum", 1.30188, 103.77269, 75.20],
-    ["NUH", 1.29387, 103.78342, 193.17]
-  ];
   late final TextEditingController _search;
 
   @override
@@ -46,8 +35,98 @@ class _FindByBuildingState extends State<FindByBuilding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView(children: [
-      screenAppBar("SEARCH BY BUILDING"),
-    ]));
+      body: Column(
+        children: [
+          screenAppBar("FIND BY BUILDING"),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                flex: 8,
+                child: SizedBox(
+                  width: 300,
+                  height: 50,
+                  child: TextField(
+                    controller: _search,
+                    style: const TextStyle(color: Colors.black),
+                    decoration: InputDecoration(
+                      hintText: "Search",
+                      hintStyle: TextStyle(color: Colors.grey.shade600),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.grey.shade600,
+                        size: 20,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey.shade100,
+                      contentPadding: const EdgeInsets.all(8),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(color: Colors.grey.shade100)),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                  onPressed: () {
+                    if (_search.text.trim() != "") {
+                      context.read<SearchBloc>().add(SearchActionEvent(
+                          page: SearchEnum.building,
+                          query: _search.text.trim()));
+                    }
+                  },
+                  icon: const Icon(Icons.search),
+                ),
+              ),
+            ],
+          ),
+          BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              if (state is SearchComplete) {
+                return StreamBuilder<Iterable<AppUserData>>(
+                    stream: state.results,
+                    builder: ((context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return const Text('done');
+                      } else if (snapshot.hasError) {
+                        return const Text('Error!');
+                      } else if (snapshot.data == null ||
+                          snapshot.data!.isEmpty) {
+                        return const Text("No results");
+                      } else {
+                        return SizedBox(
+                          height: 200.0,
+                          child: ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              if (snapshot.data!.elementAt(index).email ==
+                                  widget.userEmail) {
+                                if (snapshot.data!.length == 1) {
+                                  return const Text("No results");
+                                }
+                                return Container();
+                              }
+                              return ListTile(
+                                title: Text(
+                                    snapshot.data!.elementAt(index).userName),
+                                onTap: () {},
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    }));
+              } else if (state is BuildingSearch) {
+                return Container();
+              } else {
+                return const Text("OH THERE'S A PROBLEM ALRIGHT");
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

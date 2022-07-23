@@ -26,3 +26,13 @@ class UpdateDepartmentEvent extends ProfileEvent {
   @override
   List<Object> get props => [department];
 }
+
+class UpdateLocationEvent extends ProfileEvent {
+  final String location;
+  final String email;
+
+  const UpdateLocationEvent(this.location, this.email);
+
+  @override
+  List<Object> get props => [location];
+}
