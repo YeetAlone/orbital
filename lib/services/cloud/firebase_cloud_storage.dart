@@ -75,8 +75,8 @@ class FirebaseCloudStorage {
             status != "available") {
           throw Exception();
         }
-        await users.doc(email).update({userStatus: status});
         await SharedPrefs.setUserStatus(status);
+        await users.doc(email).update({userStatus: status});
       }
       // return AppUserData(
       //   userID: userData.userID,

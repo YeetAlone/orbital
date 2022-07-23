@@ -1,6 +1,5 @@
 import 'package:building/models/chat_message.dart';
 import 'package:building/screens/chat/widgets/single_text.dart';
-import 'package:building/services/chat/firebase_chat_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
 
@@ -17,9 +16,10 @@ class MessageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        StreamBuilder<Iterable<ChatMessage>>(
-            stream: FirebaseChatStorage().getChatsFromSender(
-                senderEmail: senderEmail, receiverEmail: receiverEmail),
+        StreamBuilder<Iterable<TextMessage>>(
+            // stream: FirebaseChatStorage().getChatsFromSender(
+            //     senderEmail: senderEmail, receiverEmail: receiverEmail),
+            stream: null,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 devtools.log(snapshot.error.toString());
@@ -42,8 +42,8 @@ class MessageBody extends StatelessWidget {
                         final message = chatMessages.elementAt(index);
 
                         return SingleText(
-                            text: message.message,
-                            isMe: message.senderEmail == receiverEmail);
+                            text: message.text,
+                            isMe: message.messageId == receiverEmail);
                         // message.userId ==  FirebaseChatAPI().currentUser.userId);
                       });
             })

@@ -1,7 +1,6 @@
 import 'package:building/models/chat_user.dart';
 import 'package:building/screens/chat/add_new_user.dart';
 import 'package:building/screens/chat/widgets/chat_home_body.dart';
-import 'package:building/services/chat/firebase_chat_storage.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:building/components/app_bar.dart';
@@ -123,8 +122,9 @@ class _ChatHomeState extends State<ChatHome> {
                     ),
                     SafeArea(
                         child: StreamBuilder<Iterable<ChatUser>>(
-                      stream: FirebaseChatStorage()
-                          .getChatsFromEveryone(receiverEmail: receiverEmail),
+                      // stream: FirebaseChatStorage()
+                      //     .getChatsFromEveryone(receiverEmail: receiverEmail),
+                      stream: null,
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');

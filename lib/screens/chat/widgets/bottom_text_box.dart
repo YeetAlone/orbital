@@ -1,4 +1,3 @@
-import 'package:building/services/chat/firebase_chat_storage.dart';
 import 'package:flutter/material.dart';
 
 // Bottom text bar
@@ -31,10 +30,10 @@ class _NewTextWidgetState extends State<NewTextWidget> {
 
   void _sendMessage() async {
     FocusScope.of(context).unfocus();
-    FirebaseChatStorage().createChat(
-        senderEmail: widget.senderEmail,
-        receiverEmail: widget.receiverEmail,
-        text: _chatController.text.trim());
+    // FirebaseChatStorage().createChat(
+    //     senderEmail: widget.senderEmail,
+    //     receiverEmail: widget.receiverEmail,
+    //     text: _chatController.text.trim());
     _chatController.clear();
   }
 

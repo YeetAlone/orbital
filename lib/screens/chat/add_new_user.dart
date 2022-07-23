@@ -1,5 +1,4 @@
 import 'package:building/models/user.dart';
-import 'package:building/services/chat/firebase_chat_storage.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -38,9 +37,9 @@ class AddNewUser extends StatelessWidget {
                         return ListTile(
                           title: Text(snapshot.data!.elementAt(index).userName),
                           onTap: () {
-                            FirebaseChatStorage().createChatUser(
-                                sender: snapshot.data!.elementAt(index),
-                                receiverEmail: receiverEmail);
+                            // FirebaseChatStorage().createChatUser(
+                            //     sender: snapshot.data!.elementAt(index),
+                            //     receiverEmail: receiverEmail);
                             Navigator.pop(context);
                           },
                         );

@@ -28,12 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final String userAuthId = SharedPrefs.userId;
   final AppUserData user = SharedPrefs.userData;
 
-  Future<bool> setAvailabilityDrawerColor(String status) async {
-    return await FirebaseCloudStorage()
-        .getAppUserFromId(userAuthId)
-        .then((value) => value.status == status);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,10 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context, snapshot) {
               final user = snapshot.data ?? AppUserData.empty();
               final email = user.email;
+              status = user.status;
               if (SharedPrefs.firstTime) {
                 SharedPrefs.setFromData(user);
               }
-              status = user.status;
               return BottomNavigationBar(
                 elevation: 0,
                 items: const <BottomNavigationBarItem>[
@@ -198,7 +192,8 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       status = newStatus;
     });
-    if (!mounted) {}
-    Navigator.of(context).pop();
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 }
