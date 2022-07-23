@@ -4,8 +4,16 @@
 // import 'package:building/services/cloud/firebase_cloud_storage.dart';
 // import 'package:building/shared/chat_constants.dart';
 // import 'package:building/shared/status_constants.dart';
+import 'dart:async';
+
+import 'package:building/models/chat_convo.dart';
+import 'package:building/models/chat_message.dart';
+import 'package:building/models/user.dart';
+import 'package:building/shared/shared_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'dart:developer' as devtools show log;
+import 'package:uuid/uuid.dart';
+import 'chat_exceptions.dart';
+import 'dart:developer' as devtools show log;
 // import '../../models/chat_user.dart';
 
 class FirebaseChatStorage {
@@ -15,8 +23,14 @@ class FirebaseChatStorage {
 
   factory FirebaseChatStorage() => _instance;
 
-  final chatDb = FirebaseFirestore.instance.collection('users/chats');
-  final convoDb = FirebaseFirestore.instance.collection('conversations');
+  final chatDb = FirebaseFirestore.instance.collection('chats');
+  // stores a list of conversations for a user
+  final convoDb = FirebaseFirestore.instance.collection('conversation_list');
+  // stores the latest conversation to be shown in the chat screen
+  final latestConvoDb = FirebaseFirestore.instance.collection('latest_convo');
+
+  final receiver = SharedPrefs.userData;
+  static const uuid = Uuid();
 
   // // C
   // Future<Message> createChat(
@@ -90,45 +104,62 @@ class FirebaseChatStorage {
 //     }
 //   }
 
-//   // C
-//   Future<ChatUser> createChatUser({
-//     required AppUserData sender,
-//     required String receiverEmail,
-//   }) async {
-//     try {
-//       final db = FirebaseFirestore.instance
-//           .collection('users/$receiverEmail/chatUsers');
-//       final time = DateTime.now();
-//       ChatUser chatUser = ChatUser(
-//           name: sender.userName,
-//           imageUrl: sender.profilePictureURL,
-//           lastMessageTime: time,
-//           lastMessageText: "Say Hi!",
-//           email: sender.email,
-//           isRead: false);
-//       await db.doc(sender.email).set(chatUser.toJson());
-//       return chatUser;
-//     } catch (e) {
-//       throw CouldNotCreateChatUserException();
-//     }
-//   }
+  // C
+  Future<ChatConversation> createConversation({
+    required AppUserData sender,
+  }) async {
+    try {
+      final time = DateTime.now();
 
-//   // R
-//   Stream<Iterable<ChatUser>> getChatsFromEveryone(
-//       {required String receiverEmail}) {
-//     try {
-//       // Pagination required
-//       final db = FirebaseFirestore.instance
-//           .collection('users/$receiverEmail/chatUsers')
-//           .orderBy(lastMessageTimeName, descending: true)
-//           .limit(20);
-//       return db
-//           .snapshots()
-//           .map((event) => event.docs.map((e) => ChatUser.fromJson(e.data())));
-//     } catch (e) {
-//       throw CouldNotGetChatUserException();
-//     }
-//   }
+      final text =
+          TextMessage(text: "Say Hi!", createdAt: time, sender: sender);
+      final id = uuid.v4();
+      final conversation = ChatConversation(
+          chatId: id, userOne: sender, userTwo: receiver, message: text);
+
+      // add the conversation to the list of conversations for the user - this works
+      await latestConvoDb.doc(id).set(conversation.toMap());
+
+      // create/update conversation lists for both users - this works
+      await convoDb.doc(receiver.email).set({
+        'convo': FieldValue.arrayUnion([id])
+      }, SetOptions(merge: true));
+      await convoDb.doc(sender.email).set({
+        'convo': FieldValue.arrayUnion([id])
+      }, SetOptions(merge: true));
+
+      // add the message to the chat db for the user
+      await chatDb.doc(id).collection('texts').add(text.toJson());
+      return conversation;
+    } on CouldNotCreateChatMessageException catch (e) {
+      devtools.log(e.toString());
+      throw CouldNotCreateConversationException();
+    }
+  }
+
+  // R
+  Future<List<ChatConversation>> getChatsFromEveryone() async {
+    {
+      // Pagination required
+      final convoList = await convoDb
+          .doc(receiver.email)
+          .get()
+          .then((value) => value.exists ? value['convo'] as List<dynamic> : []);
+
+      final conversations = <ChatConversation>[];
+      devtools.log(convoList.toString());
+      for (final String id in convoList) {
+        // Null is not a subtype of type String - latestConvoDb is empty
+        final conversation = await latestConvoDb.doc(id).get();
+        devtools.log(conversation.data().toString());
+        conversations.add(ChatConversation.fromDocumentSnapshot(conversation));
+      }
+      return conversations;
+    } // catch (e) {
+    //   devtools.log(e.toString());
+    //   throw CouldNotGetChatUserException();
+    // }
+  }
 
 //   // U
 //   Future<void> updateChatUser(

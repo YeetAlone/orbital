@@ -15,7 +15,7 @@ class CouldNotUpdateChatMessageException extends ChatStorageException {}
 class CouldNotDeleteChatMessageException extends ChatStorageException {}
 
 // C in CRUD
-class CouldNotCreateChatUserException extends ChatStorageException {}
+class CouldNotCreateConversationException extends ChatStorageException {}
 
 // R in CRUD
 class CouldNotGetChatUserException extends ChatStorageException {}
