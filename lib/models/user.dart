@@ -56,7 +56,7 @@ class AppUserData {
       userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
       department: parsedJson[departmentName] ?? '',
       profilePictureURL: parsedJson[userProfileURLName] ?? '',
-      status: (parsedJson[userStatus]),
+      status: (parsedJson[userStatus]) ?? 'unavailable',
     );
     // docID: parsedJson[docIDName] ?? '');
   }

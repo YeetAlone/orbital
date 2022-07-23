@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:building/services/cloud/cloud_constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart' show Timestamp;
+import 'package:building/models/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'
+    show DocumentSnapshot, Timestamp;
 import 'package:flutter/foundation.dart' show immutable;
 
 import '../shared/chat_constants.dart';
@@ -9,20 +10,16 @@ import '../shared/chat_constants.dart';
 @immutable
 abstract class Message {
   final DateTime createdAt;
-  final String senderName;
-  final String senderEmail;
-  final String messageId;
+  final AppUserData sender;
 
   const Message({
     required this.createdAt,
-    required this.senderName,
-    required this.senderEmail,
-    required this.messageId,
+    required this.sender,
   });
 
   @override
   String toString() {
-    return 'Message(createdAt: $createdAt, senderName: $senderName, senderEmail: $senderEmail, messageId: $messageId)';
+    return 'Message(createdAt: $createdAt, senderName: $sender)';
   }
 
   factory Message.fromJson(Map<String, dynamic> json) {
@@ -32,6 +29,10 @@ abstract class Message {
         return TextMessage.fromJson(json);
     }
   }
+  Message.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot)
+      : sender = AppUserData.fromDocumentSnapshot(snapshot.data()![userName]),
+        createdAt = snapshot.data()![createdAtName] as DateTime;
+
   Map<String, dynamic> toJson();
 }
 
@@ -39,29 +40,29 @@ class TextMessage extends Message {
   final String text;
 
   const TextMessage(
-      {required this.text,
-      required super.createdAt,
-      required super.senderName,
-      required super.senderEmail,
-      required super.messageId});
+      {required this.text, required super.createdAt, required super.sender});
 
   static TextMessage fromJson(Map<String, dynamic> json) => TextMessage(
-        messageId: json[messageIdName],
-        senderName: json[userName],
-        senderEmail: json[userEmailName],
-        text: json['text'],
+        sender: json[userName],
+        text: json[messageName],
         createdAt: (json[createdAtName] as Timestamp).toDate(),
       );
 
   @override
   Map<String, dynamic> toJson() => {
-        messageIdName: messageId,
-        senderName: userName,
-        userName: senderName,
+        userName: sender.toJson(),
         messageName: text,
         createdAtName: createdAt.toUtc(),
         messageTypeName: 0,
       };
+
+  TextMessage.fromDocumentSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> snapshot)
+      : text = snapshot.data()![messageName],
+        super(
+            sender:
+                AppUserData.fromDocumentSnapshot(snapshot.data()![userName]),
+            createdAt: snapshot.data()![createdAtName] as DateTime);
 }
 
 // edit message functionality goes in the icebox, for now this is immutable

@@ -178,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (state.navbarItem == NavBarItem.map) {
             return const MapPage();
           } else if (state.navbarItem == NavBarItem.chat) {
-            return ChatHome(userAuthId: userAuthId);
+            return const ChatHome();
           } else {
             return const CircularProgressIndicator();
           }

@@ -7,10 +7,7 @@ import 'dart:developer' as devtools show log;
 
 class MessageBody extends StatelessWidget {
   final String senderEmail;
-  final String receiverEmail;
-  const MessageBody(
-      {required this.senderEmail, required this.receiverEmail, Key? key})
-      : super(key: key);
+  const MessageBody({required this.senderEmail, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +38,7 @@ class MessageBody extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final message = chatMessages.elementAt(index);
 
-                        return SingleText(
-                            text: message.text,
-                            isMe: message.messageId == receiverEmail);
+                        return SingleText(text: message.text, isMe: false);
                         // message.userId ==  FirebaseChatAPI().currentUser.userId);
                       });
             })

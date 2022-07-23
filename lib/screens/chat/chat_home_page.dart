@@ -1,15 +1,14 @@
-import 'package:building/models/chat_user.dart';
+import 'package:building/models/chat_convo.dart';
+import 'package:building/models/user.dart';
 import 'package:building/screens/chat/add_new_user.dart';
 import 'package:building/screens/chat/widgets/chat_home_body.dart';
-import 'package:building/services/cloud/firebase_cloud_storage.dart';
+import 'package:building/services/chat/firebase_chat_storage.dart';
+import 'package:building/shared/shared_data.dart';
 import 'package:flutter/material.dart';
 import 'package:building/components/app_bar.dart';
 
-import 'dart:developer' as devtools show log;
-
 class ChatHome extends StatefulWidget {
-  final String userAuthId;
-  const ChatHome({required this.userAuthId, Key? key}) : super(key: key);
+  const ChatHome({Key? key}) : super(key: key);
 
   @override
   State<ChatHome> createState() => _ChatHomeState();
@@ -38,13 +37,10 @@ class _ChatHomeState extends State<ChatHome> {
     //     FirebaseChatAPI().addUser(user);
     //   }
     // }
-    devtools.log("User Auth ID ${widget.userAuthId}");
     return Scaffold(
-        body: FutureBuilder<String>(
-            future:
-                FirebaseCloudStorage().getUserEmailFromId(widget.userAuthId),
+        body: FutureBuilder<AppUserData>(
+            future: Future.value(SharedPrefs.userData),
             builder: (context, snapshot) {
-              final String receiverEmail = snapshot.data ?? "test@nus.edu";
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
@@ -71,8 +67,9 @@ class _ChatHomeState extends State<ChatHome> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => AddNewUser(
-                                                receiverEmail: receiverEmail,
+                                          builder: (context) =>
+                                              const AddNewUser(
+                                                receiverEmail: "",
                                               )));
                                 },
                                 child: Row(
@@ -121,21 +118,18 @@ class _ChatHomeState extends State<ChatHome> {
                       ),
                     ),
                     SafeArea(
-                        child: StreamBuilder<Iterable<ChatUser>>(
-                      // stream: FirebaseChatStorage()
-                      //     .getChatsFromEveryone(receiverEmail: receiverEmail),
-                      stream: null,
+                        child: FutureBuilder<List<ChatConversation>>(
+                      future: FirebaseChatStorage().getChatsFromEveryone(),
                       builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
+                        // if (snapshot.hasError) {
+                        //   return Text('Error: ${snapshot.error}');
+                        // }
                         final users = snapshot.data;
                         if (users == null || users.isEmpty) {
                           return const Text("No users found, add a few");
                         } else {
                           return ChatBody(
-                            users: users.toList(),
-                            receiverEmail: receiverEmail,
+                            users: users,
                           );
                         }
                       },
