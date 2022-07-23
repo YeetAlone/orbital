@@ -1,5 +1,6 @@
 import 'package:building/models/user.dart';
 import 'package:building/services/cloud/cloud_exceptions.dart';
+import 'package:building/shared/shared_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:developer' as devtools show log;
 
@@ -59,12 +60,15 @@ class FirebaseCloudStorage {
 
       if (fullName != null) {
         await users.doc(email).update({userFullName: fullName});
+        await SharedPrefs.setUserFullName(fullName);
       }
       if (department != null) {
         await users.doc(email).update({departmentName: department});
+        await SharedPrefs.setUserDepartment(department);
       }
       if (profilePictureUrl != null) {
         await users.doc(email).update({userProfileURLName: profilePictureUrl});
+        await SharedPrefs.setUserProfilePictureUrl(profilePictureUrl);
       }
       if (status != null) {
         if (status != "incognito" &&
@@ -72,6 +76,7 @@ class FirebaseCloudStorage {
             status != "available") {
           throw Exception();
         }
+        await SharedPrefs.setUserStatus(status);
         await users.doc(email).update({userStatus: status});
       }
       if (location != null) {

@@ -1,11 +1,11 @@
-import 'package:building/models/chat_user.dart';
+import 'package:building/models/user.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
 import 'package:flutter/material.dart';
 
 // Header for the top of a chat conversation
 
 class ProfileHeader extends StatefulWidget {
-  final ChatUser user;
+  final AppUserData user;
   const ProfileHeader({required this.user, Key? key}) : super(key: key);
 
   @override
@@ -32,7 +32,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
               ),
               const SizedBox(width: 2.0),
               CircleAvatar(
-                backgroundImage: NetworkImage(widget.user.imageUrl),
+                backgroundImage: NetworkImage(widget.user.profilePictureURL),
                 maxRadius: 20,
               ),
               Expanded(
@@ -41,7 +41,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      widget.user.name,
+                      widget.user.userName,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

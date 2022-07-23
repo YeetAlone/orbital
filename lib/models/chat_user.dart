@@ -37,7 +37,7 @@ class ChatUser {
       );
 
   static ChatUser fromJson(Map<String, dynamic> json) => ChatUser(
-        email: json[senderEmailName],
+        email: json[messageIdName],
         name: json[userName],
         imageUrl: json[imageUrlName],
         lastMessageTime: (json[lastMessageTimeName] as Timestamp).toDate(),
@@ -46,7 +46,7 @@ class ChatUser {
       );
 
   Map<String, dynamic> toJson() => {
-        senderEmailName: email,
+        messageIdName: email,
         userName: name,
         imageUrlName: imageUrl,
         lastMessageTimeName: lastMessageTime.toUtc(),

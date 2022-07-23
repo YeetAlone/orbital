@@ -6,14 +6,15 @@ import 'package:building/screens/map/map.dart';
 import 'package:building/screens/profile/profile.dart';
 import 'package:building/screens/search/main_search.dart';
 import 'package:building/services/navigation/bloc/navigation_cubit.dart';
+import 'package:building/shared/shared_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'dart:developer' as devtools Sshow log;
 
 class HomeScreen extends StatefulWidget {
   //* Passing user authentication ID throughout the app
-  final String userAuthId;
-  const HomeScreen({required this.userAuthId, Key? key}) : super(key: key);
+
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -24,26 +25,28 @@ class _HomeScreenState extends State<HomeScreen> {
   //     .getAppUserFromId(AuthService.firebase().currentUser!.userAuthID);
   int index = 0;
   String status = "";
-
-  Future<bool> setAvailabilityDrawerColor(String status) async {
-    return await FirebaseCloudStorage()
-        .getAppUserFromId(widget.userAuthId)
-        .then((value) => value.status == status);
-  }
+  final String userAuthId = SharedPrefs.userId;
+  final AppUserData user = SharedPrefs.userData;
 
   @override
   Widget build(BuildContext context) {
-    final userAuthId = widget.userAuthId;
-
     return Scaffold(
       bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
           builder: (context, state) {
+        Future<AppUserData> getUser =
+            FirebaseCloudStorage().getAppUserFromId(userAuthId);
+        if (!SharedPrefs.firstTime) {
+          getUser = Future.value(user);
+        }
         return FutureBuilder<AppUserData>(
-            future: FirebaseCloudStorage().getAppUserFromId(userAuthId),
+            future: getUser,
             builder: (context, snapshot) {
               final user = snapshot.data ?? AppUserData.empty();
               final email = user.email;
               status = user.status;
+              if (SharedPrefs.firstTime) {
+                SharedPrefs.setFromData(user);
+              }
               return BottomNavigationBar(
                 elevation: 0,
                 items: const <BottomNavigationBarItem>[
@@ -169,13 +172,13 @@ class _HomeScreenState extends State<HomeScreen> {
       body: BlocBuilder<NavigationCubit, NavigationState>(
         builder: (context, state) {
           if (state.navbarItem == NavBarItem.profile) {
-            return Profile(userAuthId: userAuthId);
+            return const Profile();
           } else if (state.navbarItem == NavBarItem.search) {
-            return MainSearch(userAuthId: userAuthId);
+            return const MainSearch();
           } else if (state.navbarItem == NavBarItem.map) {
-            return MapPage(userAuthId: userAuthId);
+            return const MapPage();
           } else if (state.navbarItem == NavBarItem.chat) {
-            return ChatHome(userAuthId: userAuthId);
+            return const ChatHome();
           } else {
             return const CircularProgressIndicator();
           }
@@ -189,7 +192,8 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       status = newStatus;
     });
-    if (!mounted) {}
-    Navigator.of(context).pop();
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 }

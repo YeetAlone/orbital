@@ -38,9 +38,8 @@ class AddNewUser extends StatelessWidget {
                         return ListTile(
                           title: Text(snapshot.data!.elementAt(index).userName),
                           onTap: () {
-                            FirebaseChatStorage().createChatUser(
-                                sender: snapshot.data!.elementAt(index),
-                                receiverEmail: receiverEmail);
+                            FirebaseChatStorage().createConversation(
+                                sender: snapshot.data!.elementAt(index));
                             Navigator.pop(context);
                           },
                         );

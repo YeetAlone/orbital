@@ -3,6 +3,7 @@ import 'package:building/services/authenticate/auth_exceptions.dart';
 import 'package:building/services/authenticate/auth_provider.dart';
 import 'package:building/services/authenticate/bloc/auth_event.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
+import 'package:building/shared/shared_data.dart';
 // import 'dart:developer' as devtools show log;
 
 import 'auth_state.dart';
@@ -26,6 +27,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final user =
             await provider.logIn(email: event.email, password: event.password);
+        SharedPrefs.setFirstTime();
+        SharedPrefs.setUserId(user.userAuthID);
         emit(AuthStateLoggedIn(user: user));
       } on Exception catch (exception) {
         emit(AuthStateLoggedOut(exception: exception));

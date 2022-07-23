@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:building/models/user.dart';
-import 'package:building/services/chat/firebase_chat_storage.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
 import 'package:building/shared/search_constants.dart';
 import 'package:equatable/equatable.dart';
@@ -47,8 +46,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     });
 
     on<SearchAddToChatEvent>((event, emit) {
-      FirebaseChatStorage().createChatUser(
-          sender: event.newPerson, receiverEmail: event.loggedInUserEmail);
+      // FirebaseChatStorage().createChatUser(
+      //     sender: event.newPerson, receiverEmail: event.loggedInUserEmail);
       // TODO: emit an exit event
     });
   }

@@ -1,4 +1,6 @@
-import 'package:building/models/chat_user.dart';
+import 'package:building/models/chat_convo.dart';
+import 'package:building/models/chat_message.dart';
+import 'package:building/shared/shared_data.dart';
 import 'package:flutter/material.dart';
 
 import '../chat_page.dart';
@@ -6,13 +8,13 @@ import '../chat_page.dart';
 // List of users shown in the main chat screen
 
 class ChatBody extends StatelessWidget {
-  final List<ChatUser> users;
-  final String receiverEmail;
-  const ChatBody({required this.users, required this.receiverEmail, Key? key})
-      : super(key: key);
+  final List<ChatConversation> users;
+  const ChatBody({required this.users, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    const isRead = true;
+    final receiverEmail = SharedPrefs.userEmail;
     return ListView.builder(
         itemCount: users.length,
         shrinkWrap: true,
@@ -20,11 +22,13 @@ class ChatBody extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           final chatUser = users[index];
+          final sender = chatUser.userOne.email == receiverEmail
+              ? chatUser.userTwo
+              : chatUser.userOne;
           return GestureDetector(
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ChatPage(
-                sender: chatUser,
-                receiverEmail: receiverEmail,
+                sender: sender,
               ),
             )),
             child: Container(
@@ -33,7 +37,7 @@ class ChatBody extends StatelessWidget {
               child: Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(chatUser.imageUrl),
+                    backgroundImage: NetworkImage(sender.profilePictureURL),
                     maxRadius: 30,
                   ),
                   const SizedBox(
@@ -46,20 +50,19 @@ class ChatBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            chatUser.name,
+                            sender.userName,
                             style: const TextStyle(fontSize: 16.0),
                           ),
                           const SizedBox(
                             height: 6.0,
                           ),
                           Text(
-                            chatUser.lastMessageText,
-                            style: TextStyle(
+                            (chatUser.message as TextMessage).text,
+                            style: const TextStyle(
                               fontSize: 13.0,
                               color: Colors.grey,
-                              fontWeight: chatUser.isRead
-                                  ? FontWeight.w300
-                                  : FontWeight.w500,
+                              fontWeight:
+                                  isRead ? FontWeight.w300 : FontWeight.w500,
                             ),
                           ),
                         ],
@@ -67,12 +70,11 @@ class ChatBody extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    chatUser.lastMessageTime.toString(),
-                    style: TextStyle(
+                    chatUser.message.createdAt.toString(),
+                    style: const TextStyle(
                       fontSize: 12.0,
                       color: Colors.grey,
-                      fontWeight:
-                          chatUser.isRead ? FontWeight.w300 : FontWeight.w500,
+                      fontWeight: isRead ? FontWeight.w300 : FontWeight.w500,
                     ),
                   ),
                 ],

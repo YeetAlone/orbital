@@ -1,14 +1,11 @@
-import 'package:building/services/chat/firebase_chat_storage.dart';
+import 'package:building/shared/shared_data.dart';
 import 'package:flutter/material.dart';
 
 // Bottom text bar
 
 class NewTextWidget extends StatefulWidget {
   final String senderEmail;
-  final String receiverEmail;
-  const NewTextWidget(
-      {required this.senderEmail, required this.receiverEmail, Key? key})
-      : super(key: key);
+  const NewTextWidget({required this.senderEmail, Key? key}) : super(key: key);
 
   @override
   State<NewTextWidget> createState() => _NewTextWidgetState();
@@ -31,10 +28,11 @@ class _NewTextWidgetState extends State<NewTextWidget> {
 
   void _sendMessage() async {
     FocusScope.of(context).unfocus();
-    FirebaseChatStorage().createChat(
-        senderEmail: widget.senderEmail,
-        receiverEmail: widget.receiverEmail,
-        text: _chatController.text.trim());
+    final receiver = SharedPrefs.userData;
+    // FirebaseChatStorage().createChat(
+    //     senderEmail: widget.senderEmail,
+    //     receiverEmail: widget.receiverEmail,
+    //     text: _chatController.text.trim());
     _chatController.clear();
   }
 

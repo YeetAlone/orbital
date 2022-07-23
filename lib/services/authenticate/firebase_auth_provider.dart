@@ -1,6 +1,7 @@
 import 'package:building/firebase_options.dart';
 import 'package:building/models/user.dart';
 import 'package:building/services/authenticate/auth_provider.dart';
+import 'package:building/shared/shared_data.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
@@ -8,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart'
 import 'auth_exceptions.dart';
 
 class FirebaseAuthProvider extends AuthProvider {
+  final prefs = SharedPrefs();
   @override
   Future<void> initialize() async {
     await Firebase.initializeApp(
@@ -62,6 +64,8 @@ class FirebaseAuthProvider extends AuthProvider {
           .signInWithEmailAndPassword(email: email, password: password);
       final user = currentUser;
       if (user != null) {
+        SharedPrefs.setFirstTime();
+        SharedPrefs.setUserId(user.userAuthID);
         return user;
       } else {
         throw UserNotLoggedInAuthException();
@@ -84,6 +88,7 @@ class FirebaseAuthProvider extends AuthProvider {
   Future<void> logOut() {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
+      SharedPrefs.resetPrefs();
       return FirebaseAuth.instance.signOut();
     } else {
       throw UserNotLoggedInAuthException();

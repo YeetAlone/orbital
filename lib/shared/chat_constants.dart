@@ -1,4 +1,4 @@
-const senderEmailName = 'sender_email';
+const messageIdName = 'message_id';
 // const chatIdName = 'chat_id';
 const lastMessageTimeName = 'last_message_time';
 const userName = 'name';
@@ -8,3 +8,4 @@ const imageUrlName = 'image_url';
 const createdAtName = 'created_at';
 const messageName = 'message';
 const userStatus = 'status';
+const messageTypeName = 'message_type';
