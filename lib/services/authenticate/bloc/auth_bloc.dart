@@ -28,7 +28,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final user =
             await provider.logIn(email: event.email, password: event.password);
         SharedPrefs.setFirstTime();
-        SharedPrefs.setUserId(user.userAuthID);
+        await SharedPrefs.setFromData(
+            await FirebaseCloudStorage().getAppUserFromId(user.userAuthID));
         emit(AuthStateLoggedIn(user: user));
       } on Exception catch (exception) {
         emit(AuthStateLoggedOut(exception: exception));

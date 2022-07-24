@@ -47,7 +47,7 @@ class EmailFieldValidator {
   static String? validate(String? value) {
     return (value?.isNotEmpty ?? false) &&
             isEmail(value.toString()) &&
-            value!.endsWith("u.nus.edu")
+            value!.endsWith("nus.edu")
         ? null
         : "Enter a valid NUS email";
   }

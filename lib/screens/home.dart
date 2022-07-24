@@ -9,7 +9,7 @@ import 'package:building/services/navigation/bloc/navigation_cubit.dart';
 import 'package:building/shared/shared_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'dart:developer' as devtools Sshow log;
+import 'dart:developer' as devtools show log;
 
 class HomeScreen extends StatefulWidget {
   //* Passing user authentication ID throughout the app
@@ -33,20 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
           builder: (context, state) {
-        Future<AppUserData> getUser =
-            FirebaseCloudStorage().getAppUserFromId(userAuthId);
-        if (!SharedPrefs.firstTime) {
-          getUser = Future.value(user);
-        }
         return FutureBuilder<AppUserData>(
-            future: getUser,
+            future: Future.value(user),
             builder: (context, snapshot) {
               final user = snapshot.data ?? AppUserData.empty();
               final email = user.email;
               status = user.status;
-              if (SharedPrefs.firstTime) {
-                SharedPrefs.setFromData(user);
-              }
+              devtools.log(SharedPrefs.userData.toString());
               return BottomNavigationBar(
                 elevation: 0,
                 items: const <BottomNavigationBarItem>[

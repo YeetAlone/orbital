@@ -47,6 +47,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
+    // context.read<AuthBloc>().add(const AuthEventLogOut());
     super.initState();
   }
 
@@ -80,6 +81,9 @@ class _ProfileState extends State<Profile> {
                         final department = state.department == ""
                             ? user.department
                             : state.department;
+                        final location = state.location == ""
+                            ? user.location
+                            : state.location;
                         return ListView(
                           children: [
                             screenAppBar("PROFILE"),
