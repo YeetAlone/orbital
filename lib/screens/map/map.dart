@@ -131,24 +131,26 @@ class _MapPageState extends State<MapPage> {
               "Double tap on map to zoom in and see the buildings in detail. To find a colleague by building, go to search page",
               style: TextStyle(fontSize: 8),
             ),
-            SizedBox(
-              height: 590,
-              child: Positioned(
-                left: offset.dx,
-                top: offset.dy,
-                child: GestureDetector(
-                  onPanUpdate: (details) {
-                    setState(() {
-                      offset = Offset(offset.dx + details.delta.dx,
-                          offset.dy + details.delta.dy);
-                    });
-                  },
-                  onDoubleTapDown: handleDoubleTapDown,
-                  onDoubleTap: handleDoubleTap,
-                  child: InteractiveViewer(
-                    transformationController: transController,
-                    child: Image.asset("assets/map.jpg",
-                        width: 400, height: 690, fit: BoxFit.fill),
+            Expanded(
+              flex: 5,
+              child: SizedBox(
+                child: Positioned(
+                  left: offset.dx,
+                  top: offset.dy,
+                  child: GestureDetector(
+                    onPanUpdate: (details) {
+                      setState(() {
+                        offset = Offset(offset.dx + details.delta.dx,
+                            offset.dy + details.delta.dy);
+                      });
+                    },
+                    onDoubleTapDown: handleDoubleTapDown,
+                    onDoubleTap: handleDoubleTap,
+                    child: InteractiveViewer(
+                      transformationController: transController,
+                      child: Image.asset("assets/map.jpg",
+                          width: 400, height: 690, fit: BoxFit.fill),
+                    ),
                   ),
                 ),
               ),

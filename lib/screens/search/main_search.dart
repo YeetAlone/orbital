@@ -37,38 +37,52 @@ class MainSearch extends StatelessWidget {
                 return Column(
                   children: <Widget>[
                     screenAppBar("SEARCH"),
-                    const SizedBox(height: 150),
-                    const Center(
-                        child: Text("How do you want to find your colleague?",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: Color.fromRGBO(0, 77, 64, 1)))),
-                    const SizedBox(height: 50),
-                    SearchMethodButton(
-                        title: "   Find by Name",
-                        iconURL: "assets/name.png",
-                        bg: const [225, 242, 226],
-                        onPressed: () => context
-                            .read<SearchBloc>()
-                            .add(const GotoSearchEvent(page: SearchEnum.name))),
+                    SizedBox(height: 100),
+                    const Expanded(
+                      flex: 2,
+                      child: Center(
+                          child: Text("How do you want to find your colleague?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: Color.fromRGBO(0, 77, 64, 1)))),
+                    ),
+                    const Expanded(flex: 1, child: SizedBox(height: 50)),
+                    Expanded(
+                      flex: 2,
+                      child: SearchMethodButton(
+                          title: "   Find by Name",
+                          iconURL: "assets/name.png",
+                          bg: const [225, 242, 226],
+                          onPressed: () => context.read<SearchBloc>().add(
+                              const GotoSearchEvent(page: SearchEnum.name))),
+                    ),
                     const SizedBox(height: 20),
-                    SearchMethodButton(
-                        title: "  Find by Building",
-                        iconURL: "assets/building.png",
-                        bg: const [244, 250, 244],
-                        onPressed: () => context.read<SearchBloc>().add(
-                            const GotoSearchEvent(page: SearchEnum.building))),
+                    Expanded(
+                      flex: 2,
+                      child: SearchMethodButton(
+                          title: "  Find by Building",
+                          iconURL: "assets/building.png",
+                          bg: const [244, 250, 244],
+                          onPressed: () => context.read<SearchBloc>().add(
+                              const GotoSearchEvent(
+                                  page: SearchEnum.building))),
+                    ),
                     const SizedBox(height: 20),
-                    SearchMethodButton(
-                        title: " Find by Availability",
-                        iconURL: "assets/availability.png",
-                        bg: const [255, 255, 255],
-                        onPressed: () {
-                          context.read<SearchBloc>().add(const GotoSearchEvent(
-                              page: SearchEnum.availability));
-                          devtools.log("Find by availability pressed");
-                        }),
+                    Expanded(
+                      flex: 2,
+                      child: SearchMethodButton(
+                          title: " Find by Availability",
+                          iconURL: "assets/availability.png",
+                          bg: const [255, 255, 255],
+                          onPressed: () {
+                            context.read<SearchBloc>().add(
+                                const GotoSearchEvent(
+                                    page: SearchEnum.availability));
+                            devtools.log("Find by availability pressed");
+                          }),
+                    ),
+                    const SizedBox(height: 30),
                   ],
                 );
               }
