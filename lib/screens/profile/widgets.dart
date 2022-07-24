@@ -66,7 +66,7 @@ class _InfoDisplayProfileState extends State<InfoDisplayProfile> {
                   style: const TextStyle(
                     color: Colors.white,
                     letterSpacing: 2.0,
-                    fontSize: 20.0,
+                    fontSize: 18.0,
                   ),
                 ),
               ),
@@ -179,7 +179,7 @@ class _InfoDisplayStateDepartment extends State<InfoDisplayDepartment> {
                   style: const TextStyle(
                     color: Colors.white,
                     letterSpacing: 2.0,
-                    fontSize: 20.0,
+                    fontSize: 18.0,
                   ),
                 ),
               ),
@@ -257,19 +257,19 @@ class _InfoDisplayStateDepartment extends State<InfoDisplayDepartment> {
   }
 }
 
-class InfoDispLocation extends StatefulWidget {
+class InfoDisplayLocation extends StatefulWidget {
   final String title;
   final String info;
   final String email;
-  const InfoDispLocation(
+  const InfoDisplayLocation(
       {Key? key, required this.title, required this.info, required this.email})
       : super(key: key);
 
   @override
-  State<InfoDispLocation> createState() => _InfoDispLocationState();
+  State<InfoDisplayLocation> createState() => _InfoDisplayLocationState();
 }
 
-class _InfoDispLocationState extends State<InfoDispLocation> {
+class _InfoDisplayLocationState extends State<InfoDisplayLocation> {
   Position? _position;
   late String location;
   List buildings = [
@@ -350,7 +350,7 @@ class _InfoDispLocationState extends State<InfoDispLocation> {
                   style: const TextStyle(
                     color: Colors.white,
                     letterSpacing: 2.0,
-                    fontSize: 20.0,
+                    fontSize: 18.0,
                   ),
                 ),
               ),

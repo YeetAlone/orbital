@@ -130,7 +130,7 @@ class _ProfileState extends State<Profile> {
 
                             Expanded(
                               flex: 1,
-                              child: InfoDispLocation(
+                              child: InfoDisplayLocation(
                                 title: "  LOCATION",
                                 info: " ${location.toTitleCase()}",
                                 email: user.email,
