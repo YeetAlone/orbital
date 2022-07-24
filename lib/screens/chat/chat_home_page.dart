@@ -38,6 +38,7 @@ class _ChatHomeState extends State<ChatHome> {
     //   }
     // }
     return Scaffold(
+        backgroundColor: const Color.fromRGBO(244, 250, 244, 100),
         body: FutureBuilder<AppUserData>(
             future: Future.value(SharedPrefs.userData),
             builder: (context, snapshot) {

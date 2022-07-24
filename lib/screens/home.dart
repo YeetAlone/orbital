@@ -44,14 +44,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 elevation: 0,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.person), label: 'profile'),
+                      backgroundColor: Color.fromRGBO(244, 250, 244, 100),
+                      icon: Icon(Icons.person),
+                      label: 'profile'),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.search), label: 'search'),
-                  BottomNavigationBarItem(icon: Icon(Icons.map), label: 'map'),
+                      backgroundColor: Color.fromRGBO(244, 250, 244, 100),
+                      icon: Icon(Icons.search),
+                      label: 'search'),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.chat), label: 'chat'),
+                      backgroundColor: Color.fromRGBO(244, 250, 244, 100),
+                      icon: Icon(Icons.map),
+                      label: 'map'),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.access_time), label: 'availability'),
+                      backgroundColor: Color.fromRGBO(244, 250, 244, 100),
+                      icon: Icon(Icons.chat),
+                      label: 'chat'),
+                  BottomNavigationBarItem(
+                      backgroundColor: Color.fromRGBO(244, 250, 244, 100),
+                      icon: Icon(Icons.access_time),
+                      label: 'availability'),
                 ],
                 type: BottomNavigationBarType.shifting,
                 currentIndex: index,

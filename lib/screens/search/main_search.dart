@@ -23,6 +23,7 @@ class MainSearch extends StatelessWidget {
         .add(const GotoSearchEvent(page: SearchEnum.initial));
 
     return Scaffold(
+        backgroundColor: const Color.fromRGBO(244, 250, 244, 100),
         //body
         body: BlocBuilder<SearchBloc, SearchState>(
             buildWhen: ((previous, current) => current is! SearchComplete),

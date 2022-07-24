@@ -103,6 +103,7 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color.fromRGBO(244, 250, 244, 100),
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: const Color.fromRGBO(0, 77, 64, 1),
