@@ -80,6 +80,7 @@ class FirebaseCloudStorage {
         await users.doc(email).update({userStatus: status});
       }
       if (location != null) {
+        await SharedPrefs.setUserLocation(location);
         await users.doc(email).update({gpsLocation: location});
       }
       // return AppUserData(
