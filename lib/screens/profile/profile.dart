@@ -88,56 +88,79 @@ class _ProfileState extends State<Profile> {
                         return ListView(
                           children: [
                             screenAppBar("PROFILE"),
-                            const SizedBox(height: 40),
+                            const SizedBox(height: 20),
 
                             //profile picture circular avatar
-                            Center(
-                              child: CircleAvatar(
-                                backgroundColor:
-                                    const Color.fromRGBO(165, 214, 167, 100),
-                                backgroundImage:
-                                    NetworkImage(user.profilePictureURL),
-                                radius: 60.0,
+                            Expanded(
+                              flex: 2,
+                              child: Center(
+                                child: CircleAvatar(
+                                  backgroundColor:
+                                      const Color.fromRGBO(165, 214, 167, 100),
+                                  backgroundImage:
+                                      NetworkImage(user.profilePictureURL),
+                                  radius: 60.0,
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 50),
+                            const Expanded(
+                                flex: 4, child: SizedBox(height: 20)),
                             //display of name
-                            InfoDisplayProfile(
-                              title: "  NAME",
-                              info: " ${name.toTitleCase()}",
-                              email: user.email,
-                            ),
-                            const SizedBox(height: 30.0),
-                            //display of department
-                            InfoDisplayDepartment(
-                              title: "  DEPARTMENT",
-                              info: " $department",
-                              email: user.email,
-                            ),
-                            const SizedBox(height: 30),
-
-                            InfoDispLocation(
-                              title: "  LOCATION",
-                              info: " ${location.toTitleCase()}",
-                              email: user.email,
-                            ),
-                            const SizedBox(height: 30.0),
-
-                            Center(
-                              child: Container(
-                                height: 40,
-                                width: 100,
-                                color: const Color.fromRGBO(165, 214, 167, 65),
-                                child: TextButton(
-                                    onPressed: () {
-                                      context
-                                          .read<AuthBloc>()
-                                          .add(const AuthEventLogOut());
-                                    },
-                                    child: const Text("Log Out",
-                                        style: TextStyle(color: Colors.white))),
+                            Expanded(
+                              flex: 1,
+                              child: InfoDisplayProfile(
+                                title: "  NAME",
+                                info: " ${name.toTitleCase()}",
+                                email: user.email,
                               ),
                             ),
+                            const Expanded(
+                                flex: 2, child: SizedBox(height: 20)),
+                            //display of department
+                            Expanded(
+                              flex: 1,
+                              child: InfoDisplayDepartment(
+                                title: "  DEPARTMENT",
+                                info: " $department",
+                                email: user.email,
+                              ),
+                            ),
+                            const Expanded(
+                                flex: 2, child: SizedBox(height: 20)),
+
+                            Expanded(
+                              flex: 1,
+                              child: InfoDispLocation(
+                                title: "  LOCATION",
+                                info: " ${location.toTitleCase()}",
+                                email: user.email,
+                              ),
+                            ),
+                            const Expanded(
+                                flex: 3, child: SizedBox(height: 40)),
+
+                            Expanded(
+                              flex: 1,
+                              child: Center(
+                                child: Container(
+                                  height: 40,
+                                  width: 100,
+                                  color:
+                                      const Color.fromRGBO(165, 214, 167, 65),
+                                  child: TextButton(
+                                      onPressed: () {
+                                        context
+                                            .read<AuthBloc>()
+                                            .add(const AuthEventLogOut());
+                                      },
+                                      child: const Text("Log Out",
+                                          style:
+                                              TextStyle(color: Colors.white))),
+                                ),
+                              ),
+                            ),
+                            const Expanded(
+                                flex: 1, child: SizedBox(height: 10)),
                           ],
                         );
                       } else {
