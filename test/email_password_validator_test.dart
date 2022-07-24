@@ -4,27 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Email tests', () {
     test('empty email returns error string', () {
-      expect(EmailFieldValidator.validate(""), "Enter a valid email");
+      expect(EmailFieldValidator.validate(""), "Enter a valid NUS email");
     });
 
     test('invalid email returns error string', () {
-      expect(EmailFieldValidator.validate("hello"), "Enter a valid email");
+      expect(EmailFieldValidator.validate("hello"), "Enter a valid NUS email");
     });
 
     test('null email returns error string', () {
-      expect(EmailFieldValidator.validate(null), "Enter a valid email");
-    });
-
-    test('valid email retuns null', () {
-      expect(EmailFieldValidator.validate("q@w.com"), null);
-    });
-
-    test('valid email retuns null', () {
-      expect(EmailFieldValidator.validate("ishita11@gmail.com"), null);
-    });
-
-    test('valid email retuns null', () {
-      expect(EmailFieldValidator.validate("ishita@gmail.com"), null);
+      expect(EmailFieldValidator.validate(null), "Enter a valid NUS email");
     });
   });
 
