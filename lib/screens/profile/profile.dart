@@ -80,6 +80,10 @@ class _ProfileState extends State<Profile> {
                         final department = state.department == ""
                             ? user.department
                             : state.department;
+                        final location = state.location == ""
+                            ? user.location
+                            : state.location;
+
                         return ListView(
                           children: [
                             screenAppBar("PROFILE"),
@@ -104,13 +108,6 @@ class _ProfileState extends State<Profile> {
                             ),
                             const SizedBox(height: 30.0),
 
-                            //display of department
-                            InfoDisplayDepartment(
-                              title: "  DEPARTMENT",
-                              info: " $department",
-                              email: user.email,
-                            ),
-                            const SizedBox(height: 50),
                             //display of department
                             InfoDisplayDepartment(
                               title: "  DEPARTMENT",
