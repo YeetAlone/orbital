@@ -40,7 +40,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
               SearchComplete(results: db.findUsersByAvailability(event.query)));
           break;
         case SearchEnum.name:
-          emit(SearchComplete(results: db.findUsersByName(event.query)));
+          // print(event.query.toLowerCase().trim());
+          emit(SearchComplete(
+              results: db.findUsersByName(event.query.toLowerCase().trim())));
           break;
       }
     });

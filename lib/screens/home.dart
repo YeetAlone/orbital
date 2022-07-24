@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // final user = FirebaseCloudStorage()
   //     .getAppUserFromId(AuthService.firebase().currentUser!.userAuthID);
   int index = 0;
-  String status = "";
+  String status = SharedPrefs.userStatus;
   final String userAuthId = SharedPrefs.userId;
   final AppUserData user = SharedPrefs.userData;
 
@@ -38,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context, snapshot) {
               final user = snapshot.data ?? AppUserData.empty();
               final email = user.email;
-              status = user.status;
               devtools.log(SharedPrefs.userData.toString());
               return BottomNavigationBar(
                 elevation: 0,
@@ -192,12 +191,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> updateAvailability(String email, String newStatus) async {
-    await FirebaseCloudStorage().updateAppUser(email: email, status: newStatus);
     setState(() {
       status = newStatus;
     });
-    if (mounted) {
-      Navigator.of(context).pop();
-    }
+    await FirebaseCloudStorage().updateAppUser(email: email, status: newStatus);
+
+    if (!mounted) {}
+    Navigator.of(context).pop();
   }
 }

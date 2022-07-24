@@ -52,6 +52,7 @@ class AppUserData {
   }
 
   factory AppUserData.fromJson(Map<String, dynamic> parsedJson) {
+    // print("In APPUSERDATA $parsedJson");
     return AppUserData(
       email: parsedJson[userEmailName] ?? '',
       // firstName: parsedJson[userFirstName] ?? '',
@@ -60,7 +61,7 @@ class AppUserData {
       userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
       department: parsedJson[departmentName] ?? '',
       profilePictureURL: parsedJson[userProfileURLName] ?? '',
-      status: (parsedJson[userStatus]),
+      status: (parsedJson[userStatus]) ?? '',
       location: parsedJson[gpsLocation] ?? 'no building',
     );
     // docID: parsedJson[docIDName] ?? '');
@@ -85,9 +86,12 @@ class AppUserData {
       userEmailName: email,
       // userFirstName: firstName,
       // userLastName: lastName,
-      'id': userID,
+      userFullName: userName,
+      userIDName: userID,
+      gpsLocation: location,
       departmentName: department,
-      userProfileURLName: profilePictureURL
+      userProfileURLName: profilePictureURL,
+      userStatus: status,
     };
   }
 

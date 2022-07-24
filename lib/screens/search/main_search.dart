@@ -29,6 +29,7 @@ class MainSearch extends StatelessWidget {
             buildWhen: ((previous, current) => current is! SearchComplete),
             builder: (context, state) {
               if (state is BuildingSearch) {
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => const FindByBuilding()));
                 return const FindByBuilding();
               } else if (state is AvailabilitySearch) {
                 return const FindByAvailability();
@@ -38,7 +39,7 @@ class MainSearch extends StatelessWidget {
                 return Column(
                   children: <Widget>[
                     screenAppBar("SEARCH"),
-                    SizedBox(height: 100),
+                    const SizedBox(height: 100),
                     const Expanded(
                       flex: 2,
                       child: Center(

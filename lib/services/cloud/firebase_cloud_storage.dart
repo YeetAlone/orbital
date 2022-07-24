@@ -80,6 +80,7 @@ class FirebaseCloudStorage {
         await users.doc(email).update({userStatus: status});
       }
       if (location != null) {
+        await SharedPrefs.setUserLocation(location);
         await users.doc(email).update({gpsLocation: location});
       }
       // return AppUserData(
@@ -133,10 +134,8 @@ class FirebaseCloudStorage {
       users.where(userStatus, isEqualTo: status).snapshots().map((event) =>
           event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
 
-  Stream<Iterable<AppUserData>> findUsersByName(String queryText) => users
-      .where(userFullName, isGreaterThanOrEqualTo: '$queryText\uf8ff')
-      .snapshots()
-      .map((event) =>
+  Stream<Iterable<AppUserData>> findUsersByName(String queryText) =>
+      users.where(userFullName, isEqualTo: queryText).snapshots().map((event) =>
           event.docs.map((snapshot) => AppUserData.fromJson(snapshot.data())));
 
   Stream<Iterable<AppUserData>> findUsersByBuilding(String building) =>

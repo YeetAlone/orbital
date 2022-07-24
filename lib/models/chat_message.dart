@@ -43,7 +43,7 @@ class TextMessage extends Message {
       {required this.text, required super.createdAt, required super.sender});
 
   static TextMessage fromJson(Map<String, dynamic> json) => TextMessage(
-        sender: json[userName],
+        sender: AppUserData.fromJson(json[userName]),
         text: json[messageName],
         createdAt: (json[createdAtName] as Timestamp).toDate(),
       );
