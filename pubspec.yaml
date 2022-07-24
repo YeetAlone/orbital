@@ -51,6 +51,9 @@ dependencies:
   geolocator: ^8.2.0
   shared_preferences: ^2.0.15
   uuid: ^3.0.6
+  geolocator_android: ^3.2.1
+  geolocator_apple: ^2.2.1
+  intl: ^0.17.0
 
 dev_dependencies:
   fake_cloud_firestore: ^1.2.2

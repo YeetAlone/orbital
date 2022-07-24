@@ -1,13 +1,14 @@
 import 'package:building/models/user.dart';
 import 'package:building/services/chat/firebase_chat_storage.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
+import 'package:building/shared/extensions.dart';
+import 'package:building/shared/shared_data.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/app_bar.dart';
 
 class AddNewUser extends StatelessWidget {
-  final String receiverEmail;
-  const AddNewUser({required this.receiverEmail, Key? key}) : super(key: key);
+  const AddNewUser({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +33,14 @@ class AddNewUser extends StatelessWidget {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         if (snapshot.data!.elementAt(index).email ==
-                            receiverEmail) {
+                            SharedPrefs.userEmail) {
                           return Container();
                         }
                         return ListTile(
-                          title: Text(snapshot.data!.elementAt(index).userName),
+                          title: Text(snapshot.data!
+                              .elementAt(index)
+                              .userName
+                              .toTitleCase()),
                           onTap: () {
                             FirebaseChatStorage().createConversation(
                                 sender: snapshot.data!.elementAt(index));

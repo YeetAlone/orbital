@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator_android/geolocator_android.dart';
-import 'package:geolocator_apple/geolocator_apple.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:developer' as devtools show log;
 

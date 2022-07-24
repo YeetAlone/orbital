@@ -68,9 +68,7 @@ class _ChatHomeState extends State<ChatHome> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const AddNewUser(
-                                                receiverEmail: "",
-                                              )));
+                                              const AddNewUser()));
                                 },
                                 child: Row(
                                   children: const <Widget>[
@@ -124,7 +122,15 @@ class _ChatHomeState extends State<ChatHome> {
                         // if (snapshot.hasError) {
                         //   return Text('Error: ${snapshot.error}');
                         // }
+                        // devtools.log(snapshot.connectionState.toString());
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
                         final users = snapshot.data;
+                        // devtools.log(users.toString(), name: "users");
                         if (users == null || users.isEmpty) {
                           return const Text("No users found, add a few");
                         } else {

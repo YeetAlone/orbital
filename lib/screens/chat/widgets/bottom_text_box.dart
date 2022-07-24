@@ -1,11 +1,13 @@
+import 'package:building/services/chat/firebase_chat_storage.dart';
 import 'package:building/shared/shared_data.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer' as devtools show log;
 
 // Bottom text bar
 
 class NewTextWidget extends StatefulWidget {
-  final String senderEmail;
-  const NewTextWidget({required this.senderEmail, Key? key}) : super(key: key);
+  final String chatId;
+  const NewTextWidget({required this.chatId, Key? key}) : super(key: key);
 
   @override
   State<NewTextWidget> createState() => _NewTextWidgetState();
@@ -28,11 +30,11 @@ class _NewTextWidgetState extends State<NewTextWidget> {
 
   void _sendMessage() async {
     FocusScope.of(context).unfocus();
-    final receiver = SharedPrefs.userData;
-    // FirebaseChatStorage().createChat(
-    //     senderEmail: widget.senderEmail,
-    //     receiverEmail: widget.receiverEmail,
-    //     text: _chatController.text.trim());
+    devtools.log('text sent');
+    FirebaseChatStorage().createChat(
+        chatId: widget.chatId,
+        sender: SharedPrefs.userData,
+        text: _chatController.text.trim());
     _chatController.clear();
   }
 
@@ -76,17 +78,25 @@ class _NewTextWidgetState extends State<NewTextWidget> {
                   ),
                 ),
               ),
-              const SizedBox(width: 15),
-              FloatingActionButton(
-                onPressed:
-                    _chatController.text.trim().isEmpty ? null : _sendMessage,
-                backgroundColor: Colors.blue,
-                elevation: 0,
-                child: const Icon(
-                  Icons.send,
-                  size: 18,
+              const SizedBox(width: 8),
+              GestureDetector(
+                onTap: _sendMessage,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.blue,
+                    shape: BoxShape.rectangle,
+                  ),
+                  height: 50,
+                  width: 40,
+                  // elevation: 0,
+                  child: const Icon(
+                    Icons.send,
+                    size: 30,
+                  ),
                 ),
               ),
+              const SizedBox(width: 8),
             ],
           ),
         ));

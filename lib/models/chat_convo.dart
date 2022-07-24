@@ -45,18 +45,18 @@ class ChatConversation {
   factory ChatConversation.fromMap(Map<String, dynamic> map) {
     return ChatConversation(
       chatId: map['chatId'] as String,
-      userOne: AppUserData.fromJson(map['userOne'] as Map<String, dynamic>),
-      userTwo: AppUserData.fromJson(map['userTwo'] as Map<String, dynamic>),
-      message: Message.fromJson(map['message'] as Map<String, dynamic>),
+      userOne: AppUserData.fromJson(map['userOne']),
+      userTwo: AppUserData.fromJson(map['userTwo']),
+      message: Message.fromJson(map['message']),
     );
   }
 
   ChatConversation.fromDocumentSnapshot(
       DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : chatId = snapshot.data()!['chatID'],
-        userOne = AppUserData.fromDocumentSnapshot(snapshot.data()!['userOne']),
-        userTwo = AppUserData.fromDocumentSnapshot(snapshot.data()!['userTwo']),
-        message = TextMessage.fromDocumentSnapshot(snapshot.data()!['message']);
+      : chatId = snapshot.id,
+        userOne = AppUserData.fromJson(snapshot.data()!['userOne']),
+        userTwo = AppUserData.fromJson(snapshot.data()!['userTwo']),
+        message = TextMessage.fromJson(snapshot.data()!['message']);
 
   String toJson() => json.encode(toMap());
 

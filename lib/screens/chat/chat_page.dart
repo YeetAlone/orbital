@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
   final AppUserData sender;
-  const ChatPage({required this.sender, Key? key}) : super(key: key);
+  final String chatId;
+  const ChatPage({required this.sender, Key? key, required this.chatId})
+      : super(key: key);
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -24,9 +26,9 @@ class _ChatPageState extends State<ChatPage> {
             ProfileHeader(user: widget.sender),
             Expanded(
                 child: MessageBody(
-              senderEmail: widget.sender.email,
+              chatId: widget.chatId,
             )), // wrap with Stack if required
-            NewTextWidget(senderEmail: widget.sender.email),
+            NewTextWidget(chatId: widget.chatId),
           ],
         ),
       ),

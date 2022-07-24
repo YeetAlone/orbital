@@ -1,5 +1,6 @@
 import 'package:building/models/user.dart';
 import 'package:building/services/cloud/firebase_cloud_storage.dart';
+import 'package:building/shared/extensions.dart';
 import 'package:flutter/material.dart';
 
 // Header for the top of a chat conversation
@@ -41,7 +42,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      widget.user.userName,
+                      widget.user.userName.toTitleCase(),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

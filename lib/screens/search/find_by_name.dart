@@ -1,6 +1,7 @@
 import 'package:building/components/app_bar.dart';
 import 'package:building/models/user.dart';
 import 'package:building/services/search/bloc/search_bloc.dart';
+import 'package:building/shared/extensions.dart';
 import 'package:building/shared/search_constants.dart';
 import 'package:building/shared/shared_data.dart';
 import 'package:flutter/material.dart';
@@ -108,8 +109,10 @@ class _FindByNameState extends State<FindByName> {
                                 return Container();
                               }
                               return ListTile(
-                                title: Text(
-                                    snapshot.data!.elementAt(index).userName),
+                                title: Text(snapshot.data!
+                                    .elementAt(index)
+                                    .userName
+                                    .toTitleCase()),
                                 onTap: () {},
                               );
                             },

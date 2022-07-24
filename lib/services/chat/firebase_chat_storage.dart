@@ -9,6 +9,7 @@ import 'dart:async';
 import 'package:building/models/chat_convo.dart';
 import 'package:building/models/chat_message.dart';
 import 'package:building/models/user.dart';
+import 'package:building/shared/chat_constants.dart';
 import 'package:building/shared/shared_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
@@ -32,46 +33,45 @@ class FirebaseChatStorage {
   final receiver = SharedPrefs.userData;
   static const uuid = Uuid();
 
-  // // C
-  // Future<Message> createChat(
-  //     {required String senderEmail,
-  //     required String text}) async {
-  //   try {
-  //     final time = DateTime.now();
-  //     // final sender =
-  //     //     await FirebaseCloudStorage().getAppUserFromEmail(senderEmail);
-  //     Message message = TextMessage(
-  //       senderEmail: senderEmail,
-  //       messageId: '',
-  //       senderName: '',
-  //       text: text,
-  //       createdAt: time,
-  //     );
-  //     await chatDb.add(message.toJson());
-  //     return message;
-  //   } catch (e) {
-  //     devtools.log(e.toString());
-  //     throw CouldNotCreateChatMessageException();
-  //   }
-  // }
+  // C
+  Future<TextMessage> createChat(
+      {required AppUserData sender,
+      required String chatId,
+      required String text}) async {
+    try {
+      final time = DateTime.now();
+      // final sender =
+      //     await FirebaseCloudStorage().getAppUserFromEmail(senderEmail);
+      final message = TextMessage(
+        sender: sender,
+        text: text,
+        createdAt: time,
+      );
+      await chatDb.doc(chatId).collection('texts').add(message.toJson());
+      await latestConvoDb.doc(chatId).update({'message': message.toJson()});
+      return message;
+    } catch (e) {
+      devtools.log(e.toString());
+      throw CouldNotCreateChatMessageException();
+    }
+  }
 
-  // // R
-  // Stream<Iterable<Message>> getChatsFromSender(
-  //     {required String senderEmail, required String receiverEmail}) {
-  //   try {
-  //     // Pagination required
-  //     final db = FirebaseFirestore.instance
-  //         .collection('users/$receiverEmail/chats')
-  //         .where(messageIdName, isEqualTo: (senderEmail))
-  //         .orderBy(lastMessageTimeName, descending: true)
-  //         .limit(20);
-
-  //     return db.snapshots().map(
-  //         (event) => event.docs.map((e) => Message.fromJson(e.data())));
-  //   } catch (e) {
-  //     throw CouldNotGetChatMessageException();
-  //   }
-  // }
+  // R
+  Stream<Iterable<TextMessage>> getChatsFromSender({required String chatId}) {
+    try {
+      // Pagination required
+      return chatDb
+          .doc(chatId)
+          .collection('texts')
+          .orderBy(createdAtName, descending: false)
+          .limit(20)
+          .snapshots()
+          .map((event) => event.docs
+              .map((snapshot) => TextMessage.fromJson(snapshot.data())));
+    } catch (e) {
+      throw CouldNotGetChatMessageException();
+    }
+  }
 
   // // U
   // Future<void> updateChat(
@@ -110,7 +110,6 @@ class FirebaseChatStorage {
   }) async {
     try {
       final time = DateTime.now();
-
       final text =
           TextMessage(text: "Say Hi!", createdAt: time, sender: sender);
       final id = uuid.v4();
@@ -139,7 +138,7 @@ class FirebaseChatStorage {
 
   // R
   Future<List<ChatConversation>> getChatsFromEveryone() async {
-    {
+    try {
       // Pagination required
       final convoList = await convoDb
           .doc(receiver.email)
@@ -151,14 +150,18 @@ class FirebaseChatStorage {
       for (final String id in convoList) {
         // Null is not a subtype of type String - latestConvoDb is empty
         final conversation = await latestConvoDb.doc(id).get();
-        devtools.log(conversation.data().toString());
+        // devtools.log(conversation.data().toString());
+
         conversations.add(ChatConversation.fromDocumentSnapshot(conversation));
+        // conversations.add(ChatConversation.fromMap(conversation.data()!));
       }
+      // devtools.log("Conversation List: $conversations");
       return conversations;
-    } // catch (e) {
-    //   devtools.log(e.toString());
-    //   throw CouldNotGetChatUserException();
-    // }
+    } catch (e) {
+      devtools.log(e.toString());
+      // throw CouldNotGetChatUserException();
+      rethrow;
+    }
   }
 
 //   // U
