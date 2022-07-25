@@ -91,76 +91,55 @@ class _ProfileState extends State<Profile> {
                             const SizedBox(height: 20),
 
                             //profile picture circular avatar
-                            Expanded(
-                              flex: 2,
-                              child: Center(
-                                child: CircleAvatar(
-                                  backgroundColor:
-                                      const Color.fromRGBO(165, 214, 167, 100),
-                                  backgroundImage:
-                                      NetworkImage(user.profilePictureURL),
-                                  radius: 60.0,
-                                ),
+                            Center(
+                              child: CircleAvatar(
+                                backgroundColor:
+                                    const Color.fromRGBO(165, 214, 167, 100),
+                                backgroundImage:
+                                    NetworkImage(user.profilePictureURL),
+                                radius: 60.0,
                               ),
                             ),
-                            const Expanded(
-                                flex: 4, child: SizedBox(height: 20)),
+                            const SizedBox(height: 20),
                             //display of name
-                            Expanded(
-                              flex: 1,
-                              child: InfoDisplayProfile(
-                                title: "  NAME",
-                                info: " ${name.toTitleCase()}",
-                                email: user.email,
-                              ),
+                            InfoDisplayProfile(
+                              title: "  NAME",
+                              info: " ${name.toTitleCase()}",
+                              email: user.email,
                             ),
-                            const Expanded(
-                                flex: 2, child: SizedBox(height: 20)),
+
+                            const SizedBox(height: 20),
                             //display of department
-                            Expanded(
-                              flex: 1,
-                              child: InfoDisplayDepartment(
-                                title: "  DEPARTMENT",
-                                info: " $department",
-                                email: user.email,
-                              ),
+                            InfoDisplayDepartment(
+                              title: "  DEPARTMENT",
+                              info: " $department",
+                              email: user.email,
                             ),
-                            const Expanded(
-                                flex: 2, child: SizedBox(height: 20)),
+                            const SizedBox(height: 20),
 
-                            Expanded(
-                              flex: 1,
-                              child: InfoDisplayLocation(
-                                title: "  LOCATION",
-                                info: " ${location.toTitleCase()}",
-                                email: user.email,
-                              ),
+                            InfoDisplayLocation(
+                              title: "  LOCATION",
+                              info: " ${location.toTitleCase()}",
+                              email: user.email,
                             ),
-                            const Expanded(
-                                flex: 3, child: SizedBox(height: 40)),
+                            const SizedBox(height: 40),
 
-                            Expanded(
-                              flex: 1,
-                              child: Center(
-                                child: Container(
-                                  height: 40,
-                                  width: 100,
-                                  color:
-                                      const Color.fromRGBO(165, 214, 167, 65),
-                                  child: TextButton(
-                                      onPressed: () {
-                                        context
-                                            .read<AuthBloc>()
-                                            .add(const AuthEventLogOut());
-                                      },
-                                      child: const Text("Log Out",
-                                          style:
-                                              TextStyle(color: Colors.white))),
-                                ),
+                            Center(
+                              child: Container(
+                                height: 40,
+                                width: 100,
+                                color: const Color.fromRGBO(165, 214, 167, 65),
+                                child: TextButton(
+                                    onPressed: () {
+                                      context
+                                          .read<AuthBloc>()
+                                          .add(const AuthEventLogOut());
+                                    },
+                                    child: const Text("Log Out",
+                                        style: TextStyle(color: Colors.white))),
                               ),
                             ),
-                            const Expanded(
-                                flex: 1, child: SizedBox(height: 10)),
+                            const SizedBox(height: 10),
                           ],
                         );
                       } else {
