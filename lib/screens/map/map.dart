@@ -110,32 +110,36 @@ class _MapPageState extends State<MapPage> {
           elevation: 0.0,
           title: const Text("MAP"),
         ),
-        body: Column(
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  GeolocatorAndroid.registerWith();
-                  _getCurrentLocation();
-                  showMenu(
-                      context: context,
-                      position: const RelativeRect.fromLTRB(300, 150, 300, 300),
-                      items: <PopupMenuEntry>[
-                        PopupMenuItem(
-                            child: _position != null
-                                ? Text(location)
-                                : const Text(
-                                    "No data regarding your location. Please allow location on your device or wait and retry"))
-                      ]);
-                },
-                child: const Text("Click to see current location")),
-            const Text(
-              "Double tap on map to zoom in and see the buildings in detail. To find a colleague by building, go to search page",
-              style: TextStyle(fontSize: 8),
-            ),
-            Expanded(
-              flex: 5,
-              child: SizedBox(
-                child: Positioned(
+        body: Column(children: [
+          ElevatedButton(
+              onPressed: () {
+                GeolocatorAndroid.registerWith();
+                _getCurrentLocation();
+                showMenu(
+                    context: context,
+                    position: const RelativeRect.fromLTRB(300, 150, 300, 300),
+                    items: <PopupMenuEntry>[
+                      PopupMenuItem(
+                          child: _position != null
+                              ? Text(location)
+                              : const Text(
+                                  "No data regarding your location. Please allow location on your device or wait and retry"))
+                    ]);
+              },
+              child: const Text("Click to see current location")),
+          const Text(
+            "Double tap on map to zoom in and see the buildings in detail. To find a colleague by building, go to search page",
+            style: TextStyle(fontSize: 8),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height - 220,
+            child: Stack(
+              clipBehavior: Clip.hardEdge,
+              fit: StackFit.expand,
+              alignment: Alignment.center,
+              children: [
+                Positioned(
                   left: offset.dx,
                   top: offset.dy,
                   child: GestureDetector(
@@ -153,10 +157,10 @@ class _MapPageState extends State<MapPage> {
                           width: 400, height: 690, fit: BoxFit.fill),
                     ),
                   ),
-                ),
-              ),
+                )
+              ],
             ),
-          ],
-        ));
+          ),
+        ]));
   }
 }
